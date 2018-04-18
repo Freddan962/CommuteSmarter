@@ -11,6 +11,7 @@ import { MorePage } from '../pages/more/more';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactPage,
     HomePage,
     MorePage,
-    TabsPage
+    TabsPage,
+    MoreeventnotificationsPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ContactPage,
     HomePage,
     MorePage,
-    TabsPage
+    TabsPage,
+    MoreeventnotificationsPage
   ],
   providers: [
     StatusBar,
