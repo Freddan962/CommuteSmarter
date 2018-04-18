@@ -22,6 +22,9 @@ self.toolbox.precache(
     'manifest.json'
   ]
 );
+plugins: [
+  new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js')
+],
 
 // dynamically cache any other local assets
 self.toolbox.router.any('/*', self.toolbox.fastest);

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      More Settings
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list> </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <ion-thumbnail item-start>
+        <ion-icon ios="ios-contact" md="md-contact"></ion-icon>
+      </ion-thumbnail>
+      <h2>Not signed in</h2>
+      <p>tap to register or sign up</p>
+      <button ion-button clear item-end><ion-icon name="arrow-forward"></ion-icon></button>
+    </ion-item>
+  </ion-list>
+
+
+  <ion-list>
+
+    <ion-list-header>
+
+    </ion-list-header>
+    <a ion-item (click)="openModal({})">
+      <ion-icon name="notifications-outline" [ngStyle]="" item-start></ion-icon>
+      Event Notifications
+    </a>
+    <a ion-item (click)="openModal({})">
+      <ion-icon name="ios-globe-outline" [ngStyle]="" item-start></ion-icon>
+      Lanuage
+    </a>
+    <a ion-item (click)="openModal({})">
+      <ion-icon name="ios-call-outline" [ngStyle]="" item-start></ion-icon>
+      Contact Developers
+    </a>
+  </ion-list>
+</ion-content>
