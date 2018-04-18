@@ -15,11 +15,20 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MoreeventnotificationsPage {
 
+  notificationSettings: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    
+    this.notificationSettings = [
+      {name: 'Road Work', ngModel: 'roadWorks', color: 'red'},
+      {name: 'Critical Obstacle', ngModel: 'criticalObstacle', color: 'red'},
+      {name: 'Obstacle', ngModel: 'obstacle', color: 'orange'},
+      {name: 'Road Closed', ngModel: 'roadClosed', color: 'red'},
+      {name: 'Traffic Jam', ngModel: 'trafficJam', color: 'orange'}
+    ];
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MoreeventnotificationsPage');
   }
-
 }
