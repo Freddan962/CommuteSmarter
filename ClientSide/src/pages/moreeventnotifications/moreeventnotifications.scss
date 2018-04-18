@@ -1,0 +1,43 @@
+page-moreeventnotifications {
+
+  .setting-text {
+    color:grey;
+    margin-left:5%;
+    font-size:11px;
+  }
+
+  .setting-title {
+    margin-top:10%;
+  }
+
+  .settings-list {
+    margin-bottom:0;
+  }
+
+  #notifications-toggle {
+    float:right;
+  }
+
+  .information-label {
+    float:left;
+    margin-left:0;
+  }
+
+  .dot, .dot-orange, .dot-red {
+    height: 25px;
+    width: 25px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    margin-top:19%;
+  }
+
+  .dot-orange {
+    background-color:orange;
+  }
+
+  .dot-red {
+    background-color: red;
+  }
+}
+
