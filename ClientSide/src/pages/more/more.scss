@@ -1,0 +1,27 @@
+page-more {
+
+    //---- page background
+    .content.content-ios.statusbar-padding {
+      background-color: #EFEFF4;
+    }
+
+
+//----- not signed in styling  
+    .ion-ios-contact:before{
+        font-size: 3em;
+        color: #8e9093;
+
+        // background-color: #EFEFF4;
+
+
+    }
+
+    .ion-ios-arrow-forward:before {
+        font-size: 1.4em;
+        color: #cccccc;
+
+    }
+
+
+}
+
