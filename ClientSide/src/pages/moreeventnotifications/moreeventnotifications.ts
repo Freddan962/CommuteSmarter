@@ -16,9 +16,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class MoreeventnotificationsPage {
 
   notificationSettings: any;
+  notificationDistance: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
+  
+    this.notificationDistance = 1;
     this.notificationSettings = [
       {name: 'Road Work', ngModel: 'roadWorks', color: 'red'},
       {name: 'Critical Obstacle', ngModel: 'criticalObstacle', color: 'red'},
@@ -30,5 +32,9 @@ export class MoreeventnotificationsPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MoreeventnotificationsPage');
+  }
+
+  onNotificationDistanceChange() {
+    console.log("Distance changed to: " + this.notificationDistance);
   }
 }
