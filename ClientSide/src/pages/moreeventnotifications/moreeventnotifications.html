@@ -31,8 +31,8 @@
               </ion-row>
               <ion-row>
   
-                  <ion-item>
-                    <ion-range col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">  
+                  <ion-item id="notificationrange-item">
+                    <ion-range id="notificationsrange-range" col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">  
                       <ion-label range-left>
                           <ion-badge item-end>{{notificationDistance}}</ion-badge>
                       </ion-label>
