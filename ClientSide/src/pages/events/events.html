@@ -14,9 +14,22 @@
 
 
 <ion-content padding>
-  <ion-list>
-      <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+  <ion-list class="accordion-list">
+    <div ion-item *ngFor="let item of items; let i = index">
+      <ion-avatar item-start>
+        <ion-icon name="leaf" item-start></ion-icon>
+      </ion-avatar>
+      <div (click)="itemSelected(item)">
         {{ item.text }}
-      </button>  
+        <p>30min 1.9km</p>
+        <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
+        <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
+      </div>
+
+      <div class="accordion-content" *ngIf="item.accordionOpen">
+        <p>Description text for event and incident, very long text. Some more.</p>
+        <button>Share this event</button>
+      </div>
+    </div>  
   </ion-list>
 </ion-content>

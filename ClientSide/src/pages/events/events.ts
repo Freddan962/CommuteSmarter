@@ -20,7 +20,8 @@ export class EventsPage {
     for(let i = 0; i < 3 ; i++){
       this.items.push({
         text: 'item' + i,
-        id: i
+        id: i,
+        accordionOpen: false
       });
     }
 
@@ -31,7 +32,8 @@ export class EventsPage {
     console.log('ionViewDidLoad EventsPage');
   }
 
-  itemSelected(items){
-    alert(items.text);
+  itemSelected(item){
+    console.log(item);
+    item.accordionOpen = !item.accordionOpen;
   }
 }
