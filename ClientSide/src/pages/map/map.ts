@@ -30,7 +30,8 @@ export class MapPage {
         lat: 59.329852,
         lng: 18.068461
       },
-      zoom: 13
+      zoom: 13,
+	  disableDefaultUI: true
     });
   }
 }
