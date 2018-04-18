@@ -15,14 +15,9 @@
 
 <ion-content padding>
     <ion-list radio-group [(ngModel)]="languages">  
-        <ion-item>
-          <ion-label>English</ion-label>
-          <ion-radio value="english"></ion-radio>
-        </ion-item>
-      
-        <ion-item>
-          <ion-label>Svenska</ion-label>
-          <ion-radio value="svenska"></ion-radio>
-        </ion-item>
-      </ion-list>
+      <ion-item *ngFor="let language of languages">
+        <ion-label>{{language.name}}</ion-label>
+        <ion-radio value="language.name"></ion-radio>
+      </ion-item>
+    </ion-list>
 </ion-content>
