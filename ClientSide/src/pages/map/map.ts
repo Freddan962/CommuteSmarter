@@ -11,6 +11,7 @@ declare var google;
 
 export class MapPage {
 
+  // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
