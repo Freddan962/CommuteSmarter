@@ -31,7 +31,12 @@ export class MapPage {
         lng: 18.068461
       },
       zoom: 13,
-	  disableDefaultUI: true
+      disableDefaultUI: true
     });
+  }
+
+  centerMapToLocation() {
+    console.log('Called re center');
+    this.map.setCenter();
   }
 }
