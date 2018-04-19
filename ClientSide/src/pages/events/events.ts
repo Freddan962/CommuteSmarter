@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+
 /**
  * Generated class for the EventsPage page.
  *
@@ -35,5 +36,9 @@ export class EventsPage {
   itemSelected(item){
     console.log(item);
     item.accordionOpen = !item.accordionOpen;
+  }
+
+  bntClick() {
+ 
   }
 }

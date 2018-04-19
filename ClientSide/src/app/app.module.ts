@@ -14,7 +14,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 
-
 @NgModule({
   declarations: [
     MyApp,
@@ -23,7 +22,7 @@ import { HttpModule } from '@angular/http';
     MorePage,
     TabsPage,
     MoreeventnotificationsPage,
-    MorelanguagePage
+    MorelanguagePage 
   ],
   imports: [
     BrowserModule,
