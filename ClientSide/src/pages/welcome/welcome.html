@@ -17,15 +17,21 @@
       </ion-row>
 
       <ion-row>
-        <p>Please select your prefered language.</p>
+        <ion-col>
+          <p style="text-align:center">Please select your prefered language.</p>
+        </ion-col>
       </ion-row>
 
-      <ion-list radio-group [(ngModel)]="languages">  
-        <ion-item *ngFor="let language of languages">
-          <ion-label>{{language.name}}</ion-label>
-          <ion-radio value="language.name"></ion-radio>
-        </ion-item>
-      </ion-list>
+      <ion-row>
+        <ion-col>
+          <ion-list radio-group [(ngModel)]="languages">  
+            <ion-item *ngFor="let language of languages">
+              <ion-label>{{language.name}}</ion-label>
+              <ion-radio value="language.name"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-slide>
 

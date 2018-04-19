@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
+import { LanguageService } from './../../app/services/LanguageService';
 
 /**
  * Generated class for the WelcomePage page.
@@ -16,14 +17,22 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 export class WelcomePage {
   @ViewChild(Slides) slides : Slides;
   features: any;
+  languages: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
+  languageService: LanguageService;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService) {
+    this.languageService = LanguageService;
+
     this.features = [
       {name: 'Map Overview', icon: 'globe', description: 'Scroll and press current events to get a more in-depth description.'},
       {name: 'Events List', icon: 'information-circle', description: 'Detailed list of all events within your range. Report an ongoing event.'},
       {name: 'More', icon: 'ios-more', description: 'Adjust your notification preferences and register to unlock reporting feature.'}
     ]
+  }
+
+  ngOnInit() {
+    this.languages = this.languageService.getLanguages();    
   }
 
   ngAfterViewInit() {
