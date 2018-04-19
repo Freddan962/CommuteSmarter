@@ -8,7 +8,6 @@
 </ion-header>
 
 <ion-content no-padding>
-  <div #map id="map"></div>
   <ion-fab top right edge id="filters">
     <button ion-fab mini><ion-icon name="cog"></ion-icon></button>
     <ion-fab-list side="left">
@@ -18,4 +17,14 @@
   <ion-fab top right edge id="center-location">
     <button ion-fab mini (click)="centerMapToLocation()"><ion-icon name="navigate"></ion-icon></button>
   </ion-fab>
+
+  <div id="map-event-information" *ngIf="displayMapEventCard">
+    <div id="toggle-handle">&nbsp;</div>
+    <button (click)="closeMapEventInfo()" id="close-map-event"><ion-icon name="close-circle"></ion-icon></button>
+    <h2>Car Crash</h2>
+    <p>Reported 30min ago | 1,9km</p>
+    <p>Yes, this is a lot of text that serve as a placeholder... More of the text.</p>
+    <button ion-button block>Share this event</button>
+  </div>
+  <div #map id="map"></div>
 </ion-content>

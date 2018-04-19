@@ -14,8 +14,10 @@ export class MapPage {
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  displayMapEventCard: boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.displayMapEventCard = true;
   }
 
   ionViewDidLoad() {
@@ -38,5 +40,9 @@ export class MapPage {
   centerMapToLocation() {
     console.log('Called re center');
     this.map.setCenter();
+  }
+
+  closeMapEventInfo() {
+    this.displayMapEventCard = false;
   }
 }
