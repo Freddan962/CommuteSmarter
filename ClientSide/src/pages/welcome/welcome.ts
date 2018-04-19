@@ -37,10 +37,16 @@ export class WelcomePage {
 
   ngAfterViewInit() {
     this.slides.lockSwipeToNext(true);
+    this.slides.paginationClickable = false;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WelcomePage');
   }
 
+  onNextClick() {
+    this.slides.lockSwipeToNext(false);
+    this.slides.slideNext();
+    this.slides.lockSwipeToNext(true);
+  }
 }
