@@ -46,6 +46,9 @@ export class WelcomePage {
   }
 
   onNextClick() {
+    if (this.selectedLanguage == null)
+      return;
+
     this.slides.lockSwipeToNext(false);
     this.slides.slideNext();
     this.slides.lockSwipeToNext(true);
