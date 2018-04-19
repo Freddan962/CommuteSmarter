@@ -1,5 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+import { WelcomePage } from './../welcome/welcome';
 
 declare var google;
 
@@ -13,9 +15,17 @@ export class MapPage {
 
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
+  navController: NavController;
+  storageService: Storage;
   map: any;
+  alwaysShowWelcomePage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public Storage: Storage) {
+    this.navController = navCtrl;
+    this.storageService = Storage;
+    this.alwaysShowWelcomePage = false;
+  
+    this.handleWelcomeScreen();
   }
 
   ionViewDidLoad() {
@@ -33,5 +43,20 @@ export class MapPage {
       zoom: 13,
 	  disableDefaultUI: true
     });
+  }
+
+  handleWelcomeScreen() {
+    if (this.alwaysShowWelcomePage)
+      this.showWelcomeScreen();
+
+    this.storageService.get('finalizedWelcome').then((state) => {
+      if (!state) {
+        this.showWelcomeScreen();
+      }
+    });
+  }
+
+  showWelcomeScreen() {
+    this.navCtrl.push(WelcomePage);
   }
 }

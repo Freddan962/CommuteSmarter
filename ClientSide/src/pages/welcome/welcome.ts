@@ -25,13 +25,11 @@ export class WelcomePage {
   features: any;
   languages: any[];
   selectedLanguage: any;
-  alwaysShowPage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService, public StorageService: Storage) {
     this.navController = navCtrl;
     this.languageService = LanguageService;
     this.storageService = StorageService;
-    this.alwaysShowPage = false;
 
     this.features = [
       {name: 'Map Overview', icon: 'globe', description: 'Scroll and press current events to get a more in-depth description.'},
@@ -52,17 +50,6 @@ export class WelcomePage {
   goToNextPage() {
     this.storageService.set('finalizedWelcome', true);
     this.navController.push(MapPage);
-  }
-
-  ionViewDidLoad() {
-    if (this.alwaysShowPage)
-      return;
-
-    this.storageService.get('finalizedWelcome').then((state) => {
-      if (state) {
-        this.goToNextPage();
-      }
-    });
   }
 
   onNextClick() {
