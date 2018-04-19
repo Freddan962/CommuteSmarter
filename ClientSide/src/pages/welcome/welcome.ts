@@ -17,9 +17,10 @@ import { LanguageService } from './../../app/services/LanguageService';
 export class WelcomePage {
   @ViewChild(Slides) slides : Slides;
   features: any;
-  languages: any;
-
+  languages: any[];
   languageService: LanguageService;
+
+  selectedLanguage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService) {
     this.languageService = LanguageService;
@@ -48,5 +49,10 @@ export class WelcomePage {
     this.slides.lockSwipeToNext(false);
     this.slides.slideNext();
     this.slides.lockSwipeToNext(true);
+    this.slides.paginationClickable = false;
+  }
+
+  onLanguageSelect(language) {
+    this.selectedLanguage = language;
   }
 }
