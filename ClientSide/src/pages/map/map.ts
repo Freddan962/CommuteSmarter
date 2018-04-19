@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 declare var google;
 
@@ -17,7 +18,7 @@ export class MapPage {
   displayMapEventCard: boolean;
   mapEventInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private socialSharing: SocialSharing) {
     this.displayMapEventCard = false;
   }
 
@@ -34,7 +35,8 @@ export class MapPage {
         lng: 18.068461
       },
       zoom: 13,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      clickableIcons: false
     });
   }
 
@@ -54,6 +56,10 @@ export class MapPage {
     }
 
     this.displayMapEventCard = true;
+  }
+
+  shareEvent() {
+    this.socialSharing.share('Subject ja','Message ja');
   }
 
   closeMapEventInfo() {
