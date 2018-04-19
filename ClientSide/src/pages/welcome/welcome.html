@@ -23,10 +23,10 @@
     <ion-row>
       <ion-col col-12>
         <ion-list>
-          <ion-item class="item-text-wrap" *ngFor="let feature of features">
+          <ion-item *ngFor="let feature of features">
             <ion-icon name="{{feature.icon}}" item-start></ion-icon>
             <b>{{feature.name}}</b>
-            <p>{{feature.description}}</p>
+            <p class="feature-text">{{feature.description}}</p>
           </ion-item>
         </ion-list>
       </ion-col>
