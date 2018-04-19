@@ -20,9 +20,9 @@ export class WelcomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   
     this.features = [
-      {name: 'Map Overview', icon: 'globe', description: 'Scroll and press current events to get a more in-depth description'},
+      {name: 'Map Overview', icon: 'globe', description: 'Scroll and press current events to get a more in-depth description.'},
       {name: 'Events List', icon: 'information-circle', description: 'Detailed list of all events within your range. Report an ongoing event.'},
-      {name: 'More', icon: 'ios-more', description: 'Adjust your notification preferences and register to unlock reporting feature'}
+      {name: 'More', icon: 'ios-more', description: 'Adjust your notification preferences and register to unlock reporting feature.'}
     ]
   }
 
