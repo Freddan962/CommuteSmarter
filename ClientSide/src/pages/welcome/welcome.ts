@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { LanguageService } from './../../app/services/LanguageService';
+import { Storage } from '@ionic/storage';
+import { MapPage } from './../map/map';
 
 /**
  * Generated class for the WelcomePage page.
@@ -16,14 +18,20 @@ import { LanguageService } from './../../app/services/LanguageService';
 })
 export class WelcomePage {
   @ViewChild(Slides) slides : Slides;
+  languageService: LanguageService;
+  storageService: Storage;
+  navController: NavController;
+
   features: any;
   languages: any[];
-  languageService: LanguageService;
-
   selectedLanguage: any;
+  alwaysShowPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService, public StorageService: Storage) {
+    this.navController = navCtrl;
     this.languageService = LanguageService;
+    this.storageService = StorageService;
+    this.alwaysShowPage = false;
 
     this.features = [
       {name: 'Map Overview', icon: 'globe', description: 'Scroll and press current events to get a more in-depth description.'},
@@ -41,8 +49,20 @@ export class WelcomePage {
     this.slides.paginationClickable = false;
   }
 
+  goToNextPage() {
+    this.storageService.set('finalizedWelcome', true);
+    this.navController.push(MapPage);
+  }
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WelcomePage');
+    if (this.alwaysShowPage)
+      return;
+
+    this.storageService.get('finalizedWelcome').then((state) => {
+      if (state) {
+        this.goToNextPage();
+      }
+    });
   }
 
   onNextClick() {
