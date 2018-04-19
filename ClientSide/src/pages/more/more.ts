@@ -11,7 +11,7 @@ import { MorelanguagePage } from '../morelanguage/morelanguage';
 export class MorePage {
 
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController,) {
 
     const signedIn = false;
 
@@ -20,7 +20,7 @@ export class MorePage {
 
 
   if(signedIn){
-    
+
   }
 
   openNotificationModal() {

@@ -4,6 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { EventsPage} from '../pages/events/events';
+import { EventsReportPage } from '../pages/eventsreport/eventsreport';
+import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
+
+
 import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
@@ -13,6 +17,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
+import { Camera } from '@ionic-native/camera';
+
 
 
 @NgModule({
@@ -22,6 +28,8 @@ import { HttpModule } from '@angular/http';
     MapPage,
     MorePage,
     TabsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MoreeventnotificationsPage,
     MorelanguagePage
   ],
@@ -34,6 +42,8 @@ import { HttpModule } from '@angular/http';
   entryComponents: [
     MyApp,
     EventsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MapPage,
     MorePage,
     TabsPage,
@@ -43,6 +53,7 @@ import { HttpModule } from '@angular/http';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

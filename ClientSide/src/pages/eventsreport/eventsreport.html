@@ -1,0 +1,61 @@
+<!--
+  Generated template for the EventsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Report incident</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+        <ion-list no-lines >
+          <ion-item ><a ion-item (click)="openReportTypeModal()">
+            Type of event
+            <span class="mandatory">*</span>
+          </a>
+        </ion-item>
+
+        <ion-item no-lines>
+          <a ion-item (click)="openModal()">
+            Choose location
+            <span class="mandatory">*</span>
+          </a>
+        </ion-item>
+         
+          </ion-list>
+
+        
+
+          <ion-item no-lines>
+            <ion-label floating class="report-desc-title">Describe the event</ion-label>
+        <ion-textarea #myInput id="myInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="model"></ion-textarea>
+            <!-- <ion-textarea id="reportInput" class="report-desc" placeholder="Describe the event..."></ion-textarea> -->
+          </ion-item>
+
+      <ion-grid padding>
+          <ion-row>
+            <ion-col col-6>
+              <button ion-button round outline icon-start>
+              <ion-icon name='camera' is-active="false"></ion-icon>
+              Add photo/video
+            </button>
+          </ion-col>
+          </ion-row>
+        </ion-grid>
+
+         
+
+
+    
+     
+ 
+
+  <button ion-button full no-lines (click)="takePhoto(1)" >Send report</button>
+</ion-content>

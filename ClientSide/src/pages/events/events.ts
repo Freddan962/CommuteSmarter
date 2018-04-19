@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EventsReportPage } from '../eventsreport/eventsreport';
 
 /**
  * Generated class for the EventsPage page.
@@ -36,4 +37,11 @@ export class EventsPage {
     console.log(item);
     item.accordionOpen = !item.accordionOpen;
   }
+
+
+  openReportPage() {
+    this.navCtrl.push(EventsReportPage);
+  }
+
+
 }
