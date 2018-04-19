@@ -32,17 +32,16 @@ export class PositionselectorPage {
       disableDefaultUI: true,
     });
 
-    var marker = null;
-  
+    //TODO: Set this to whatever is the current location
+    var marker = null; 
+    
     map.addListener('click', function(e) {
       var lat = e.latLng.lat();
       var lng = e.latLng.lng();
 
-      if (marker) {
-        console.log("Attempting to destroy marker");
+      if (marker) 
         marker.setMap(null);
-      }
-
+      
       marker = new google.maps.Marker({
         map: map,
         draggable: false,
