@@ -15,10 +15,11 @@ export class MapPage {
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  socialSharing: SocialSharing;
   displayMapEventCard: boolean;
   mapEventInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private socialSharing: SocialSharing) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.displayMapEventCard = false;
   }
 
