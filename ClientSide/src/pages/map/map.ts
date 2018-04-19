@@ -15,9 +15,10 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   displayMapEventCard: boolean;
+  mapEventInfo: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.displayMapEventCard = true;
+    this.displayMapEventCard = false;
   }
 
   ionViewDidLoad() {
@@ -42,7 +43,21 @@ export class MapPage {
     this.map.setCenter();
   }
 
+  openMapEventInfo() {
+    console.log('Called open map event info');
+    this.mapEventInfo = {
+      title: 'Car Crash',
+      time: 30,
+      distance: 1.9,
+      unit: 'km',
+      text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
+    }
+
+    this.displayMapEventCard = true;
+  }
+
   closeMapEventInfo() {
+    console.log('Called close map event');
     this.displayMapEventCard = false;
   }
 }
