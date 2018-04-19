@@ -5,10 +5,13 @@ page-map {
   #filters {
     top: 0px;
   }
-  #filters ion-icon {
+  #filters ion-icon, #center-location ion-icon {
     color: #000;
   }
-  #filters button  {
+  #filters button, #center-location button {
     background-color: #fff;
+  }
+  #center-location {
+    top: 50px;
   }
 }
