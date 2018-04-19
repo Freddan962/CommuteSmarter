@@ -20,8 +20,9 @@ export class MorelanguagePage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     
     this.languages = [
-      {name: 'Svenska'},
-      {name: 'English'}
+	  {name: 'English'},
+      {name: 'Svenska'}
+     
     ];
   }
 
