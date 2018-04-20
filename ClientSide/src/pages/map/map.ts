@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { WelcomePage } from './../welcome/welcome';
 
 declare var google;
 
@@ -13,9 +14,11 @@ export class MapPage {
 
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
+  navController: NavController;
   map: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
   }
 
   ionViewDidLoad() {
