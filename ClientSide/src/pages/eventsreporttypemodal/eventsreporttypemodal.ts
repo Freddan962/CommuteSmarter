@@ -1,13 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 
-/**
- * Generated class for the EventsreporttypemodalPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
   @Component({
     templateUrl: 'eventsreporttypemodal.html'
@@ -22,25 +15,15 @@ export class EventsreporttypemodalPage {
     public viewCtrl: ViewController,
     params: NavParams
 
-  ) {
-    this.myParam = params.get('myParam');
+  ) 
+  {
+    //Use this to pass params to the modal when implementing logic
+    // this.myParam = params.get('myParam');
   }
   
-
-
-
- 
-
   dismiss() {
     this.viewCtrl.dismiss();
   }
-
-
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EventsreporttypemodalPage');
-  }
-
 }
 
 

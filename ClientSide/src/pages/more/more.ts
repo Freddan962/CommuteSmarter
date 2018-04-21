@@ -11,32 +11,32 @@ import { MorelanguagePage } from '../morelanguage/morelanguage';
 export class MorePage {
 
 
-  constructor(public navCtrl: NavController,) {
-
+  constructor(public navCtrl: NavController) {
     const signedIn = false;
-
   }
 
 
-
-  if(signedIn){
-
-  }
-
-  openNotificationModal() {
-    this.navCtrl.push(MoreeventnotificationsPage);
-  }
-
-  openLanguageModal() {
-    this.navCtrl.push(MorelanguagePage);
-    // myModal.present();
-  }
-
+//For future register/profile/login-UI
+  // if(signedIn){
+  // }
 
 //   checkLoginState() {
 //   FB.getLoginStatus(function (response) {
 //     statusChangeCallback(response);
 //   });
 // }
+
+//Open Notification page
+  openNotificationModal() {
+    this.navCtrl.push(MoreeventnotificationsPage);
+  }
+
+  //Open Language page
+  openLanguageModal() {
+    this.navCtrl.push(MorelanguagePage);
+  }
+
+
+
 
 }
