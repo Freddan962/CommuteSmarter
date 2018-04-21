@@ -39,9 +39,11 @@ export class EventsPage {
   }
 
 
-  openReportPage() {
-    this.navCtrl.push(EventsReportPage);
-  }
+
+  //Use this code to link events-page with events-report page
+  // openReportPage() {
+  //   this.navCtrl.push(EventsReportPage);
+  // }
 
 
 }

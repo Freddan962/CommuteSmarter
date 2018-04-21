@@ -11,9 +11,10 @@ import { Camera } from '@ionic-native/camera';
   imports: [
     IonicPageModule.forChild(EventsReportPage),
   ],
-  providers:[
+  providers: [
     Camera
   ]
-  
+
 })
 export class EventsReportPageModule {}
+
