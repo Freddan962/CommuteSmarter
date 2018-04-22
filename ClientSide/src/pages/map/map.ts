@@ -17,10 +17,12 @@ export class MapPage {
   map: any;
   socialSharing: SocialSharing;
   displayMapEventCard: boolean;
+  animateEventCard: string;
   mapEventInfo: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.displayMapEventCard = false;
+    this.animateEventCard = 'reveal';
   }
 
   ionViewDidLoad() {
@@ -65,6 +67,11 @@ export class MapPage {
 
   closeMapEventInfo() {
     console.log('Called close map event');
-    this.displayMapEventCard = false;
+    this.animateEventCard = 'fadeAway';
+
+    setTimeout(()=>{
+      this.displayMapEventCard = false;
+      this.animateEventCard = 'reveal';
+    }, 1000);
   }
 }

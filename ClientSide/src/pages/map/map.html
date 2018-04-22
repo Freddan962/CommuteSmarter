@@ -19,7 +19,7 @@
     <button ion-fab mini (click)="centerMapToLocation()"><ion-icon name="navigate"></ion-icon></button>
   </ion-fab>
 
-  <div id="map-event-information" *ngIf="displayMapEventCard" on-swipe-down="closeMapEventInfo()">
+  <div id="map-event-information" class="{{animateEventCard}}" *ngIf="displayMapEventCard" on-swipe-down="closeMapEventInfo()">
     <div id="handle-wrapper">
       <div id="toggle-handle">&nbsp;</div>
     </div>
