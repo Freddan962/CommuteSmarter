@@ -69,7 +69,7 @@ export class MapPage {
     console.log('Called close map event');
     this.animateEventCard = 'fadeAway';
 
-    setTimeout(()=>{
+    setTimeout(()=> {
       this.displayMapEventCard = false;
       this.animateEventCard = 'reveal';
     }, 1000);
