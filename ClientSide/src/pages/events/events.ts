@@ -9,6 +9,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EventsPage {
   items: any[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventService) {
     this.items = eventService.getEvents();
     console.log(this.items);
@@ -21,5 +22,9 @@ export class EventsPage {
   itemSelected(item){
     console.log(item);
     item.accordionOpen = !item.accordionOpen;
+  }
+
+  bntClick() {
+ 
   }
 }

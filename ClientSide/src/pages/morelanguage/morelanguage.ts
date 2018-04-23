@@ -15,7 +15,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MorelanguagePage {
 
+  languages: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+    
+    this.languages = [
+      {name: 'Svenska'},
+      {name: 'English'}
+    ];
   }
 
   ionViewDidLoad() {
