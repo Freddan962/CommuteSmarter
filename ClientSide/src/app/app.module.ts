@@ -5,6 +5,10 @@ import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { EventsPage} from '../pages/events/events';
+import { EventsReportPage } from '../pages/eventsreport/eventsreport';
+import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
+
+
 import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
@@ -15,6 +19,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { HttpModule } from '@angular/http';
+import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core/'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -24,6 +29,9 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/translations/", ".json");
 }
 
+import { SocialSharing } from '@ionic-native/social-sharing';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -31,6 +39,8 @@ export function createTranslateLoader(http: HttpClient) {
     MapPage,
     MorePage,
     TabsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
     WelcomePage
@@ -53,6 +63,8 @@ export function createTranslateLoader(http: HttpClient) {
   entryComponents: [
     MyApp,
     EventsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MapPage,
     MorePage,
     TabsPage,
@@ -63,6 +75,8 @@ export function createTranslateLoader(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
+    Camera,
     LanguageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
