@@ -18,7 +18,7 @@ export class EventsPage {
   items: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.items = [];
-    for(let i = 0; i < 100 ; i++){
+    for(let i = 0; i < 30 ; i++){
       this.items.push({
         text: 'item' + i,
         id: i,
