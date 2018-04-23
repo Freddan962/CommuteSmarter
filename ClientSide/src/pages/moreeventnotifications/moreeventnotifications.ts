@@ -77,15 +77,20 @@ export class MoreeventnotificationsPage {
     })
 
     this.loadNotificationStates();
+    this.updateNotificationState();
   }
 
-  notificationSettingValueChanged(name, state) {
+  onNotificationSettingValueChange(name, state) {
     this.updateNotificationState();
     this.storage.set(name, state);
   }
 
   onNotificationDistanceChange() {
     this.storage.set('notificationDistance', this.notificationDistance);
+  }
+
+  onNotificationChange() {
+    this.notifications ? this.setNotificationStates(true) : this.setNotificationStates(false);
   }
 
   loadNotificationStates() {
@@ -111,5 +116,11 @@ export class MoreeventnotificationsPage {
     });
 
     this.notifications = state;
+  }
+
+  setNotificationStates(state) {
+    this.notificationSettings.forEach(setting => {
+      setting.ngModel = state;
+    });
   }
 }
