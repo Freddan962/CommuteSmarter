@@ -26,7 +26,6 @@ export class MoreeventnotificationsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage) {
     this.storage = storageService;
-    this.notificationDistance = 1;
 
     this.notifications = true;
     this.notificationState = {
@@ -70,6 +69,13 @@ export class MoreeventnotificationsPage {
       }
     ];
 
+    this.storage.get('notificationDistance').then((distance) => {
+      if (distance == undefined)
+        distance = 1;
+
+      this.notificationDistance = distance;
+    })
+
     this.loadNotificationStates();
   }
 
@@ -79,7 +85,7 @@ export class MoreeventnotificationsPage {
   }
 
   onNotificationDistanceChange() {
-    console.log("Distance changed to: " + this.notificationDistance);
+    this.storage.set('notificationDistance', this.notificationDistance);
   }
 
   loadNotificationStates() {
