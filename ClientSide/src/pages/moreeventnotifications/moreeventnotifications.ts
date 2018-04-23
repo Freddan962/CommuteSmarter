@@ -27,7 +27,7 @@ export class MoreeventnotificationsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage) {
     this.storage = storageService;
 
-    this.notifications = true;
+    //Contains all the states for the different notification settings
     this.notificationState = {
       roadWork: true,
       criticalObstacle: true,
@@ -36,6 +36,13 @@ export class MoreeventnotificationsPage {
       trafficJam: true
     }
 
+    /** 
+     * Represents data for all the different notification settings     
+     * Name = The visual name.
+     * storageName = The key to store the state in local memory. 
+     * ngModel = The variable used for the notification setting's databinding.
+     * color = The dot color, as defined in the app's main scss file.
+    */
     this.notificationSettings = [
       {
         name: 'Road Work', 
@@ -69,6 +76,7 @@ export class MoreeventnotificationsPage {
       }
     ];
 
+    //Loads the slider's notification distance
     this.storage.get('notificationDistance').then((distance) => {
       if (distance == undefined)
         distance = 1;
@@ -76,23 +84,57 @@ export class MoreeventnotificationsPage {
       this.notificationDistance = distance;
     })
 
+    //Prepare states locally for buttons
     this.loadNotificationStates();
     this.updateNotificationState();
   }
 
+  /**
+   * onNotificationSettingValueChange()
+   * 
+   * Function gets called when one of the notification settin's value changes.
+   * 
+   * @param {any} name The storageName of the setting.
+   * @param {any} state The new state for the setting.
+   * @memberof MoreeventnotificationsPage
+   */
   onNotificationSettingValueChange(name, state) {
     this.updateNotificationState();
     this.storage.set(name, state);
   }
 
+  /**
+   * onNotificationDistanceChange()
+   * 
+   * Function gets called when the distance slider's value changes.
+   * Stores the new value locally. 
+   * 
+   * @memberof MoreeventnotificationsPage
+   */
   onNotificationDistanceChange() {
     this.storage.set('notificationDistance', this.notificationDistance);
   }
 
+  /**
+   * onNotificationChange()
+   *   
+   * Function gets called when notification's view bound value is changed.
+   * Enables/disables all subsettings depending on new state.
+   * 
+   * @memberof MoreeventnotificationsPage
+   */
   onNotificationChange() {
     this.notifications ? this.setNotificationStates(true) : this.setNotificationStates(false);
   }
 
+  /**
+   * loadNotificationStates()
+   * 
+   * Loads the local stored state for the different notification settings
+   * and assigns correct state values in memory.
+   *  
+   * @memberof MoreeventnotificationsPage
+   */
   loadNotificationStates() {
     this.notificationSettings.forEach(setting => {
       this.storage.get(setting.storageName).then((state) => {
@@ -107,6 +149,17 @@ export class MoreeventnotificationsPage {
     });
   }
 
+  /**
+   * updateNotificationState()
+   * 
+   * Updates main notification toggler state 
+   * based on all the notification settings' states.
+   * 
+   * E.g if all other settings are active, a call to this function will 
+   * result in activation and if not it will become inactive.
+   * 
+   * @memberof MoreeventnotificationsPage
+   */
   updateNotificationState() {
     let state = true;
     this.notificationSettings.forEach(setting => {
@@ -118,6 +171,15 @@ export class MoreeventnotificationsPage {
     this.notifications = state;
   }
 
+  /**
+   * setNotificationStates()
+   * 
+   * Sets the notification state for all notification settings.
+   * 
+   * @param {any} state The state to set the notification to. 
+   *                    True for active, false for inactive.
+   * @memberof MoreeventnotificationsPage
+   */
   setNotificationStates(state) {
     this.notificationSettings.forEach(setting => {
       setting.ngModel = state;
