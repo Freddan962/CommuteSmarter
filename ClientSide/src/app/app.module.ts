@@ -5,6 +5,10 @@ import { MyApp } from './app.component';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { EventsPage} from '../pages/events/events';
+import { EventsReportPage } from '../pages/eventsreport/eventsreport';
+import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
+
+
 import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
@@ -15,7 +19,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { HttpModule } from '@angular/http';
+import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
+
 
 
 @NgModule({
@@ -25,6 +31,8 @@ import { LanguageService } from './services/LanguageService';
     MapPage,
     MorePage,
     TabsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
     WelcomePage
@@ -39,6 +47,8 @@ import { LanguageService } from './services/LanguageService';
   entryComponents: [
     MyApp,
     EventsPage,
+    EventsReportPage,
+    EventsreporttypemodalPage,
     MapPage,
     MorePage,
     TabsPage,
@@ -49,6 +59,7 @@ import { LanguageService } from './services/LanguageService';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     LanguageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
