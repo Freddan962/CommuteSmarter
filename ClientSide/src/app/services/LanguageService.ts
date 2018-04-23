@@ -7,12 +7,20 @@ export class LanguageService {
 
   constructor() { 
     this.languages = [
-      {id: 'sv', name: 'Svenska'},
-      {id: 'en', name: 'English'}
+      {id: 'en', name: 'English'},
+      {id: 'sv', name: 'Svenska'}
     ];
   }
 
   getLanguages() {
     return this.languages;
+  }
+
+  getLanguageIDs() {
+    let ids = [];
+    this.languages.forEach(language => {
+      ids.push(language.id);
+    });
+    return ids;
   }
 }
