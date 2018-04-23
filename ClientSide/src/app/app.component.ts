@@ -22,11 +22,6 @@ export class MyApp {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = true;
 
-    let languageIDs = language.getLanguageIDs();
-    translate.addLangs(languageIDs);
-    translate.setDefaultLang(languageIDs[0]);
-    translate.use(languageIDs[0]);
-
     platform.ready().then(() => {
       this.handleWelcomeScreen();
  
