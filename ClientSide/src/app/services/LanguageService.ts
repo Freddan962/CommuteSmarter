@@ -7,8 +7,8 @@ export class LanguageService {
 
   constructor() { 
     this.languages = [
-      {name: 'Svenska'},
-      {name: 'English'}
+      {id: 'sv', name: 'Svenska'},
+      {id: 'en', name: 'English'}
     ];
   }
 
