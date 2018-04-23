@@ -28,7 +28,7 @@ export class WelcomePage {
 
   features: any;
   languages: any[];
-  selectedLanguage: any;
+  hasSelectedLanguage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService, public StorageService: Storage, public translateService: TranslateService) {
     this.navController = navCtrl;
@@ -41,6 +41,8 @@ export class WelcomePage {
       {name: 'List', icon: 'information-circle', description: 'Detailed list of all events within your range. Report an ongoing event.'},
       {name: 'More', icon: 'ios-more', description: 'Adjust your notification preferences and register to unlock reporting feature.'}
     ]
+
+    this.hasSelectedLanguage = false;
   }
 
   ngOnInit() {
@@ -58,7 +60,7 @@ export class WelcomePage {
   }
 
   onNextClick() {
-    if (this.selectedLanguage == null)
+    if (!this.hasSelectedLanguage)
       return;
 
     this.slides.lockSwipeToNext(false);
@@ -68,8 +70,8 @@ export class WelcomePage {
   }
 
   onLanguageSelect(language) {
-    this.selectedLanguage = language;
-    console.log("Using language " + language);
+    this.languageService.setLanguage(language);
+    this.hasSelectedLanguage = true;
     this.translate.use(language);
   }
 }
