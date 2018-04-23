@@ -15,16 +15,13 @@ import { WelcomePage } from '../pages/welcome/welcome';
 })
 export class MyApp {
   storageService: Storage;
-  rootPage:any = MapPage;
+  rootPage:any = TabsPage;
   alwaysShowWelcomePage: any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public Storage: Storage, translate: TranslateService, language: LanguageService) {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = true;
-
     platform.ready().then(() => {
-      this.handleWelcomeScreen();
- 
       statusBar.styleDefault();
       splashScreen.hide();
     });

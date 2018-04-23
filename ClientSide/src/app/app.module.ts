@@ -1,3 +1,4 @@
+import { EventService } from './services/eventService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -30,7 +31,6 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 import { SocialSharing } from '@ionic-native/social-sharing';
-
 
 @NgModule({
   declarations: [
@@ -75,6 +75,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
   providers: [
     StatusBar,
     SplashScreen,
+    EventService,
     SocialSharing,
     Camera,
     LanguageService,

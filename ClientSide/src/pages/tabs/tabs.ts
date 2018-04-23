@@ -1,3 +1,4 @@
+import { ContactPage } from './../contact/contact';
 import { Component } from '@angular/core';
 
 import { MorePage } from '../more/more';
