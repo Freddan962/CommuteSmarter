@@ -12,25 +12,25 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-list class="accordion-list">
     <div ion-item *ngFor="let item of items; let i = index">
       <ion-avatar item-start>
-        <ion-icon name="leaf" item-start></ion-icon>
+        <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
-        {{ item.text }}
-        <p>30min 1.9km</p>
+        {{ item.title + ' - ' + item.location }}
+        <p>{{ item.time + ' ' + item.distance + ' km'}}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
       </div>
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
-        <p>Description text for event and incident, very long text. Some more.</p>
-        <button ion-button color=default (click)="shareEvent(item)">Share</button>
+        <p>{{item.description}}</p>
+        <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
       </div>
     </div>
      <button ion-item (click)="openReportPage()">Report Incident</button>
   </ion-list>
+  <button  id="report-event" ion-button block (click)="bntClick">Report an event</button>
 </ion-content>

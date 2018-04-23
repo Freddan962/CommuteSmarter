@@ -1,3 +1,4 @@
+import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
@@ -12,18 +13,9 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 
 export class EventsPage {
   items: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    private socialSharing: SocialSharing) {
-    this.items = [];
-    for(let i = 0; i < 3 ; i++){
-      this.items.push({
-        title: "Title",
-        text: 'item' + i,
-        id: i,
-        accordionOpen: false
-      });
-    }
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventService) {
+    this.items = eventService.getEvents();
     console.log(this.items);
   }
 
