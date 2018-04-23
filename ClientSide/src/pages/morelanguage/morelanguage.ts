@@ -1,3 +1,4 @@
+import { LanguageService } from './../../app/services/LanguageService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -14,16 +15,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'morelanguage.html',
 })
 export class MorelanguagePage {
-
   languages: any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    
-    this.languages = [
-	  {name: 'English'},
-      {name: 'Svenska'}
-     
-    ];
+  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService) {
+    this.languages = LanguageService.getLanguages();
   }
 
   ionViewDidLoad() {
