@@ -58,7 +58,7 @@
                   <ion-label >{{setting.name}}</ion-label>
                 </ion-col>
                 <ion-col col-4>
-                  <ion-toggle [(ngModel)]="setting.ngModel" (ngModelChange)="notificationSettingValueChanged(setting.name, setting.ngModel)" [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
+                  <ion-toggle [(ngModel)]="setting.ngModel" (ngModelChange)="notificationSettingValueChanged(setting.storageName, setting.ngModel)" [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
                 </ion-col>
               </ion-row>
             </div>

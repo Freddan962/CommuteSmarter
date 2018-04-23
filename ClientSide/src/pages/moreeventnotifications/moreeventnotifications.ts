@@ -22,12 +22,15 @@ export class MoreeventnotificationsPage {
   notificationDistance: any;
   notificationState: any;
 
+  notifications: any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage) {
     this.storage = storageService;
     this.notificationDistance = 1;
 
+    this.notifications = true;
     this.notificationState = {
-      roadWorks: true,
+      roadWork: true,
       criticalObstacle: true,
       roadClosed: true,
       obstacle: true,
@@ -37,26 +40,31 @@ export class MoreeventnotificationsPage {
     this.notificationSettings = [
       {
         name: 'Road Work', 
-        ngModel: this.notificationState.roadWorks, 
+        storageName: 'roadWork',
+        ngModel: this.notificationState.roadWork, 
         color: 'red'
       },
       {
         name: 'Critical Obstacle', 
+        storageName: 'criticalObstacle',
         ngModel: this.notificationState.criticalObstacle, 
         color: 'red'
       },
 	    {
         name: 'Road Closed', 
+        storageName: 'roadClosed',
         ngModel: this.notificationState.roadClosed,
         color: 'red'
       },
       {
         name: 'Obstacle',
+        storageName: 'obstacle',
         ngModel: this.notificationState.obstacle,
         color: 'orange'
       },
       {
         name: 'Traffic Jam', 
+        storageName: 'trafficJam',
         ngModel: this.notificationState.trafficJam, 
         color: 'orange'
       }
@@ -66,6 +74,7 @@ export class MoreeventnotificationsPage {
   }
 
   notificationSettingValueChanged(name, state) {
+    this.updateNotificationState();
     this.storage.set(name, state);
   }
 
@@ -75,12 +84,26 @@ export class MoreeventnotificationsPage {
 
   loadNotificationStates() {
     this.notificationSettings.forEach(setting => {
-      this.storage.get(setting.name).then((state) => {
+      this.storage.get(setting.storageName).then((state) => {
         if (state == undefined)
           return;
+        
+        if (!state)
+          this.notifications = false;
 
         setting.ngModel = state;
       });
     });
+  }
+
+  updateNotificationState() {
+    let state = true;
+    this.notificationSettings.forEach(setting => {
+      if (!setting.ngModel) {
+        state = false;
+      }
+    });
+
+    this.notifications = state;
   }
 }
