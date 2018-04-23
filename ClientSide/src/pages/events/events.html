@@ -12,12 +12,11 @@
 
 </ion-header>
 
-
 <ion-content padding>
   <ion-list class="accordion-list">
     <div ion-item *ngFor="let item of items; let i = index">
       <ion-avatar item-start>
-        <ion-icon name="leaf" item-start></ion-icon>
+        <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
         {{ item.text }}
@@ -32,8 +31,5 @@
       </div>
     </div>  
   </ion-list>
-
-    <button  id="report-event" ion-button block (click)="bntClick">Report an event</button>
-
-  
+  <button  id="report-event" ion-button block (click)="bntClick">Report an event</button>
 </ion-content>

@@ -22,7 +22,8 @@ export class EventsPage {
       this.items.push({
         text: 'item' + i,
         id: i,
-        accordionOpen: false
+        accordionOpen: false,
+        color: 'red'
       });
     }
 
