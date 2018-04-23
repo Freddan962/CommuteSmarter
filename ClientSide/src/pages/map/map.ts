@@ -18,7 +18,6 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   navController: NavController;
   map: any;
-  socialSharing: SocialSharing;
   displayMapEventCard: boolean;
   animateEventCard: string;
   mapEventInfo: any;
