@@ -13,7 +13,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 export class EventsPage {
   items: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private socailSharing: SocialSharing) {
+    private socialSharing: SocialSharing) {
     this.items = [];
     for(let i = 0; i < 3 ; i++){
       this.items.push({
