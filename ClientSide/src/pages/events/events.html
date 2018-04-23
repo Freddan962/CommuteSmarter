@@ -28,9 +28,9 @@
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>Description text for event and incident, very long text. Some more.</p>
-        <button ion-button color=default>Share</button>
+        <button ion-button color=default (click)="shareEvent(item)">Share</button>
       </div>
-    </div>  
+    </div>
      <button ion-item (click)="openReportPage()">Report Incident</button>
   </ion-list>
 </ion-content>

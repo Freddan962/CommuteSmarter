@@ -23,7 +23,8 @@ export class MapPage {
   animateEventCard: string;
   mapEventInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private socialSharing: SocialSharing) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
   }
@@ -65,7 +66,9 @@ export class MapPage {
   }
 
   shareEvent() {
-    this.socialSharing.share('Subject ja','Message ja');
+    console.log("called share event");
+
+    this.socialSharing.share(this.mapEventInfo.title, this.mapEventInfo.text, null, null);
   }
 
   closeMapEventInfo() {
