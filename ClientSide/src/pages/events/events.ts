@@ -1,13 +1,6 @@
+import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-
-/**
- * Generated class for the EventsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -16,17 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class EventsPage {
   items: any[];
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.items = [];
-    for(let i = 0; i < 30 ; i++){
-      this.items.push({
-        text: 'item' + i,
-        id: i,
-        accordionOpen: false,
-        color: 'red'
-      });
-    }
 
+  constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventService) {
+    this.items = eventService.getEvents();
     console.log(this.items);
   }
 

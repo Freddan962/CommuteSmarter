@@ -1,3 +1,4 @@
+import { EventService } from './services/eventService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -42,6 +43,7 @@ import { HttpModule } from '@angular/http';
   providers: [
     StatusBar,
     SplashScreen,
+    EventService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
