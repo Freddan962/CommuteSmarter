@@ -1,3 +1,4 @@
+import { TabsPage } from './../tabs/tabs';
 import { TranslateModule } from '@ngx-translate/core/';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
@@ -53,7 +54,7 @@ export class WelcomePage {
 
   goToNextPage() {
     this.storageService.set('finalizedWelcome', true);
-    this.navController.push(MapPage);
+    this.navController.push(TabsPage);
   }
 
   onNextClick() {
