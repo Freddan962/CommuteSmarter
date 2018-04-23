@@ -1,0 +1,15 @@
+{
+  "Welcome": {
+    "welcomeTitle": "Welcome to",
+    "selectLanguageText": "Please select your prefered language",
+    "nextSlide": "Next",
+    "appDescription": "A great tool for monitoroing traffic and getting an overview of current events affecting your commute.",
+    "goToAppButton": "Take me to the app",
+    "featureMapTitle": "Map Overview",
+    "featureMapDesc": "Scroll and press current events to get a more in-depth description.",
+    "featureListTitle": "Event List",
+    "featureListDesc": "Detailed list of all events within your range. Report an ongoing event.",
+    "featureMoreTitle": "More",
+    "featureMoreDesc": "Adjust your notification preferences and register to unlock reporting feature."
+  }
+}

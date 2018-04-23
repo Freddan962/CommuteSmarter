@@ -1,0 +1,15 @@
+{
+  "Welcome": {
+    "welcomeTitle": "Välkommen till",
+    "selectLanguageText": "Välj språk",
+    "nextSlide": "Fortsätt",
+    "appDescription": "Ett bra verktyg...",
+    "featureMapTitle": "Kartvy",
+    "featureMapDesc": "Skrolla och...",
+    "featureListTitle": "Händelse Lista",
+    "featureListDesc": "Detaljerad lista...",
+    "featureMoreTitle": "Mer",
+    "featureMoreDesc": "Ändra dina notifikationer...",
+    "goToAppButton": "Ta mig till appen"
+  }
+}

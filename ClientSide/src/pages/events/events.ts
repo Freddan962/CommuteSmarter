@@ -1,6 +1,7 @@
 import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { EventsReportPage } from '../eventsreport/eventsreport';
 
 @IonicPage()
 @Component({
@@ -24,7 +25,8 @@ export class EventsPage {
     item.accordionOpen = !item.accordionOpen;
   }
 
-  bntClick() {
- 
-  }
+  //Use this code to link events-page with events-report page
+  // openReportPage() {
+  //   this.navCtrl.push(EventsReportPage);
+  // }
 }
