@@ -14,7 +14,8 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 export class EventsPage {
   items: any[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     public eventService: EventService, private socialSharing: SocialSharing) {
     this.items = eventService.getEvents();
     console.log(this.items);
   }
