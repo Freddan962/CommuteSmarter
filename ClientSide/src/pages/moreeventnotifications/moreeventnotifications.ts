@@ -1,3 +1,4 @@
+import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,12 +16,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class MoreeventnotificationsPage {
 
+  storage: any;
+
   notificationSettings: any;
   notificationDistance: any;
   notificationState: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage) {
+    this.storage = storageService;
     this.notificationDistance = 1;
 
     this.notificationState = {
@@ -58,13 +61,26 @@ export class MoreeventnotificationsPage {
         color: 'orange'
       }
     ];
+
+    this.loadNotificationStates();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MoreeventnotificationsPage');
+  notificationSettingValueChanged(name, state) {
+    this.storage.set(name, state);
   }
 
   onNotificationDistanceChange() {
     console.log("Distance changed to: " + this.notificationDistance);
+  }
+
+  loadNotificationStates() {
+    this.notificationSettings.forEach(setting => {
+      this.storage.get(setting.name).then((state) => {
+        if (state == undefined)
+          return;
+
+        setting.ngModel = state;
+      });
+    });
   }
 }
