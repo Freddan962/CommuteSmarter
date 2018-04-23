@@ -23,6 +23,8 @@ import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
 
 
+import { SocialSharing } from '@ionic-native/social-sharing';
+
 
 @NgModule({
   declarations: [
@@ -59,6 +61,7 @@ import { LanguageService } from './services/LanguageService';
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
     Camera,
     LanguageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
