@@ -14,10 +14,10 @@
 
 
 <ion-content padding>
-    <ion-list radio-group>  
+    <ion-list [(ngModel)]="selectedLanguage" radio-group>  
       <ion-item *ngFor="let language of languages">
         <ion-label>{{language.name}}</ion-label>
-        <ion-radio (click)="onLanguageSelect(language.id)" [value]="language.name"></ion-radio>
+        <ion-radio (click)="onLanguageSelect(language.id)" [value]="language.id"></ion-radio>
       </ion-item>
     </ion-list>
 </ion-content>
