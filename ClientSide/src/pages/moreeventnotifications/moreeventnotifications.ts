@@ -17,16 +17,46 @@ export class MoreeventnotificationsPage {
 
   notificationSettings: any;
   notificationDistance: any;
+  notificationState: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   
     this.notificationDistance = 1;
+
+    this.notificationState = {
+      roadWorks: true,
+      criticalObstacle: true,
+      roadClosed: true,
+      obstacle: true,
+      trafficJam: true
+    }
+
     this.notificationSettings = [
-      {name: 'Road Work', ngModel: 'roadWorks', color: 'red'},
-      {name: 'Critical Obstacle', ngModel: 'criticalObstacle', color: 'red'},
-	  {name: 'Road Closed', ngModel: 'roadClosed', color: 'red'},
-      {name: 'Obstacle', ngModel: 'obstacle', color: 'orange'},
-      {name: 'Traffic Jam', ngModel: 'trafficJam', color: 'orange'}
+      {
+        name: 'Road Work', 
+        ngModel: this.notificationState.roadWorks, 
+        color: 'red'
+      },
+      {
+        name: 'Critical Obstacle', 
+        ngModel: this.notificationState.criticalObstacle, 
+        color: 'red'
+      },
+	    {
+        name: 'Road Closed', 
+        ngModel: this.notificationState.roadClosed,
+        color: 'red'
+      },
+      {
+        name: 'Obstacle',
+        ngModel: this.notificationState.obstacle,
+        color: 'orange'
+      },
+      {
+        name: 'Traffic Jam', 
+        ngModel: this.notificationState.trafficJam, 
+        color: 'orange'
+      }
     ];
   }
 
