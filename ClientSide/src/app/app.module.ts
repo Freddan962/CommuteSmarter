@@ -1,4 +1,5 @@
 import { EventService } from './services/eventService';
+import { LoginWithTwitterService } from './services/loginWithTwitterService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -76,6 +77,7 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     EventService,
+    LoginWithTwitterService,
     SocialSharing,
     TwitterConnect,
     Camera,
