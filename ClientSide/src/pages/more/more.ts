@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, NavParams} from 'ionic-angular';
 
+import { ToastController } from 'ionic-angular';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { MoreeventnotificationsPage } from '../moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from '../morelanguage/morelanguage';
@@ -11,23 +12,42 @@ import { MorelanguagePage } from '../morelanguage/morelanguage';
 })
 export class MorePage {
 
-  signedIn: boolean;
+  private signedIn: boolean;
 
-  constructor(public navCtrl: NavController, private twitter: TwitterConnect) {
-    signedIn = false;
+  constructor(public toastCtrl: ToastController, public navCtrl: NavController,
+    private twitter: TwitterConnect) {
+    this.signedIn = false;
   }
 
   loginWithTwitter() {
-    this.twitter.login().then(onTwitterLoginSuccess, onTwitterLoginError);
+    this.twitter.login().then(
+      (result) => {
+        console.log(response);
+        this.signedIn = true;
+
+        let toast = this.toastCtrl.create({
+          message: "Signed you in with Twitter",
+          position: 'top',
+          cssClass: 'success',
+          duration: 3000
+        });
+        toast.present();
+      },
+      (error) => {
+        console.log(error);
+        let toast = this.toastCtrl.create({
+          message: error,
+          position: 'top',
+          cssClass: 'failure',
+          duration: 3000
+        });
+        toast.present();
+      }
+    );
   }
 
-  onTwitterLoginSuccess(response) {
-    console.log(response);
-    signedIn = true;
-  }
-
-  onTwitterLoginError(error) {
-    console.log(error);
+  getIfSignedIn() {
+    return this.signedIn;
   }
 
   //Open Notification page
