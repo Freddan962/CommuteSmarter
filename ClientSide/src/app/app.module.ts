@@ -20,6 +20,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { HttpModule } from '@angular/http';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core/'
@@ -79,6 +80,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     SocialSharing,
     Camera,
     LanguageService,
+	Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
