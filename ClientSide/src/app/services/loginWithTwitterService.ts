@@ -15,22 +15,13 @@ export class LoginWithTwitterService {
   constructor(private twitter: TwitterConnect,
     private storage: Storage,
     private toastCtrl: ToastController) {
-
-      this.storage.get('twittwerLoginStatus').then((signedIn) => {
-        if(signedIn === undefined) {
-          console.log('Did Not Find the Twitter login status in db');
-          this.signedIn = false;
-        } else {
-          console.log('Found in db Twitter login status: ' + signedIn);
-          this.signedIn = signedIn;
-        }
-      });
-
       this.storage.get('twittwerUser').then((twittwerUser) => {
         if(twittwerUser === undefined) {
           this.setUserDetailsNull();
+          this.signedIn = false;
         } else  {
           this.setAllUserDetails(twittwerUser);
+          this.signedIn = true;
         }
       });
   }
