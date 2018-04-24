@@ -4,18 +4,16 @@
   "description": "REST API for Traffic App",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "sequelize": "^4.37.6"
   },
   "devDependencies": {
     "nodemon": "^1.17.3"
-  },
-  "scripts": {
-    "dev": "nodemon server.js"
   }
 }
