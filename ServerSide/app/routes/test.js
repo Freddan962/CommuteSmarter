@@ -3,6 +3,13 @@ const app = express();
 
 app.use(express.json());
 
+const noteRoutes = require('./twitter_accounts');
+
+module.exports = function(app, db) {
+  noteRoutes(app, db);
+  // Other route groups could go here, in the future
+};
+
 const events = [
     {id: 1, type:'Critical', location: 'Torsgatan'},
     {id: 2, type:'Critical', location: 'Kungsgatan'},
