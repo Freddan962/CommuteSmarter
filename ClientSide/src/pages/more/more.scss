@@ -1,22 +1,28 @@
 page-more {
-
-    //---- page background------//
+    //---- page background ----//
     .content.content-ios.statusbar-padding {
       background-color: #EFEFF4;
     }
 
-
-//----- not sign in/register avatar styling-----//
+    //---- not sign in/register avatar styling ----//
     .ion-ios-contact:before{
         font-size: 3em;
         color: #8e9093;
     }
 
-//----- sign in/register arrow-----//
+    //---- sign in/register arrow ----//
     .ion-ios-arrow-forward:before {
         font-size: 1.4em;
         color: #cccccc;
     }
-
 }
 
+.toast-md.failure .toast-wrapper {
+  background-color: #f53d3d !important;
+  color: #fff;
+}
+
+.toast-md.success .toast-wrapper {
+  background-color: #32db64 !important;
+  color: #fff;
+}

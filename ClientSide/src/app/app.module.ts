@@ -1,4 +1,5 @@
 import { EventService } from './services/eventService';
+import { LoginWithTwitterService } from './services/loginWithTwitterService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -25,12 +26,12 @@ import { LanguageService } from './services/LanguageService';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core/'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { SocialSharing } from '@ionic-native/social-sharing';
+import { TwitterConnect } from '@ionic-native/twitter-connect';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/translations/", ".json");
 }
-
-import { SocialSharing } from '@ionic-native/social-sharing';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,9 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     StatusBar,
     SplashScreen,
     EventService,
+    LoginWithTwitterService,
     SocialSharing,
+    TwitterConnect,
     Camera,
     LanguageService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
