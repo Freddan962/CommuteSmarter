@@ -2,7 +2,7 @@
   "name": "serverside",
   "version": "0.0.1",
   "description": "REST API for Traffic App",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
