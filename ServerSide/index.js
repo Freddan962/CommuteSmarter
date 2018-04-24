@@ -24,7 +24,7 @@ app.get('/api/events/:id', (req, res) => {
     res.send(event);
 });
 
-app.post('/api/events',(req, res) => { 
+app.post('/api/events',(req, res) => {
     const event = {
         id: events.length + 1,
         type: req.body.type,
