@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams} from 'ionic-angular';
-
-import { ToastController } from 'ionic-angular';
+import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { MoreeventnotificationsPage } from '../moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from '../morelanguage/morelanguage';
-import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
-
+import { NavController, ModalController, NavParams} from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'page-more',
@@ -17,7 +16,8 @@ export class MorePage {
 
   constructor(public toastCtrl: ToastController,
     public navCtrl: NavController,
-    private loginWithTwitterService: LoginWithTwitterService)
+    private loginWithTwitterService: LoginWithTwitterService,
+    public translate: TranslateService)
   {}
 
   loginWithTwitter() {
