@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
 declare var google;
 
 @IonicPage()
@@ -22,7 +24,7 @@ export class MapPage {
   animateEventCard: string;
   mapEventInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public geolocation: Geolocation,
     private socialSharing: SocialSharing) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
@@ -30,25 +32,30 @@ export class MapPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
-    this.initMap();
+    this.loadMap();
   }
 
-  initMap() {
-    // Create a map object and specify the DOM element for display.
-    this.map = new google.maps.Map(document.getElementById('map'), {
-      center: {
-        lat: 59.329852,
-        lng: 18.068461
-      },
-      zoom: 13,
-      disableDefaultUI: true,
-      clickableIcons: false
-    });
-  }
+  loadMap() {
+   
+	this.geolocation.getCurrentPosition().then
+	((position) => {
+		let latLng = new google.maps.LatLng
+		(position.coords.latitude, position.coords.longitude);
+		
+		let mapOptions = {
+			center: latLng,
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI: true
+		}
+		
+		this.map = new google.maps.Map
+		(this.mapElement.nativeElement, mapOptions);
+		this.addMarker();
+	}, (err) => {
+		console.log(err);
+	});
 
-  centerMapToLocation() {
-    console.log('Called re center');
-    this.map.setCenter();
   }
 
   openMapEventInfo() {
@@ -79,4 +86,30 @@ export class MapPage {
       this.animateEventCard = 'reveal';
     }, 1000);
   }
+  
+   addMarker(){
+ 
+  let marker = new google.maps.Marker({
+    map: this.map,
+    animation: google.maps.Animation.DROP,
+    position: this.map.getCenter()
+  });
+ 
+  let content = "<h4>Information!</h4>";         
+ 
+  this.addInfoWindow(marker, content);
+ 
+}
+
+addInfoWindow(marker, content){
+ 
+  let infoWindow = new google.maps.InfoWindow({
+    content: content
+  });
+ 
+  google.maps.event.addListener(marker, 'click', () => {
+    infoWindow.open(this.map, marker);
+  });
+ 
+}
 }
