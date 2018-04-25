@@ -96,6 +96,14 @@ export class MapPage {
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
+      icon: 
+      new google.maps.MarkerImage(
+        'https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png',
+        null, /* size is determined at runtime */
+        null, /* origin is 0,0 */
+        null, /* anchor is bottom center of the scaled image */
+        new google.maps.Size(25, 25) /* marker size */
+      ),
       position: this.map.getCenter()
     });
 
