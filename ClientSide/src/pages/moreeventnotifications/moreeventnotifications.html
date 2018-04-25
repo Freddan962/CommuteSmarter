@@ -30,15 +30,15 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-col col-2>
-                    <button ion-button item-end outline color="primary" class="information-label">7 km</button>
-                </ion-col>
-                <ion-col col-9 offset-1>
-                  <ion-range [(ngModel)]="notification-distance">
-                    <ion-icon range-left small></ion-icon>
-                    <ion-icon range-right></ion-icon>
-                  </ion-range>
-                </ion-col>
+  
+                  <ion-item id="notificationrange-item">
+                    <ion-range id="notificationsrange-range" col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">  
+                      <ion-label range-left>
+                          <ion-badge item-end>{{notificationDistance}}</ion-badge>
+                      </ion-label>
+                    </ion-range>
+                  </ion-item>
+  
               </ion-row>
             </div>
           </ion-item>
@@ -47,85 +47,23 @@
 
         <p class="setting-text setting-title">NOTIFICATIONS</p>
         <ion-list class="settings-list">
-          <ion-item>
-            <div item-content col-12>
-              <ion-row> 
-                <ion-col col-2>
-                <span class="dot-red"></span>
-                  </ion-col>
-                <ion-col col-6>
-                  <ion-label >Road Work</ion-label>
-                </ion-col>
-                <ion-col col-4>
-                  <ion-toggle [(ngModel)]="roadworks" id="roadwork-toggle" color="secondary"></ion-toggle>
-                </ion-col>
-              </ion-row>
-            </div>
-          </ion-item>
-
-          <ion-item>
-            <div item-content col-12>
-              <ion-row> 
-                <ion-col col-2>
-                  <span class="dot-red"></span>
-                </ion-col>
-                <ion-col col-6>
-                  <ion-label >Critical Obstacle</ion-label>
-                </ion-col>
-                <ion-col col-4>
-                  <ion-toggle [(ngModel)]="criticalobstacle" id="criticalobstacle-toggle" color="secondary"></ion-toggle>
-                </ion-col>
-              </ion-row>
-            </div>
-          </ion-item>
-
-          <ion-item>
-            <div item-content col-12>
-              <ion-row> 
-                <ion-col col-2>
-                  <span class="dot-orange"></span>
-                </ion-col>
-                <ion-col col-6>
-                  <ion-label >Obstacle</ion-label>
-                </ion-col>
-                <ion-col col-4 style="float:right;">
-                  <ion-toggle [(ngModel)]="obstacle" id="obstacle-toggle" color="secondary"></ion-toggle>
-                </ion-col>
-              </ion-row>
-            </div>
-          </ion-item>
           
-          <ion-item>
+          <ion-item *ngFor="let setting of notificationSettings">
             <div item-content col-12>
-              <ion-row>
-                <ion-col> 
-                  <span class="dot-red"></span>
-                </ion-col>
+              <ion-row> 
+                <ion-col col-2>
+                <span [ngClass]="'dot-' + setting.color"></span>
+                  </ion-col>
                 <ion-col col-6>
-                  <ion-label >Road Closed</ion-label>
+                  <ion-label >{{setting.name}}</ion-label>
                 </ion-col>
                 <ion-col col-4>
-                  <ion-toggle [(ngModel)]="roadclosed" id="roadclosed-toggle" color="secondary"></ion-toggle>
+                  <ion-toggle [(ngModel)]="setting.ngModel" id="'warning-' + setting.name'" color="secondary"></ion-toggle>
                 </ion-col>
               </ion-row>
             </div>
           </ion-item>
-
-          <ion-item>
-              <div item-content col-12>
-                <ion-row> 
-                  <ion-col>
-                    <span class="dot-orange"></span>
-                  </ion-col>
-                  <ion-col col-6>
-                    <ion-label >Traffic Jam</ion-label>
-                  </ion-col>
-                  <ion-col col-4>
-                    <ion-toggle [(ngModel)]="trafficjam" id="trafficjam-toggle" color="secondary"></ion-toggle>
-                  </ion-col>
-                </ion-row>
-              </div>
-            </ion-item>
+        
         </ion-list>
       </div>
     </ion-col>

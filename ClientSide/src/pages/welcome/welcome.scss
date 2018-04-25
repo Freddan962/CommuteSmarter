@@ -1,0 +1,27 @@
+page-welcome {
+  #welcome-column {
+    text-align:center;
+  }
+
+  #welcome-column h1 {
+    font-size:38px;
+  }
+
+  #welcome-text {
+    margin-top:5%;
+    margin-bottom:2%;
+  }
+  
+  #welcome-subtext {
+    color:rgb(0, 129, 247);
+    margin-top:0;
+  }
+
+  .feature-text {
+    white-space: normal;
+  }
+
+  #welcome-slides {
+    background-color:white;
+  }
+}
