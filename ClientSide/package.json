@@ -24,6 +24,7 @@
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/core": "4.6.0",
     "@ionic-native/geolocation": "^4.7.0",
+    "@ionic-native/http": "^4.7.0",
     "@ionic-native/social-sharing": "^4.7.0",
     "@ionic-native/splash-screen": "4.6.0",
     "@ionic-native/status-bar": "4.6.0",
@@ -32,8 +33,10 @@
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^3.0.1",
     "cordova-android": "7.0.0",
+    "cordova-plugin-advanced-http": "^1.11.1",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^6.0.1",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
@@ -71,7 +74,8 @@
         "FABRIC_KEY": "29ffbd50c9d16f409638495a50eec740d751fb3a",
         "TWITTER_KEY": "agC1meoWus9BLERR6pLKhbIk2",
         "TWITTER_SECRET": "UWLv3b9hqZmm7fZXKoGZR0PWcstKYIwP0efJOoDp30umYjN3xs"
-      }
+      },
+      "cordova-plugin-advanced-http": {}
     },
     "platforms": [
       "android"

@@ -1,41 +1,28 @@
 import { Injectable } from '@angular/core';
+import { HTTP } from '@ionic-native/http';
 
 @Injectable()
 export class EventService {
 
   events: any;
 
-  constructor() { 
-    this.events = [
-      {
-        id: 1, 
-        title: "Obstacle", 
-        location: "Torsg/Norra Station", 
-        time: "30 min ago", distance: 1.9, 
-        description: "Car crash in intersection Torsgatan/Norra Stationsgatan. 3 cars involved, limited passability. Police has arrived at the scene."
-      },
-      {
-        id: 2, 
-        title: "Closed", 
-        location: "Kungsg.", 
-        time: "08.00-16.00", 
-        distance: 2.7},
-      {
-        id: 3, 
-        title: "Road Work", 
-        location: "Odeng./Dalag.", 
-        distance: 2.2
-      },
-      {
-        id: 4, 
-        title: "Traffic Jam", 
-        location: "Sveavägen Odenplan", 
-        distance: 5.7
-      }
-    ];
+  constructor(private http: HTTP)
+  {
+    this.http.get('https://pvt73trafficinfo.herokuapp.com/events', {}, {})
+    .then(data => {
+      this.events = data;
+      console.log(data.status);
+      console.log(data.data); // data received by server
+      console.log(data.headers);
+    })
+    .catch(error => {
+      console.log(error.status);
+      console.log(error.error); // error message as string
+      console.log(error.headers);
+    });
   }
 
   getEvents() {
     return this.events;
   }
-} 
+}
