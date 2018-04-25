@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { filterMap } from '../filterMap/filterMap';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
@@ -37,6 +38,7 @@ export class MapPage {
   }
 
   loadMap() {
+
     let latLng = new google.maps.LatLng(59.326137, 18.071325);
 
     let mapOptions = {
@@ -63,9 +65,8 @@ export class MapPage {
       }, (err) => {
         console.log(err);
       });
-
-  }
-
+	}
+  
   openMapEventInfo() {
     console.log('Called open map event info');
     this.mapEventInfo = {
