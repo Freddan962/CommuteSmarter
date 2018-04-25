@@ -1,0 +1,127 @@
+
+<ion-header>
+        <ion-navbar>
+          <ion-title>
+            Filters
+          </ion-title>
+        </ion-navbar>
+      </ion-header>
+      
+      <ion-content>
+      
+        <ion-grid>
+          <ion-row>
+           
+            <ion-col>
+               
+                <ion-item>
+                    
+                    <div item-content col-12>
+                     <p class="warning-title">Critical warning</p>
+                      <ion-row>
+                         
+                        <ion-col col-1>
+                          <span class="dot-red"></span>
+                        </ion-col>
+                        <ion-col col-8>
+                          <ion-label >Obstacle blocking the road</ion-label>
+                        </ion-col>
+                        <ion-col>
+                          <ion-toggle [(ngModel)]="obstacleblockingtheroad" id="obstacleblockingtheroad-toggle" color="secondary"></ion-toggle>
+                        </ion-col>
+                      </ion-row>
+                    </div>
+                  </ion-item> 
+
+                  <ion-item>
+                      <div item-content col-12>
+                        <ion-row> 
+                          <ion-col col-1>
+                          <span class="dot-red"></span>
+                            </ion-col>
+                          <ion-col col-8>
+                            <ion-label >Closed for event</ion-label>
+                          </ion-col>
+                          <ion-col>
+                            <ion-toggle [(ngModel)]="Closedforevent" id="Closedforevent-toggle" color="secondary"></ion-toggle>
+                          </ion-col>
+                        </ion-row>
+                      </div>
+                    </ion-item>
+                  
+                 
+                  <ion-item>
+                      <div item-content col-12>
+                          <p class="warning-title">Be Cautious</p>
+                           <ion-row> 
+                          <ion-col col-1>
+                            <span class="dot-orange"></span>
+                          </ion-col>
+                          <ion-col col-8>
+                            <ion-label >Obstacle on the road</ion-label>
+                          </ion-col>
+                          <ion-col>
+                            <ion-toggle [(ngModel)]="Obstacleontheroad" id="Obstacleontheroad-toggle" color="secondary"></ion-toggle>
+                          </ion-col>
+                        </ion-row>
+                      </div>
+                    </ion-item> 
+
+                    <ion-item>
+                        <div item-content col-12>
+                          <ion-row> 
+                            <ion-col col-1>
+                              <span class="dot-orange"></span>
+                            </ion-col>
+                            <ion-col col-8>
+                              <ion-label >Traffic jam</ion-label>
+                            </ion-col>
+                            <ion-col>
+                              <ion-toggle [(ngModel)]="Trafficjam" id="Trafficjam-toggle" color="secondary"></ion-toggle>
+                            </ion-col>
+                          </ion-row>
+                        </div>
+                      </ion-item> 
+
+                      <ion-item>
+                          <div item-content col-12>
+                            <ion-row> 
+                              <ion-col col-1>
+                                <span class="dot-orange"></span>
+                              </ion-col>
+                              <ion-col col-8>
+                                <ion-label >Road work</ion-label>
+                              </ion-col>
+                              <ion-col>
+                                <ion-toggle [(ngModel)]="Roadwork" id="Roadwork-toggle" color="secondary"></ion-toggle>
+                              </ion-col>
+                            </ion-row>
+                          </div>
+                        </ion-item> 
+                      
+
+                   
+                    
+                    <ion-item>
+                        <div item-content col-12>
+                            <p class="warning-title">Other</p>
+                          <ion-row> 
+                            <ion-col col-1>
+                              <span class="dot-blue"></span>
+                            </ion-col>
+                            <ion-col col-8>
+                              <ion-label >Emergency vehicles</ion-label>
+                            </ion-col>
+                            <ion-col>
+                              
+                              <ion-toggle [(ngModel)]="Emergencyvehicles" id="Emergencyvehicles-toggle" color="secondary"></ion-toggle>
+                            </ion-col>
+                          </ion-row>
+                        </div>
+                      </ion-item> 
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    
+      </ion-content>
+    

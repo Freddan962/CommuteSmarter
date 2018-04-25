@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { filterMap } from '../filterMap/filterMap';
 
 declare var google;
 
@@ -17,11 +18,12 @@ export class MapPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
     this.initMap();
-  }
+  } 
 
   initMap() {
     // Create a map object and specify the DOM element for display.
@@ -34,4 +36,10 @@ export class MapPage {
 	  disableDefaultUI: true
     });
   }
+  onClicked(){
+   
+    this.navCtrl.push(filterMap);
+  }
+ 
+  
 }

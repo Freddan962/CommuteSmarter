@@ -12,6 +12,8 @@ import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from './../pages/morelanguage/morelanguage';
+import { filterMap } from './../pages/filterMap/filterMap';
+
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -29,7 +31,8 @@ import { HttpModule } from '@angular/http';
     MorePage,
     TabsPage,
     MoreeventnotificationsPage,
-    MorelanguagePage
+    MorelanguagePage,
+    filterMap
   ],
   imports: [
     BrowserModule,
@@ -47,7 +50,8 @@ import { HttpModule } from '@angular/http';
     MorePage,
     TabsPage,
     MoreeventnotificationsPage,
-    MorelanguagePage
+    MorelanguagePage,
+    filterMap
   ],
   providers: [
     StatusBar,
