@@ -47,8 +47,7 @@
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
     "twitter-connect-plugin": "git+https://github.com/chroa/twitter-connect-plugin.git",
-    "zone.js": "0.8.20",
-    "cordova-plugin-x-socialsharing": "^5.3.2"
+    "zone.js": "0.8.20"
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.8",
