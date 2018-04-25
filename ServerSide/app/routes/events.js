@@ -10,23 +10,19 @@ module.exports = function(app, db) {
     });
 
     const events = [
-        {id: 1, type:'Critical', location: 'Torsgatan'},
-        {id: 2, type:'Critical', location: 'Kungsgatan'},
-        {id: 3, type:'Be Cautious', location: 'Odengatan'},
+        {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},titel:'Obstacle',},
+        {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},titel:'closed for Marathon'},
+        {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},titel:'emergency response vehicle'},
     ];
 
-    app.get('/', (req, res) => {
-        res.send('Current events:');
-    });
-
     app.get('/api/events', (req, res) => {
-        res.send(events);
+        res.json(events);
     });
 
     app.get('/api/events/:id', (req, res) => {
         //res.send(req.query);
         const event = events.find(c => c.id === parseInt(req.params.id));
         if (!event) res.status(404).send('The event with given ID was not found.');
-        res.send(event);
+        res.json(event);
     });
 }
