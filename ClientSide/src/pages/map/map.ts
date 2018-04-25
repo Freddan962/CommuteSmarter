@@ -36,25 +36,30 @@ export class MapPage {
   }
 
   loadMap() {
-   
-	this.geolocation.getCurrentPosition().then
-	((position) => {
-		let latLng = new google.maps.LatLng
-		(position.coords.latitude, position.coords.longitude);
-		
-		let mapOptions = {
-			center: latLng,
-			zoom: 13,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true
-		}
-		
-		this.map = new google.maps.Map
-		(this.mapElement.nativeElement, mapOptions);
-		this.addMarker();
-	}, (err) => {
-		console.log(err);
-	});
+    let latLng = new google.maps.LatLng(59.326137, 18.071325);
+
+    let mapOptions = {
+      center: latLng,
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.centerMapToLocation();
+  }
+
+
+  centerMapToLocation() {
+    this.geolocation.getCurrentPosition().then
+      ((position) => {
+        let latLng = new google.maps.LatLng
+          (position.coords.latitude, position.coords.longitude);
+        this.map.setCenter(latLng);
+        this.addMarker();
+      }, (err) => {
+        console.log(err);
+      });
 
   }
 
@@ -81,35 +86,29 @@ export class MapPage {
     console.log('Called close map event');
     this.animateEventCard = 'fadeAway';
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.displayMapEventCard = false;
       this.animateEventCard = 'reveal';
     }, 1000);
   }
-  
-   addMarker(){
- 
-  let marker = new google.maps.Marker({
-    map: this.map,
-    animation: google.maps.Animation.DROP,
-    position: this.map.getCenter()
-  });
- 
-  let content = "<h4>Information!</h4>";         
- 
-  this.addInfoWindow(marker, content);
- 
-}
 
-addInfoWindow(marker, content){
- 
-  let infoWindow = new google.maps.InfoWindow({
-    content: content
-  });
- 
-  google.maps.event.addListener(marker, 'click', () => {
-    infoWindow.open(this.map, marker);
-  });
- 
-}
+  addMarker() {
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: this.map.getCenter()
+    });
+
+    let content = "<h4>Information!</h4>";
+
+    this.addInfoWindow(marker, content);
+
+  }
+
+  addInfoWindow(marker, content) {
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+  }
 }
