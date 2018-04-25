@@ -7,6 +7,7 @@ import { WelcomePage } from './../welcome/welcome';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
+var marker;
 
 @IonicPage()
 @Component({
@@ -46,17 +47,19 @@ export class MapPage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  
     this.centerMapToLocation();
   }
 
 
   centerMapToLocation() {
+    if(marker == null) this.addMarker();
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
-        this.addMarker();
+        marker.setPosition(latLng);
       }, (err) => {
         console.log(err);
       });
@@ -91,9 +94,10 @@ export class MapPage {
       this.animateEventCard = 'reveal';
     }, 1000);
   }
-
+  
   addMarker() {
-    let marker = new google.maps.Marker({
+    
+    marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       icon: 
