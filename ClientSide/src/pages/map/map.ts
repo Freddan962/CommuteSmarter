@@ -56,10 +56,12 @@ export class MapPage {
 	}, (err) => {
 		console.log(err);
 	});
-    
+  }
+  
   onClicked(){
     this.navCtrl.push(filterMap);
   }
+  
   openMapEventInfo() {
     console.log('Called open map event info');
     this.mapEventInfo = {
