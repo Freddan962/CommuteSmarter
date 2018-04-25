@@ -15,6 +15,8 @@ import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from './../pages/morelanguage/morelanguage';
+import { filterMap } from './../pages/filterMap/filterMap';
+
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -45,6 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
     EventsreporttypemodalPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
+    filterMap,
     WelcomePage
   ],
   imports: [
@@ -72,6 +75,7 @@ export function createTranslateLoader(http: HttpClient) {
     TabsPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
+    filterMap,
     WelcomePage
   ],
   providers: [
