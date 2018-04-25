@@ -11,5 +11,13 @@
     "featureListDesc": "Detailed list of all events within your range. Report an ongoing event.",
     "featureMoreTitle": "More",
     "featureMoreDesc": "Adjust your notification preferences and register to unlock reporting feature."
+  },
+  "More": {
+    "notSignedIn": "Not signed in",
+    "tapToRegister": "tap to register or sign in",
+    "tapToSignOut": "tap to sign out",
+    "eventNoti": "Event Notifications",
+    "lang": "Language",
+    "contact": "Contact Developers" 
   }
 }

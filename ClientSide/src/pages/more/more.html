@@ -12,8 +12,14 @@
       <ion-thumbnail item-start>
         <ion-icon ios="ios-contact" md="ios-contact"></ion-icon>
       </ion-thumbnail>
-      <h2>Not signed in</h2>
-      <p>tap to register or sign up</p>
+      <div *ngIf="!getIfSignedIn()" (click)="loginWithTwitter()">
+        <h2>Not signed in</h2>
+        <p>tap to register or sign in</p>
+      </div>
+      <div *ngIf="getIfSignedIn()" (click)="logOutTwitter()">
+        <h1>{{ userName() }}</h1>
+        <p>tap to sign out</p>
+      </div>
       <button ion-button clear item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </ion-item>
   </ion-list>

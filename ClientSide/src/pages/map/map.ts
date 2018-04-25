@@ -5,6 +5,8 @@ import { filterMap } from '../filterMap/filterMap';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
 declare var google;
 
 @IonicPage()
@@ -19,44 +21,45 @@ export class MapPage {
   @ViewChild('map') mapElement: ElementRef;
   navController: NavController;
   map: any;
-  socialSharing: SocialSharing;
   displayMapEventCard: boolean;
   animateEventCard: string;
   mapEventInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation,
+    private socialSharing: SocialSharing) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
   }
-  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
-    this.initMap();
-  } 
-
-  initMap() {
-    // Create a map object and specify the DOM element for display.
-    this.map = new google.maps.Map(document.getElementById('map'), {
-      center: {
-        lat: 59.329852,
-        lng: 18.068461
-      },
-      zoom: 13,
-      disableDefaultUI: true,
-      clickableIcons: false
-    });
+    this.loadMap();
   }
 
+  loadMap() {
+   
+	this.geolocation.getCurrentPosition().then
+	((position) => {
+		let latLng = new google.maps.LatLng
+		(position.coords.latitude, position.coords.longitude);
+		
+		let mapOptions = {
+			center: latLng,
+			zoom: 13,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+			disableDefaultUI: true
+		}
+		
+		this.map = new google.maps.Map
+		(this.mapElement.nativeElement, mapOptions);
+		this.addMarker();
+	}, (err) => {
+		console.log(err);
+	});
+    
   onClicked(){
     this.navCtrl.push(filterMap);
   }
-
-  centerMapToLocation() {
-    console.log('Called re center');
-    this.map.setCenter();
-  }
-
   openMapEventInfo() {
     console.log('Called open map event info');
     this.mapEventInfo = {
@@ -71,7 +74,9 @@ export class MapPage {
   }
 
   shareEvent() {
-    this.socialSharing.share('Subject ja','Message ja');
+    console.log("called share event");
+
+    this.socialSharing.share(this.mapEventInfo.title, this.mapEventInfo.text, null, null);
   }
 
   closeMapEventInfo() {
@@ -83,4 +88,30 @@ export class MapPage {
       this.animateEventCard = 'reveal';
     }, 1000);
   }
+  
+   addMarker(){
+ 
+  let marker = new google.maps.Marker({
+    map: this.map,
+    animation: google.maps.Animation.DROP,
+    position: this.map.getCenter()
+  });
+ 
+  let content = "<h4>Information!</h4>";         
+ 
+  this.addInfoWindow(marker, content);
+ 
+}
+
+addInfoWindow(marker, content){
+ 
+  let infoWindow = new google.maps.InfoWindow({
+    content: content
+  });
+ 
+  google.maps.event.addListener(marker, 'click', () => {
+    infoWindow.open(this.map, marker);
+  });
+ 
+}
 }

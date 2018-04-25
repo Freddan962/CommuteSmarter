@@ -27,9 +27,9 @@
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-        <button>Share this event</button>
+        <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
       </div>
-    </div>  
+    </div>
      <button ion-item (click)="openReportPage()">Report Incident</button>
   </ion-list>
   <button  id="report-event" ion-button block (click)="bntClick">Report an event</button>
