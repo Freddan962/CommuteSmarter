@@ -1,0 +1,19 @@
+{
+  "name": "serverside",
+  "version": "0.0.1",
+  "description": "REST API for Traffic App",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "sequelize": "^4.37.6"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.3"
+  }
+}
