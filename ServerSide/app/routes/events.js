@@ -2,11 +2,13 @@ module.exports = function(app, db) {
     app.post('/api/events',(req, res) => {
         const event = {
             id: events.length + 1,
-            type: req.body.type,
-            location: req.body.location
+            color: req.body.color,
+            location: req.body.location,
+            coordinates: req.body.coordinates,
+            titel:req.body.titel
         };
         events.push(event);
-        res.send(event);
+        res.json(event);
     });
 
     const events = [
