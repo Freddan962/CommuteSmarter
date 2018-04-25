@@ -20,7 +20,7 @@
       </ion-avatar>
       <div (click)="itemSelected(item)">
         {{ item.title + ' - ' + item.location }}
-        <p>{{ item.time + ' ' + item.distance + ' km'}}</p>
+        <p>{{ item.time + ' km'}}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
       </div>

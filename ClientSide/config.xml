@@ -98,7 +98,6 @@
         <variable name="TWITTER_KEY" value="agC1meoWus9BLERR6pLKhbIk2" />
         <variable name="TWITTER_SECRET" value="UWLv3b9hqZmm7fZXKoGZR0PWcstKYIwP0efJOoDp30umYjN3xs" />
     </plugin>
-
     <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
 </widget>
