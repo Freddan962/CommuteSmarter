@@ -2,11 +2,10 @@
 </ion-header>
 
 <ion-content no-padding>
+  <div #map id="map"></div>
   <ion-fab top right edge id="filters">
-    <button ion-fab mini><ion-icon name="cog"></ion-icon></button>
-    <ion-fab-list side="left">
-      <button ion-fab>Test</button>
-    </ion-fab-list>
+    <button ion-fab mini (click)="onClicked()">
+      <ion-icon name="reorder"></ion-icon></button>
   </ion-fab>
   <ion-fab top right edge id="center-location">
     <button ion-fab mini (click)="centerMapToLocation()"><ion-icon name="navigate"></ion-icon></button>

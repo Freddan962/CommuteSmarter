@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { filterMap } from '../filterMap/filterMap';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
@@ -55,9 +56,12 @@ export class MapPage {
 	}, (err) => {
 		console.log(err);
 	});
-
   }
-
+  
+  onClicked(){
+    this.navCtrl.push(filterMap);
+  }
+  
   openMapEventInfo() {
     console.log('Called open map event info');
     this.mapEventInfo = {
