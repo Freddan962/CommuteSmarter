@@ -37,7 +37,6 @@ export class MapPage {
   }
 
   loadMap() {
-   
 	this.geolocation.getCurrentPosition().then
 	((position) => {
 		let latLng = new google.maps.LatLng
@@ -56,7 +55,7 @@ export class MapPage {
 	}, (err) => {
 		console.log(err);
 	});
-    
+  }  
   onClicked(){
     this.navCtrl.push(filterMap);
   }
