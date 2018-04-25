@@ -56,9 +56,11 @@ export class MapPage {
 		console.log(err);
 	});
   }  
+
   onClicked(){
     this.navCtrl.push(filterMap);
   }
+  
   openMapEventInfo() {
     console.log('Called open map event info');
     this.mapEventInfo = {
