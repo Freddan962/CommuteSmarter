@@ -92,11 +92,17 @@ export class MapPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MapPage');
     this.loadMap();
     this.renderObstacles();
   }
 
+  /**
+   * loadMap()
+   * 
+   * Responsible for creating the initial map.
+   * 
+   * @memberof MapPage
+   */
   loadMap() {
     let latLng = new google.maps.LatLng(59.326137, 18.071325);
 
@@ -111,6 +117,13 @@ export class MapPage {
     this.centerMapToLocation();
   }
 
+  /**
+   * renderObstacles()
+   * 
+   * Handles and renders obstacles on the map.
+   * 
+   * @memberof MapPage
+   */
   renderObstacles() {
     this.obstacles.forEach(obstacle => {
       switch (obstacle.type) {
@@ -130,10 +143,18 @@ export class MapPage {
     this.navCtrl.push(filterMap);
   }    
 
+  /**
+   * centerMapToLocation()
+   * 
+   * Prepares the center marker and centers the map on current geolocation.
+   * 
+   * @memberof MapPage
+   */
   centerMapToLocation() {
     if(locationMarker == null) {
       locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter()); 
     }
+
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
@@ -145,24 +166,57 @@ export class MapPage {
       });
 	}
   
+  /**
+   * openMapEventinfo()
+   * 
+   * Reveals the display box displaying the provided data.
+   * 
+   * @param {any} data The data to be displayed in the box.
+   * @memberof MapPage
+   */
   openMapEventInfo(data) {
     this.mapEventInfo = data; 
     this.displayMapEventCard = true;
   }
 
+
+  /**
+  * shareEvent() 
+  * 
+  * Callback function fopr the shareEvent button on the map.
+  * 
+  * @memberof MapPage
+  */
   shareEvent() {
     this.socialSharing.share(this.mapEventInfo.title, this.mapEventInfo.text, null, null);
   }
 
+  /**
+   * closeMapEventInfo()
+   * 
+   * Closes the box with information regarding a specific event.
+   * 
+   * @memberof MapPage 
+   */
   closeMapEventInfo() {
     this.animateEventCard = 'fadeAway';
-
+    
     setTimeout(() => {
       this.displayMapEventCard = false;
       this.animateEventCard = 'reveal';
     }, 1000);
   }
   
+  /**
+   * addMarker()
+   * 
+   * Adds a marker to the map.
+   * 
+   * @param {any} markerImage The image of the marker.
+   * @param {any} position The position of the marker.
+   * @returns 
+   * @memberof MapPage
+   */
   addMarker(markerImage, position) {
     let marker = new google.maps.Marker({
       map: this.map,
@@ -181,17 +235,38 @@ export class MapPage {
     return marker;
   }
 
-  addInfoMarker(markerImage, position, data) {
+
+/**
+ * addInfoMarker()
+ * 
+ * Adds a info markeron the map. 
+ * 
+ * @param {any} markerImage The image to be displayed.
+ * @param {any} position The position of the marker.
+ * @param {any} data 
+ * @memberof MapPage
+ */
+addInfoMarker(markerImage, position, data) {
     let marker = this.addMarker(markerImage, position);
     marker.data = data;
 
     marker.addListener('click', () => {
-      console.log("Clicked on this marker");
       this.openMapEventInfo(marker.data);
     });
   }
 
-  drawPath(startPos, endPos, color) {
+
+/**
+ * drawPath()
+ * 
+ * Draws a line on the map from the startPos to the endPos with the desired color. 
+ * 
+ * @param {any} startPos The position to start routing from.
+ * @param {any} endPos The position to route to.
+ * @param {any} color The color of the line.
+ * @memberof MapPage
+ */
+drawPath(startPos, endPos, color) {
     let request = {
       origin: startPos,
       destination: endPos,
@@ -209,8 +284,18 @@ export class MapPage {
       directionsDisplay.setDirections(result);
     });
   }
-
-  drawIcon(startPos, color, data) {
-    this.addInfoMarker('./assets/imgs/' + color + '.png', startPos, data);
+/**
+ * drawIcon()
+ * 
+ * Renders a icon at the specified position using the provided color and
+ * prepares callbacks to deal with display of data.
+ * 
+ * @param {any} pos The position where the marker is placed.
+ * @param {any} color The target color of the marker.
+ * @param {any} data The data that gets displayed in the reaveled box.
+ * @memberof MapPage
+ */
+drawIcon(pos, color, data) {
+    this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
   }
 }
