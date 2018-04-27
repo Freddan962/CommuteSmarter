@@ -2,7 +2,6 @@
 </ion-header>
 
 <ion-content no-padding no-bounce>
-  <div #map id="map"></div>
   <ion-fab top right edge id="filters">
     <button ion-fab mini (click)="onClicked()">
       <ion-icon name="reorder"></ion-icon></button>
@@ -21,4 +20,6 @@
     <p>Yes, this is a lot of text that serve as a placeholder... More of the text.</p>
     <button ion-button block (click)="shareEvent">Share this event</button>
   </div>
+
+  <div #map id="map"></div>
 </ion-content>
