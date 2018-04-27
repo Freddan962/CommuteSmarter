@@ -1,10 +1,10 @@
-import { TabsPage } from './../tabs/tabs';
 import { TranslateModule } from '@ngx-translate/core/';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { LanguageService } from './../../app/services/LanguageService';
 import { Storage } from '@ionic/storage';
 import { MapPage } from './../map/map';
+import { TabsPage } from './../tabs/tabs';
 import { TranslateService } from '@ngx-translate/core';
 
 /**

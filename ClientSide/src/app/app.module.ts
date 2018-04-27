@@ -10,6 +10,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { EventsPage} from '../pages/events/events';
 import { EventsReportPage } from '../pages/eventsreport/eventsreport';
 import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
+import { PositionselectorPage } from '../pages/positionselector/positionselector';
 
 
 import { MapPage } from '../pages/map/map';
@@ -47,6 +48,7 @@ export function createTranslateLoader(http: HttpClient) {
     TabsPage,
     EventsReportPage,
     EventsreporttypemodalPage,
+    PositionselectorPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
     filterMap,
@@ -72,6 +74,7 @@ export function createTranslateLoader(http: HttpClient) {
     EventsPage,
     EventsReportPage,
     EventsreporttypemodalPage,
+    PositionselectorPage,
     MapPage,
     MorePage,
     TabsPage,

@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { EventsreporttypemodalPage } from './eventsreporttypemodal';
 
+
 @NgModule({
   declarations: [
-    EventsreporttypemodalPage,
+    // EventsreporttypemodalPage,
   ],
   imports: [
     IonicPageModule.forChild(EventsreporttypemodalPage),

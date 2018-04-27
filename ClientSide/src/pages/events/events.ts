@@ -1,7 +1,7 @@
-import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import { EventService } from './../../app/services/eventService';
 import moment from 'moment';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -27,9 +27,6 @@ export class EventsPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EventsPage');
-  }
 
   itemSelected(item){
     console.log(item);
@@ -40,6 +37,10 @@ export class EventsPage {
     console.log('called share event');
 
     this.socialSharing.share(item.title, item.text, null, null);
+  }
+  
+  openReportPage() {
+    this.navCtrl.push(EventsReportPage);
   }
 
   parseTime(time) {
@@ -61,9 +62,4 @@ export class EventsPage {
 
     return currentdistance.toFixed(2) + ' ' + unit;
   }
-
-  //Use this code to link events-page with events-report page
-  // openReportPage() {
-  //   this.navCtrl.push(EventsReportPage);
-  // }
 }

@@ -4,7 +4,7 @@ import { filterMap } from './filterMap';
 
 @NgModule({
   declarations: [
-    filterMap,
+    // filterMap,
   ],
   imports: [
     IonicPageModule.forChild(filterMap),

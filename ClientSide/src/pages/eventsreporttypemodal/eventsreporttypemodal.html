@@ -7,54 +7,14 @@
   </ion-navbar>
 </ion-header>
 
-
-<ion-content padding>
-  <ion-list radio-group>
-    <ion-list-header>Car Crash</ion-list-header>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="crash"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="crash2"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="crash3"></ion-radio>
-    </ion-item>
-
-    <ion-list-header>Traffic jam</ion-list-header>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="crash4"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="5"></ion-radio>
-    </ion-item>
-
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="6"></ion-radio>
-    </ion-item>
-
-    <ion-list-header>Obstacles</ion-list-header>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="7"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="8"></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label color="dark">Crash</ion-label>
-      <ion-radio value="9"></ion-radio>
+<ion-content padding >
+  <div radio-group>
+  <ion-list *ngFor="let event of events">
+  <ion-list-header><span [ngClass]="'dot-' + event.color"></span>{{ event.eventtype | translate}}</ion-list-header>
+    <ion-item *ngFor="let item of event.eventsubtype">
+      <ion-label color="dark"> {{ item | translate}}</ion-label>
+      <ion-radio (click)="onSelectType(item)" [value]="item" value="{{ item }}">is</ion-radio>
     </ion-item>
   </ion-list>
-
+  </div>
 </ion-content>
-

@@ -4,7 +4,7 @@ import { MorelanguagePage } from './morelanguage';
 
 @NgModule({
   declarations: [
-    MorelanguagePage,
+    // MorelanguagePage,
   ],
   imports: [
     IonicPageModule.forChild(MorelanguagePage),
