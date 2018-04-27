@@ -8,7 +8,7 @@ import { WelcomePage } from './../welcome/welcome';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
-var marker;
+var locationMarker;
 
 @IonicPage()
 @Component({
@@ -133,14 +133,15 @@ export class MapPage {
   }    
 
   centerMapToLocation() {
-    if(marker == null) this.addMarker
-      ('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+    if(locationMarker == null) {
+      locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter()); 
+    }
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
-        marker.setPosition(latLng);
+        locationMarker.setPosition(latLng);
       }, (err) => {
         console.log(err);
       });
@@ -170,7 +171,7 @@ export class MapPage {
   
   addMarker(markerImage, position) {
     
-    marker = new google.maps.Marker({
+    let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       icon: 
@@ -188,7 +189,7 @@ export class MapPage {
   }
 
   addInfoMarker(markerImage, position, data) {
-    marker = this.addMarker(markerImage, position);
+    let marker = this.addMarker(markerImage, position);
     marker.data = data;
 
     marker.addListener('click', () => {
