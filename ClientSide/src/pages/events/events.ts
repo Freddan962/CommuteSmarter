@@ -42,7 +42,7 @@ export class EventsPage {
   }
 
   parseTime(time) {
-    return moment('2013-02-08 09:30').fromNow();
+    return moment(time).fromNow();
   }
 
   //Use this code to link events-page with events-report page
