@@ -5,6 +5,7 @@ import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import moment from 'moment';
+import { TranslateService } from '@ngx-translate/core';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 declare var google;
@@ -21,6 +22,7 @@ export class EventsPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public eventService: EventService,
+    public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
     private socialSharing: SocialSharing) {
        this.getEvents();
