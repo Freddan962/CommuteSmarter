@@ -29,8 +29,11 @@
         <p>{{item.description}}</p>
         <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
       </div>
-    </div>
-     <button ion-item (click)="openReportPage()">Report Incident</button>
+    </div>  
+
   </ion-list>
-  <button  id="report-event" ion-button block (click)="bntClick">Report an event</button>
+
+  <ion-footer>
+    <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">Report Incident</button>
+  </ion-footer>
 </ion-content>

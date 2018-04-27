@@ -6,7 +6,7 @@ import { Camera } from '@ionic-native/camera';
 
 @NgModule({
   declarations: [
-    EventsReportPage,
+    // EventsReportPage,
   ],
   imports: [
     IonicPageModule.forChild(EventsReportPage),

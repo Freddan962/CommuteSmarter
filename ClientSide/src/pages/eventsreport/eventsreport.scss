@@ -2,7 +2,8 @@
     color: red;
 }
 
-#myInput {
+#descriptionInput {
+
     min-height: 100px;
     border: 1px solid #cccccc;
     border-radius: 4px;
@@ -12,5 +13,33 @@
 
 .report-desc-title{
     margin-left: 0.8em;
+
+}
+
+
+ .dot,
+ .dot-orange,
+ .dot-red,
+ .dot-blue
+  {
+   height: 10px;
+   width: 10px;
+   background-color: #bbb;
+   border-radius: 50%;
+   display: inline-block;
+    margin-right: 3%;
+    }
+
+ 
+ .dot-orange {
+   background-color: orange;
+ }
+
+ .dot-red {
+   background-color: red;
+ }
+
+.dot-blue{
+       background-color: blue;
 
 }

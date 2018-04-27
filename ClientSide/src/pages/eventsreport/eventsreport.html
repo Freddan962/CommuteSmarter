@@ -7,35 +7,36 @@
 <ion-content padding>
   <ion-list no-lines>
     <ion-item>
-      <a ion-item (click)="openReportTypeModal()">
-        Type of event
-        <span class="mandatory">*</span>
-      </a>
+      <a ion-item (click)="openReportTypeModal()" [innerHTML]="">
+      {{selectedType}} <span class="mandatory">*</span></a>
     </ion-item>
 
     <ion-item no-lines>
-      <a ion-item (click)="openModal()">
-        Choose location
+      <a ion-item (click)="openPositionPickerModal()">
+        {{selectedLocation}}
         <span class="mandatory">*</span>
       </a>
     </ion-item>
   </ion-list>
 
   <ion-item no-lines>
-    <ion-label floating class="report-desc-title">Describe the event</ion-label>
-    <ion-textarea #myInput id="myInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="model"></ion-textarea>
+    <ion-label  floating class="report-desc-title">Describe the event</ion-label>
+    <ion-textarea (click)="descriptionInput.setFocus()" #descriptionInput id="descriptionInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
 
   <ion-grid padding>
     <ion-row>
       <ion-col col-6>
-        <button ion-button round outline icon-start>
+        <button ion-button round outline icon-start (click)="takePhoto(1)">
           <ion-icon name='camera' is-active="false"></ion-icon>
           Add photo/video
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <button ion-button full no-lines (click)="takePhoto(1)">Send report</button>
+
+  <ion-footer>
+      <button ion-button block no-lines  (click)='showConfirm()' [disabled]="!isenabled">Send report</button>
+  </ion-footer>
 </ion-content>
 
