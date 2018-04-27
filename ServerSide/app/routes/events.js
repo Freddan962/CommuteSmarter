@@ -9,11 +9,11 @@ module.exports = function(app, db) {
         res.send(event);
     });
 
-    const events = { test: [
+    const events = [
         {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},titel:'Obstacle',},
         {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},titel:'closed for Marathon'},
         {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},titel:'emergency response vehicle'},
-    ]};
+    ];
 
     app.get('/api/events', (req, res) => {
         res.json(events);
