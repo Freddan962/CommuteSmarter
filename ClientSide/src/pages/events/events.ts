@@ -2,6 +2,7 @@ import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import moment from 'moment';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 
@@ -35,9 +36,13 @@ export class EventsPage {
   }
 
   shareEvent(item) {
-    console.log("called share event");
+    console.log('called share event');
 
     this.socialSharing.share(item.title, item.text, null, null);
+  }
+
+  parseTime(time) {
+    return moment('2013-02-08 09:30').fromNow();
   }
 
   //Use this code to link events-page with events-report page
