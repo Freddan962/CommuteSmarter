@@ -2,17 +2,20 @@ module.exports = function(app, db) {
     app.post('/api/events',(req, res) => {
         const event = {
             id: events.length + 1,
-            type: req.body.type,
-            location: req.body.location
+            color: req.body.color,
+            location: req.body.location,
+            coordinates: req.body.coordinates,
+            titel:req.body.titel,
+            reported:req.body.reported
         };
         events.push(event);
-        res.send(event);
+        res.json(event);
     });
 
     const events = [
-        {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},titel:'Obstacle',},
-        {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},titel:'closed for Marathon'},
-        {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},titel:'emergency response vehicle'},
+        {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},title:'Obstacle', reported:'14:00',description:'car crash'},
+        {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},title:'closed for Marathon',reported:'08:00',description:'Marathon'},
+        {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},title:'emergency response vehicle',report:'09:00',description:'something'},
     ];
 
     app.get('/api/events', (req, res) => {
