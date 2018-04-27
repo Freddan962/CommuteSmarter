@@ -18,7 +18,7 @@ export class EventsPage {
   items: any[];
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.items = [];
-    for(let i = 0; i < 3 ; i++){
+    for(let i = 0; i < 20 ; i++){
       this.items.push({
         text: 'item' + i,
         id: i,
@@ -29,9 +29,6 @@ export class EventsPage {
     console.log(this.items);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad EventsPage');
-  }
 
   itemSelected(item){
     console.log(item);
@@ -40,10 +37,10 @@ export class EventsPage {
 
 
 
-  //Use this code to link events-page with events-report page
-  // openReportPage() {
-  //   this.navCtrl.push(EventsReportPage);
-  // }
+  // Use this code to link events-page with events-report page
+  openReportPage() {
+    this.navCtrl.push(EventsReportPage);
+  }
 
 
 }

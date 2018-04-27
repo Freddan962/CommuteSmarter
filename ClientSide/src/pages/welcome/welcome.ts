@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import { LanguageService } from './../../app/services/LanguageService';
 import { Storage } from '@ionic/storage';
 import { MapPage } from './../map/map';
+import { TabsPage } from './../tabs/tabs';
 import { TranslateService } from '@ngx-translate/core';
 
 /**
@@ -53,7 +54,7 @@ export class WelcomePage {
 
   goToNextPage() {
     this.storageService.set('finalizedWelcome', true);
-    this.navController.push(MapPage);
+    this.navController.push(TabsPage);
   }
 
   onNextClick() {
@@ -66,9 +67,5 @@ export class WelcomePage {
     this.slides.paginationClickable = false;
   }
 
-  onLanguageSelect(language) {
-    this.selectedLanguage = language;
-    console.log("Using language " + language);
-    this.translate.use(language);
-  }
+   
 }

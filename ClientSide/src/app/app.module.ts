@@ -7,6 +7,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { EventsPage} from '../pages/events/events';
 import { EventsReportPage } from '../pages/eventsreport/eventsreport';
 import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
+import { PositionselectorPage } from '../pages/positionselector/positionselector';
 
 
 import { MapPage } from '../pages/map/map';
@@ -41,6 +42,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     TabsPage,
     EventsReportPage,
     EventsreporttypemodalPage,
+    PositionselectorPage,
     MoreeventnotificationsPage,
     MorelanguagePage,
     WelcomePage
@@ -65,6 +67,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
     EventsPage,
     EventsReportPage,
     EventsreporttypemodalPage,
+    PositionselectorPage,
     MapPage,
     MorePage,
     TabsPage,

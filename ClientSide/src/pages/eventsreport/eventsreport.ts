@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
-import { NavController, ModalController,  } from 'ionic-angular';
+import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
 
 @Component({
@@ -9,11 +9,30 @@ import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreport
 })
 
 export class EventsReportPage {
+  defaultSelected: string;
+  selectedType: any;
+  selectedLocation: any;
+  reportDescription: any;
+  isenabled: boolean;
   constructor(
     public navCtrl: NavController, 
     public modalCtrl: ModalController,
-    private camera: Camera
-  ) {}
+    private camera: Camera,
+    public alertCtrl: AlertController
+  ) {
+
+    this.defaultSelected = 'Select type';
+
+    if(this.selectedType == null){
+      this.selectedType = this.defaultSelected; //'Type of event <span class="mandatory" >*</span>'
+    console.log(this.selectedType)
+    }
+
+
+    
+
+
+  }
 
   // Resizes the height of report description when text gets too long. 
   @ViewChild('myInput') myInput: ElementRef;
@@ -27,14 +46,35 @@ export class EventsReportPage {
     }
   }
   
-
-
   //Open report type modal
   openReportTypeModal() {
-    let modal = this.modalCtrl.create(EventsreporttypemodalPage);
+    let myParam = { selectedType: this.selectedType}
+    let modal = this.modalCtrl.create(EventsreporttypemodalPage, myParam);
     modal.present();
+    modal.onDidDismiss(data => {
+      this.selectedType = data;
+
+      //Activates the send button
+      if (this.selectedType == this.defaultSelected) {
+        this.isenabled = false;
+      } else {
+        this.isenabled = true;
+      }
+    });
   }
 
+  
+ 
+
+  //Open position picker modal
+  openPositionPickerModal() {
+    let modal = this.modalCtrl.create(PositionselectorPage);
+    modal.present();
+
+    modal.onDidDismiss(data => {
+      this.selectedLocation = data;
+    });
+  }
   
   //photo api for adding photos - this needs more tweaking later
   takePhoto(sourceType: number) {
@@ -54,6 +94,38 @@ export class EventsReportPage {
       // Handle error
     });
   }
+
+
+
+
+
+
+  showConfirm() {
+
+    
+    let confirm = this.alertCtrl.create({
+      title: 'Send the report?',
+      message: this.selectedType + ' at ' + this.selectedLocation + '\n' + this.reportDescription,
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            console.log('Agree clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+
+ 
 }
 
 

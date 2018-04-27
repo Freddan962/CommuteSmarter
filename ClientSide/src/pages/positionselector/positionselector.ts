@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, } from 'ionic-angular';
 
 declare var google;
 
@@ -12,8 +12,12 @@ export class PositionselectorPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  marker: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+    public viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
@@ -33,20 +37,25 @@ export class PositionselectorPage {
     });
 
     //TODO: Set this to whatever is the current location
-    var marker = null; 
+     this.marker = null; 
     
     map.addListener('click', function(e) {
       var lat = e.latLng.lat();
       var lng = e.latLng.lng();
 
-      if (marker) 
-        marker.setMap(null);
+      if (this.marker) 
+        this.marker.setMap(null);
       
-      marker = new google.maps.Marker({
+      this.marker = new google.maps.Marker({
         map: map,
         draggable: false,
         position: {lat: lat, lng: lng}
       });
+      console.log(this.marker.position.lat)
     });
+  }
+
+   dismiss() {
+     this.viewCtrl.dismiss(this.marker);
   }
 }
