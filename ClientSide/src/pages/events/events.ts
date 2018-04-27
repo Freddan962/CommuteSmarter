@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import moment from 'moment';
@@ -67,7 +68,7 @@ export class EventsPage {
   }
 
   openReportPage() {
-    if(isLoggedIn()) {
+    if(this.isLoggedIn()) {
       this.navCtrl.push(EventsReportPage);
     } else {
       this.navCtrl.push(MorePage);
