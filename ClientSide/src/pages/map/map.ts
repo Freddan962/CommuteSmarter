@@ -25,16 +25,38 @@ export class MapPage {
   displayMapEventCard: boolean;
   animateEventCard: string;
   mapEventInfo: any;
+  colors: any;
+  obstacles: any;
 
   constructor(public navCtrl: NavController, public geolocation: Geolocation,
     private socialSharing: SocialSharing) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
+
+    this.colors = {
+      'orange': '#ffa500',
+      'red': '#ff0000',
+      'blue': '#0000ff'
+    }
+
+    this.obstacles = [
+      { 
+        start: new google.maps.LatLng(59.407433, 17.947650),
+        end: new google.maps.LatLng(59.406676, 17.945710),
+        color: this.colors['orange']
+      }, 
+      {
+        start: new google.maps.LatLng(59.405539, 17.942470),
+        end: new google.maps.LatLng(59.406084, 17.943790),
+        color: this.colors['blue']
+      } 
+    ]
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MapPage');
     this.loadMap();
+    this.renderObstacles();
   }
 
   loadMap() {
@@ -51,7 +73,12 @@ export class MapPage {
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
   
     this.centerMapToLocation();
+  }
 
+  renderObstacles() {
+    this.obstacles.forEach(path => {
+      this.drawPath(path.start, path.end, path.color);
+    });
   }
 
   onClicked(){
@@ -118,5 +145,22 @@ export class MapPage {
     });
   }
 
+  drawPath(startPos, endPos, color) {
+    let request = {
+      origin: startPos,
+      destination: endPos,
+      travelMode: 'DRIVING'
+    }
 
+    let directionService = new google.maps.DirectionsService;
+    let directionsDisplay = new google.maps.DirectionsRenderer;
+
+    let polyLineOptions = { strokeColor: color }
+    directionsDisplay.setMap(this.map);
+    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true, polylineOptions: polyLineOptions });
+
+    directionService.route(request, function(result, status) {
+      directionsDisplay.setDirections(result);
+    });
+  }
 }
