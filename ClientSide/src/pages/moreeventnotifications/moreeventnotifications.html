@@ -26,7 +26,7 @@
                   <ion-label >Toggle all notifications</ion-label>
                 </ion-col>
                 <ion-col col-4>
-                  <ion-toggle [(ngModel)]="notifications" id="notifications-toggle" color="secondary"></ion-toggle>
+                  <ion-toggle [(ngModel)]="notifications" id="notifications-toggle" (ngModelChange)="onNotificationChange()" color="secondary"></ion-toggle>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -34,7 +34,7 @@
                   <ion-item id="notificationrange-item">
                     <ion-range id="notificationsrange-range" col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">  
                       <ion-label range-left>
-                          <ion-badge item-end>{{notificationDistance}}</ion-badge>
+                          <ion-badge item-end>{{notificationDistance}} KM</ion-badge>
                       </ion-label>
                     </ion-range>
                   </ion-item>
@@ -58,7 +58,7 @@
                   <ion-label >{{setting.name}}</ion-label>
                 </ion-col>
                 <ion-col col-4>
-                  <ion-toggle [(ngModel)]="setting.ngModel" id="'warning-' + setting.name'" color="secondary"></ion-toggle>
+                  <ion-toggle [(ngModel)]="setting.ngModel" (ionChange)="onNotificationSettingValueChange(setting.storageName, setting.ngModel)" (ngModelChange)="onNotificationSettingValueChange(setting.storageName, setting.ngModel)" [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
                 </ion-col>
               </ion-row>
             </div>

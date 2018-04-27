@@ -1,3 +1,4 @@
+import { TabsPage } from './../tabs/tabs';
 import { TranslateModule } from '@ngx-translate/core/';
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
@@ -28,7 +29,7 @@ export class WelcomePage {
 
   features: any;
   languages: any[];
-  selectedLanguage: any;
+  hasSelectedLanguage: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService, public StorageService: Storage, public translateService: TranslateService) {
     this.navController = navCtrl;
@@ -41,6 +42,8 @@ export class WelcomePage {
       {name: 'List', icon: 'information-circle', description: 'Detailed list of all events within your range. Report an ongoing event.'},
       {name: 'More', icon: 'ios-more', description: 'Adjust your notification preferences and register to unlock reporting feature.'}
     ]
+
+    this.hasSelectedLanguage = false;
   }
 
   ngOnInit() {
@@ -58,7 +61,7 @@ export class WelcomePage {
   }
 
   onNextClick() {
-    if (this.selectedLanguage == null)
+    if (!this.hasSelectedLanguage)
       return;
 
     this.slides.lockSwipeToNext(false);
@@ -67,5 +70,9 @@ export class WelcomePage {
     this.slides.paginationClickable = false;
   }
 
-   
+  onLanguageSelect(language) {
+    this.languageService.setLanguage(language);
+    this.hasSelectedLanguage = true;
+    this.translate.use(language);
+  }
 }

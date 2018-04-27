@@ -1,0 +1,46 @@
+page-filterMap {
+  .setting-text {
+    color:grey;
+    margin-left:5%;
+    font-size:11px;
+  }
+
+  .setting-title {
+    margin-top:10%;
+  }
+
+  .settings-list {
+    margin-bottom:0;
+  }
+
+  #notifications-toggle {
+    float:right;
+  }
+    .dot, .dot-orange, .dot-red, .dot-blue,{
+      height: 25px;
+      width: 25px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      margin-top:19%;
+    }
+  
+    .dot-orange {
+      background-color:orange;
+    }
+  
+    .dot-red {
+      background-color: red;
+    }
+    .dot-blue {
+        background-color: blue;
+
+    }
+    .warning-title {
+        margin-top:3%;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: rgb(0, 0, 0);
+      }
+  }
+  

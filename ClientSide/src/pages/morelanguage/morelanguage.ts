@@ -15,14 +15,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'morelanguage.html',
 })
 export class MorelanguagePage {
+  language: LanguageService;
   languages: any;
+  selectedLanguage: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public LanguageService: LanguageService) {
     this.languages = LanguageService.getLanguages();
+    this.language = LanguageService;
+    this.selectedLanguage = LanguageService.getSelectedLanguageID();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MorelanguagePage');
   }
 
+  onLanguageSelect(id) {
+    this.language.setLanguage(id);
+  }
 }

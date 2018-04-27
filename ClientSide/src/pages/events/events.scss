@@ -6,11 +6,29 @@ page-events {
     }
 
     .report-event {
-
       position: fixed;
       bottom: 60px;
-
-
     }
 
+
+    #report-event {
+        align-items: center;
+        bottom: 55px;
+        width: 85%;
+        position: fixed;
+    }
+    .dot, .dot-orange, .dot-red {
+        height: 25px;
+        width: 25px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        margin-top:19%;
+    }
+    .dot-orange {
+        background-color:orange;
+    }
+    .dot-red {
+        background-color: red;
+    }
 }

@@ -23,9 +23,11 @@
     "@angular/platform-browser-dynamic": "5.2.9",
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/core": "4.6.0",
+    "@ionic-native/geolocation": "^4.7.0",
     "@ionic-native/social-sharing": "^4.7.0",
     "@ionic-native/splash-screen": "4.6.0",
     "@ionic-native/status-bar": "4.6.0",
+    "@ionic-native/twitter-connect": "^4.7.0",
     "@ionic/storage": "2.1.3",
     "@ngx-translate/core": "^9.1.1",
     "@ngx-translate/http-loader": "^3.0.1",
@@ -33,9 +35,10 @@
     "cordova-ios": "4.5.4",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-ionic-keyboard": "^2.0.5",
-    "cordova-plugin-ionic-webview": "^1.2.0",
+    "cordova-plugin-ionic-webview": "^1.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "cordova-plugin-x-socialsharing": "^5.3.2",
@@ -44,6 +47,7 @@
     "ionicons": "3.0.0",
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
+    "twitter-connect-plugin": "git+https://github.com/chroa/twitter-connect-plugin.git",
     "zone.js": "0.8.20"
   },
   "devDependencies": {
@@ -60,7 +64,15 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {}
+      "cordova-plugin-camera": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      },
+      "twitter-connect-plugin": {
+        "FABRIC_KEY": "29ffbd50c9d16f409638495a50eec740d751fb3a",
+        "TWITTER_KEY": "agC1meoWus9BLERR6pLKhbIk2",
+        "TWITTER_SECRET": "UWLv3b9hqZmm7fZXKoGZR0PWcstKYIwP0efJOoDp30umYjN3xs"
+      }
     },
     "platforms": [
       "android",

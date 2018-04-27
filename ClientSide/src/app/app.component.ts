@@ -1,3 +1,4 @@
+import { LanguageService } from './services/LanguageService';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,20 +15,13 @@ import { EventsPage } from '../pages/events/events';
 })
 export class MyApp {
   storageService: Storage;
-  rootPage: any = EventsPage;
+  rootPage:any = TabsPage;
   alwaysShowWelcomePage: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public Storage: Storage, translate: TranslateService) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public Storage: Storage, translate: TranslateService, language: LanguageService) {
     this.storageService = Storage;
-    this.alwaysShowWelcomePage = false;
-
-    translate.addLangs(['en', 'sv']);
-    translate.setDefaultLang('en');
-    translate.use('en');
-
+    this.alwaysShowWelcomePage = true;
     platform.ready().then(() => {
-      this.handleWelcomeScreen();
- 
       statusBar.styleDefault();
       splashScreen.hide();
     });
