@@ -1,7 +1,7 @@
-import { EventService } from './../../app/services/eventService';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import { EventService } from './../../app/services/eventService';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
 

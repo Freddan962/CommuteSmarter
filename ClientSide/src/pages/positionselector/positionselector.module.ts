@@ -4,7 +4,7 @@ import { PositionselectorPage } from './positionselector';
 
 @NgModule({
   declarations: [
-    PositionselectorPage,
+    // PositionselectorPage,
   ],
   imports: [
     IonicPageModule.forChild(PositionselectorPage),

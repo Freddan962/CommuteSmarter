@@ -8,7 +8,6 @@ import {TranslateService} from '@ngx-translate/core';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MapPage } from '../pages/map/map';
 import { WelcomePage } from '../pages/welcome/welcome';
-import { EventsPage } from '../pages/events/events';
 
 @Component({
   templateUrl: 'app.html'
