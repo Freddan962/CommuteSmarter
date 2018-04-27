@@ -8,6 +8,7 @@ import { WelcomePage } from './../welcome/welcome';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
+var marker;
 
 @IonicPage()
 @Component({
@@ -37,29 +38,38 @@ export class MapPage {
   }
 
   loadMap() {
-	this.geolocation.getCurrentPosition().then
-	((position) => {
-		let latLng = new google.maps.LatLng
-		(position.coords.latitude, position.coords.longitude);
-		
-		let mapOptions = {
-			center: latLng,
-			zoom: 13,
-			mapTypeId: google.maps.MapTypeId.ROADMAP,
-			disableDefaultUI: true
-		}
-		
-		this.map = new google.maps.Map
-		(this.mapElement.nativeElement, mapOptions);
-		this.addMarker();
-	}, (err) => {
-		console.log(err);
-	});
-  }  
+
+    let latLng = new google.maps.LatLng(59.326137, 18.071325);
+
+    let mapOptions = {
+      center: latLng,
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      disableDefaultUI: true
+    }
+
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+  
+    this.centerMapToLocation();
+
+  }
 
   onClicked(){
     this.navCtrl.push(filterMap);
-  }
+  }    
+
+  centerMapToLocation() {
+    if(marker == null) this.addMarker();
+    this.geolocation.getCurrentPosition().then
+      ((position) => {
+        let latLng = new google.maps.LatLng
+          (position.coords.latitude, position.coords.longitude);
+        this.map.setCenter(latLng);
+        marker.setPosition(latLng);
+      }, (err) => {
+        console.log(err);
+      });
+	}
   
   openMapEventInfo() {
     console.log('Called open map event info');
@@ -84,35 +94,38 @@ export class MapPage {
     console.log('Called close map event');
     this.animateEventCard = 'fadeAway';
 
-    setTimeout(()=> {
+    setTimeout(() => {
       this.displayMapEventCard = false;
       this.animateEventCard = 'reveal';
     }, 1000);
   }
   
-   addMarker(){
- 
-  let marker = new google.maps.Marker({
-    map: this.map,
-    animation: google.maps.Animation.DROP,
-    position: this.map.getCenter()
-  });
- 
-  let content = "<h4>Information!</h4>";         
- 
-  this.addInfoWindow(marker, content);
- 
-}
+  addMarker() {
+    
+    marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      icon: 
+      new google.maps.MarkerImage(
+        'https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png',
+        null, /* size is determined at runtime */
+        null, /* origin is 0,0 */
+        null, /* anchor is bottom center of the scaled image */
+        new google.maps.Size(25, 25) /* marker size */
+      ),
+      position: this.map.getCenter()
+    });
 
-addInfoWindow(marker, content){
- 
-  let infoWindow = new google.maps.InfoWindow({
-    content: content
-  });
- 
-  google.maps.event.addListener(marker, 'click', () => {
-    infoWindow.open(this.map, marker);
-  });
- 
-}
+    let content = "<h4>Information!</h4>";
+
+    this.addInfoWindow(marker, content);
+
+  }
+
+  addInfoWindow(marker, content) {
+
+    let infoWindow = new google.maps.InfoWindow({
+      content: content
+    });
+  }
 }
