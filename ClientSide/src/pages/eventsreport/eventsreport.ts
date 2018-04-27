@@ -10,6 +10,7 @@ import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreport
 
 export class EventsReportPage {
   defaultSelected: string;
+  defaultLocation: string;
   selectedType: any;
   selectedLocation: any;
   reportDescription: any;
@@ -20,32 +21,26 @@ export class EventsReportPage {
     private camera: Camera,
     public alertCtrl: AlertController
   ) {
-
     this.defaultSelected = 'Select type';
-
-    if(this.selectedType == null){
-      this.selectedType = this.defaultSelected; //'Type of event <span class="mandatory" >*</span>'
-    console.log(this.selectedType)
-    }
-
-
-    
-
-
+    this.defaultLocation = 'Select Location'
+    this.selectedType = this.defaultSelected; 
+    this.selectedLocation = this.defaultLocation;
   }
 
   // Resizes the height of report description when text gets too long. 
-  @ViewChild('myInput') myInput: ElementRef;
+  @ViewChild('descriptionInput') descriptionInput: ElementRef;
   resize() {
-    let element = this.myInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
+    let element = this.descriptionInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
     let scrollHeight = element.scrollHeight;
     element.style.height = scrollHeight + 'px';
    
     if ((scrollHeight + 30) > 100){
-      this.myInput['_elementRef'].nativeElement.style.height = (scrollHeight + 30) + 'px';
+      this.descriptionInput['_elementRef'].nativeElement.style.height = (scrollHeight + 30) + 'px';
     }
   }
-  
+
+
+
   //Open report type modal
   openReportTypeModal() {
     let myParam = { selectedType: this.selectedType}
@@ -53,18 +48,16 @@ export class EventsReportPage {
     modal.present();
     modal.onDidDismiss(data => {
       this.selectedType = data;
-
-      //Activates the send button
-      if (this.selectedType == this.defaultSelected) {
-        this.isenabled = false;
-      } else {
-        this.isenabled = true;
-      }
+      this.activateSendButton()
     });
   }
 
-  
- 
+  //Activates the send button if criteria is fullfilled
+ activateSendButton(){
+   if (this.selectedType != this.defaultSelected && this.selectedLocation != this.defaultLocation) {
+     this.isenabled = true;
+   }
+ }
 
   //Open position picker modal
   openPositionPickerModal() {
@@ -73,6 +66,7 @@ export class EventsReportPage {
 
     modal.onDidDismiss(data => {
       this.selectedLocation = data;
+      this.activateSendButton()
     });
   }
   
@@ -98,25 +92,26 @@ export class EventsReportPage {
 
 
 
-
-
+// Alert modal to confirm report details
   showConfirm() {
-
-    
     let confirm = this.alertCtrl.create({
-      title: 'Send the report?',
-      message: this.selectedType + ' at ' + this.selectedLocation + '\n' + this.reportDescription,
+      title: 'Confirm report',
+      message:
+        `<p>${this.selectedType} at ${this.selectedLocation}.<p>
+        <p>Description:<\p>
+        <p>${ this.reportDescription}</p>
+      `,
       buttons: [
         {
           text: 'Cancel',
           handler: () => {
-            console.log('Disagree clicked');
+            console.log('Cancel clicked');
           }
         },
         {
           text: 'Send',
           handler: () => {
-            console.log('Agree clicked');
+            console.log('Send clicked');
           }
         }
       ]

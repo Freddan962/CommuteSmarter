@@ -13,15 +13,15 @@
 
     <ion-item no-lines>
       <a ion-item (click)="openPositionPickerModal()">
-        Choose location
+        {{selectedLocation}}
         <span class="mandatory">*</span>
       </a>
     </ion-item>
   </ion-list>
 
   <ion-item no-lines>
-    <ion-label floating class="report-desc-title">Describe the event</ion-label>
-    <ion-textarea #myInput id="myInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="reportDescription"></ion-textarea>
+    <ion-label  floating class="report-desc-title">Describe the event</ion-label>
+    <ion-textarea (click)="descriptionInput.setFocus()" #descriptionInput id="descriptionInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
 
   <ion-grid padding>
@@ -36,9 +36,7 @@
   </ion-grid>
 
   <ion-footer>
-    <ion-toolbar>
-      <button ion-button full no-lines  (click)='showConfirm()' [disabled]="!isenabled">Send report</button>
-    </ion-toolbar>
+      <button ion-button block no-lines  (click)='showConfirm()' [disabled]="!isenabled">Send report</button>
   </ion-footer>
 </ion-content>
 

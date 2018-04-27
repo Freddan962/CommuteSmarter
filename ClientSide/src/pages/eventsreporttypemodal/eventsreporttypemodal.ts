@@ -40,27 +40,31 @@ export class EventsreporttypemodalPage {
 
     const eventtypes = [
       {
-        name: 'Car crash',
+        name: 'Critical warnings',
+        color: 'red',
         subcategories: [
-          'type1.1',
-          'type1.2',
-          'type1.3'
+          'Obstacle blocking the road',
+          'Closed for event',
+          'Other'
         ] 
       },
       {
-        name: 'Traffic Jam',
+        name: 'Be cautious',
+        color: 'orange',
         subcategories: [
-          'type2.1',
-          'type2.2',
-          'type2.3'
+          'Obstacle on the road',
+          'Traffic jam',
+          'Road work',
+          'Other'
         ]
       },
       {
-        name: 'Obstacle',
+        name: 'Other events',
+        color: 'blue',
         subcategories: [
-          'type3.1',
-          'type3.2',
-          'type3.3'
+          'Police control',
+          'Other'
+        
         ]
       }
     ]
@@ -69,6 +73,7 @@ export class EventsreporttypemodalPage {
     for (let i = 0; i < eventtypes.length; i++) {
       this.events.push({
       eventtype: eventtypes[i].name,
+      color: eventtypes[i].color,
       eventsubtype: eventtypes[i].subcategories
     });
   }

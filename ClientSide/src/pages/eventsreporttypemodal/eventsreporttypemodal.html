@@ -12,7 +12,7 @@
   
   <div radio-group>
   <ion-list *ngFor="let event of events">
-    <ion-list-header >{{ event.eventtype | translate}}</ion-list-header>
+  <ion-list-header><span [ngClass]="'dot-' + event.color"></span>{{ event.eventtype | translate}}</ion-list-header>
     <ion-item *ngFor="let item of event.eventsubtype">
       <ion-label color="dark"> {{ item | translate}}</ion-label>
       <ion-radio (click)="onSelectType(item)" [value]="item" value="{{ item }}">is</ion-radio>
