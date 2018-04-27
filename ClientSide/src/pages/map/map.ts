@@ -51,8 +51,12 @@ export class MapPage {
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
   
     this.centerMapToLocation();
+
   }
 
+  onClicked(){
+    this.navCtrl.push(filterMap);
+  }    
 
   centerMapToLocation() {
     if(marker == null) this.addMarker();
