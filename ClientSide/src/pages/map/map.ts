@@ -59,7 +59,8 @@ export class MapPage {
   }    
 
   centerMapToLocation() {
-    if(marker == null) this.addMarker();
+    if(marker == null) this.addMarker
+      ('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
@@ -100,32 +101,22 @@ export class MapPage {
     }, 1000);
   }
   
-  addMarker() {
+  addMarker(markerImage, position) {
     
     marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
       icon: 
       new google.maps.MarkerImage(
-        'https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png',
+        markerImage,
         null, /* size is determined at runtime */
         null, /* origin is 0,0 */
         null, /* anchor is bottom center of the scaled image */
         new google.maps.Size(25, 25) /* marker size */
       ),
-      position: this.map.getCenter()
-    });
-
-    let content = "<h4>Information!</h4>";
-
-    this.addInfoWindow(marker, content);
-
-  }
-
-  addInfoWindow(marker, content) {
-
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
+      position: position
     });
   }
+
+
 }
