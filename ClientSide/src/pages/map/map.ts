@@ -40,16 +40,33 @@ export class MapPage {
     }
 
     this.obstacles = [
-      { 
+      {
+        type: 'line', 
         start: new google.maps.LatLng(59.407433, 17.947650),
         end: new google.maps.LatLng(59.406676, 17.945710),
         color: this.colors['orange']
       }, 
       {
+        type: 'line',
         start: new google.maps.LatLng(59.405539, 17.942470),
         end: new google.maps.LatLng(59.406084, 17.943790),
         color: this.colors['blue']
-      } 
+      },
+      {
+        type: 'icon',
+        start: new google.maps.LatLng(59.405539, 17.942470),
+        color: 'red'
+      },
+      {
+        type: 'icon',
+        start: new google.maps.LatLng(59.408429, 17.944525),
+        color: 'blue'
+      },
+      {
+        type: 'icon',
+        start: new google.maps.LatLng(59.408559, 17.940394),
+        color: 'yellow'
+      }
     ]
   }
 
@@ -76,8 +93,17 @@ export class MapPage {
   }
 
   renderObstacles() {
-    this.obstacles.forEach(path => {
-      this.drawPath(path.start, path.end, path.color);
+    this.obstacles.forEach(obstacle => {
+      switch (obstacle.type) {
+        case 'icon':
+          this.drawIcon(obstacle.start, obstacle.color);
+          break;
+          case 'line':
+          this.drawPath(obstacle.start, obstacle.end, obstacle.color);
+          break;
+        default:
+          break;
+      }
     });
   }
 
@@ -162,5 +188,9 @@ export class MapPage {
     directionService.route(request, function(result, status) {
       directionsDisplay.setDirections(result);
     });
+  }
+
+  drawIcon(startPos, color) {
+    this.addMarker('./assets/imgs/' + color + '.png', startPos);
   }
 }
