@@ -5,6 +5,7 @@ import { EventsReportPage } from '../eventsreport/eventsreport';
 import moment from 'moment';
 
 import { SocialSharing } from '@ionic-native/social-sharing';
+declare var google;
 
 @IonicPage()
 @Component({
@@ -43,6 +44,22 @@ export class EventsPage {
 
   parseTime(time) {
     return moment(time).fromNow();
+  }
+
+  distance() {
+    let currentLocation = new google.maps.LatLng(59.405539, 17.942470);
+    let marker = new google.maps.LatLng(65.405539, 17.942470);
+    let unit = 'km';
+
+    let currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker);
+
+    if(currentdistance < 1000) {
+      unit = 'm';
+    } else {
+      currentdistance = currentdistance / 1000;
+    }
+
+    return currentdistance.toFixed(2) + ' ' + unit;
   }
 
   //Use this code to link events-page with events-report page
