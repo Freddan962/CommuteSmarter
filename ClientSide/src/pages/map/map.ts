@@ -55,17 +55,38 @@ export class MapPage {
       {
         type: 'icon',
         start: new google.maps.LatLng(59.405539, 17.942470),
-        color: 'red'
+        color: 'red',
+        data: {
+          title: 'Car Crash',
+          time: 30,
+          distance: 1.9,
+          unit: 'km',
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+        }
       },
       {
         type: 'icon',
         start: new google.maps.LatLng(59.408429, 17.944525),
-        color: 'blue'
+        color: 'blue',
+        data: {
+          title: 'Obstacle',
+          time: 128,
+          distance: 41,
+          unit: 'km',
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+        }
       },
       {
         type: 'icon',
         start: new google.maps.LatLng(59.408559, 17.940394),
-        color: 'yellow'
+        color: 'yellow', 
+        data: {
+          title: 'Something illegal',
+          time: 12,
+          distance: 2.3,
+          unit: 'km',
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+        }
       }
     ]
   }
@@ -96,7 +117,7 @@ export class MapPage {
     this.obstacles.forEach(obstacle => {
       switch (obstacle.type) {
         case 'icon':
-          this.drawIcon(obstacle.start, obstacle.color);
+          this.drawIcon(obstacle.start, obstacle.color, obstacle.data);
           break;
           case 'line':
           this.drawPath(obstacle.start, obstacle.end, obstacle.color);
@@ -125,16 +146,9 @@ export class MapPage {
       });
 	}
   
-  openMapEventInfo() {
-    console.log('Called open map event info');
-    this.mapEventInfo = {
-      title: 'Car Crash',
-      time: 30,
-      distance: 1.9,
-      unit: 'km',
-      text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
-    }
-
+  openMapEventInfo(data) {
+    console.log("Open map event info with data: " + data);
+    this.mapEventInfo = data; 
     this.displayMapEventCard = true;
   }
 
@@ -169,6 +183,18 @@ export class MapPage {
       ),
       position: position
     });
+
+    return marker;
+  }
+
+  addInfoMarker(markerImage, position, data) {
+    marker = this.addMarker(markerImage, position);
+    marker.data = data;
+
+    marker.addListener('click', () => {
+      console.log("Clicked on this marker");
+      this.openMapEventInfo(marker.data);
+    });
   }
 
   drawPath(startPos, endPos, color) {
@@ -190,7 +216,7 @@ export class MapPage {
     });
   }
 
-  drawIcon(startPos, color) {
-    this.addMarker('./assets/imgs/' + color + '.png', startPos);
+  drawIcon(startPos, color, data) {
+    this.addInfoMarker('./assets/imgs/' + color + '.png', startPos, data);
   }
 }
