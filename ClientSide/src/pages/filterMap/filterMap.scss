@@ -1,5 +1,21 @@
 page-filterMap {
+  .setting-text {
+    color:grey;
+    margin-left:5%;
+    font-size:11px;
+  }
 
+  .setting-title {
+    margin-top:10%;
+  }
+
+  .settings-list {
+    margin-bottom:0;
+  }
+
+  #notifications-toggle {
+    float:right;
+  }
     .dot, .dot-orange, .dot-red, .dot-blue,{
       height: 25px;
       width: 25px;
