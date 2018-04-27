@@ -1,4 +1,5 @@
 import { EventService } from './services/eventService';
+import { HttpService } from './services/httpService';
 import { LoginWithTwitterService } from './services/loginWithTwitterService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -83,6 +84,7 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     EventService,
+    HttpService,
     LoginWithTwitterService,
     SocialSharing,
     TwitterConnect,
