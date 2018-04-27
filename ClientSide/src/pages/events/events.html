@@ -1,15 +1,7 @@
-<!--
-  Generated template for the EventsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
     <ion-title>Events</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
@@ -19,8 +11,8 @@
         <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
-        {{ item.title + ' - ' + item.location }}
-        <p>{{ item.time + ' ' + item.distance + ' km'}}</p>
+        {{ item.title }} - {{ item.location }}
+        <p>{{ parseTime(item.reported) }}, {{ distance() }}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
       </div>
@@ -30,7 +22,6 @@
         <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
       </div>
     </div>  
-
   </ion-list>
 
   <ion-footer>

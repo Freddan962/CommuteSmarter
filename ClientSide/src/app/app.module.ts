@@ -1,4 +1,5 @@
 import { EventService } from './services/eventService';
+import { HttpService } from './services/httpService';
 import { LoginWithTwitterService } from './services/loginWithTwitterService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -29,6 +30,7 @@ import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core/'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
@@ -85,11 +87,13 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     EventService,
+    HttpService,
     LoginWithTwitterService,
     SocialSharing,
     TwitterConnect,
     Camera,
     LanguageService,
+    HTTP,
 	Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
