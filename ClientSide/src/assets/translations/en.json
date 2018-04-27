@@ -18,6 +18,9 @@
     "tapToSignOut": "tap to sign out",
     "eventNoti": "Event Notifications",
     "lang": "Language",
-    "contact": "Contact Developers" 
+    "contact": "Contact Developers"
+  },
+  "Events": {
+    "event": "Events",
   }
 }

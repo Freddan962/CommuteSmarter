@@ -11,5 +11,16 @@
     "featureMoreTitle": "Mer",
     "featureMoreDesc": "Ändra dina notifikationer...",
     "goToAppButton": "Ta mig till appen"
+  },
+  "More": {
+    "notSignedIn": "Ej inloggad",
+    "tapToRegister": "tryck för registrera eller logga in",
+    "tapToSignOut": "tryck för att logga ut",
+    "eventNoti": "Händelsenotiser",
+    "lang": "Språk",
+    "contact": "Kontakta utvecklarna"
+  },
+  "Events": {
+    "event": "Händelser",
   }
 }
