@@ -16,7 +16,7 @@ export class LoginWithTwitterService {
     private storage: Storage,
     private toastCtrl: ToastController) {
       this.storage.get('twittwerUser').then((twittwerUser) => {
-        if(twittwerUser === undefined) {
+        if(twittwerUser === undefined || twittwerUser === null) {
           this.setUserDetailsNull();
           this.signedIn = false;
         } else  {

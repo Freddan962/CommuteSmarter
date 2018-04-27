@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Events</ion-title>
+    <ion-title>{{ 'Events.event' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
         <p>{{item.description}}</p>
         <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
       </div>
-    </div>  
+    </div>
   </ion-list>
 
   <ion-footer>
