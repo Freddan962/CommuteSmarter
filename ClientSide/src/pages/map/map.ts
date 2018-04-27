@@ -98,7 +98,6 @@ export class MapPage {
   }
 
   loadMap() {
-
     let latLng = new google.maps.LatLng(59.326137, 18.071325);
 
     let mapOptions = {
@@ -109,7 +108,6 @@ export class MapPage {
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-  
     this.centerMapToLocation();
   }
 
@@ -148,19 +146,15 @@ export class MapPage {
 	}
   
   openMapEventInfo(data) {
-    console.log("Open map event info with data: " + data);
     this.mapEventInfo = data; 
     this.displayMapEventCard = true;
   }
 
   shareEvent() {
-    console.log("called share event");
-
     this.socialSharing.share(this.mapEventInfo.title, this.mapEventInfo.text, null, null);
   }
 
   closeMapEventInfo() {
-    console.log('Called close map event');
     this.animateEventCard = 'fadeAway';
 
     setTimeout(() => {
@@ -170,7 +164,6 @@ export class MapPage {
   }
   
   addMarker(markerImage, position) {
-    
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
