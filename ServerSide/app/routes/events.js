@@ -13,9 +13,9 @@ module.exports = function(app, db) {
     });
 
     const events = [
-        {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},title:'Obstacle', reported:'14:00',description:'car crash'},
-        {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},title:'closed for Marathon',reported:'08:00',description:'Marathon'},
-        {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},title:'emergency response vehicle',report:'09:00',description:'something'},
+        {id: 1, color:'red', location: 'Torsgatan', coordinates: {lat: 54566456, long:5677998},title:'Obstacle', reported:'2018-04-27 09:30', description:'car crash'},
+        {id: 2, color:'orange', location: 'Kungsgatan',coordinates: {lat: 54566456, long:5677998},title:'closed for Marathon', reported:'2018-04-27 11:30', description:'Marathon'},
+        {id: 3, color:'blue', location: 'Odengatan',coordinates: {lat: 54566456, long:5677998},title:'emergency response vehicle', report:'2018-04-27 14:30', description:'something'},
     ];
 
     app.get('/api/events', (req, res) => {
