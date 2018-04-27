@@ -7,7 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
   @Component({
     templateUrl: 'eventsreporttypemodal.html'
   })
-
 export class EventsreporttypemodalPage {
   languageService: LanguageService;
   translate: TranslateService;
@@ -20,33 +19,30 @@ export class EventsreporttypemodalPage {
 
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public LanguageService: LanguageService,
     public translateService: TranslateService,
     params: NavParams
-    
-  ) 
-  {
+
+  ) {
     this.events = [];
     this.languageService = LanguageService;
     this.translate = translateService;
-    console.log("myparam: " + this.myParam)
 
-    if(this.myParam != 'Select type'){
+    if (this.myParam != 'Select type') {
       this.selectedType = this.myParam;
     }
 
-    const eventtypes = [
-      {
+    const eventtypes = [{
         name: 'Critical warnings',
         color: 'red',
         subcategories: [
           'Obstacle blocking the road',
           'Closed for event',
-          'Other'
-        ] 
+          'Other (critical)'
+        ]
       },
       {
         name: 'Be cautious',
@@ -55,7 +51,7 @@ export class EventsreporttypemodalPage {
           'Obstacle on the road',
           'Traffic jam',
           'Road work',
-          'Other'
+          'Other (cautious)'
         ]
       },
       {
@@ -63,37 +59,25 @@ export class EventsreporttypemodalPage {
         color: 'blue',
         subcategories: [
           'Police control',
-          'Other'
-        
+          'Other (describe in textarea)'
         ]
       }
     ]
-
-
     for (let i = 0; i < eventtypes.length; i++) {
       this.events.push({
-      eventtype: eventtypes[i].name,
-      color: eventtypes[i].color,
-      eventsubtype: eventtypes[i].subcategories
-    });
-  }
-
- 
-
-    //Use this to pass params to the modal when implementing logic
-      console.log(this.myParam)
+        eventtype: eventtypes[i].name,
+        color: eventtypes[i].color,
+        eventsubtype: eventtypes[i].subcategories
+      });
+    }
   }
 
   onSelectType(item) {
     this.selectedType = item;
-    console.log(this.selectedType)
   }
-
-  
 
   dismiss() {
     this.viewCtrl.dismiss(this.selectedType);
   }
 }
-
 

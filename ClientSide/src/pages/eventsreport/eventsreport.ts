@@ -118,9 +118,6 @@ export class EventsReportPage {
     });
     confirm.present();
   }
-
-
- 
 }
 
 

@@ -7,9 +7,7 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding >
-  
   <div radio-group>
   <ion-list *ngFor="let event of events">
   <ion-list-header><span [ngClass]="'dot-' + event.color"></span>{{ event.eventtype | translate}}</ion-list-header>
