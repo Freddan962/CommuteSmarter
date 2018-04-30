@@ -36,6 +36,5 @@ UserInterfaceState.xcuserstate
 ngrok
 
 ClientSide/package-lock.json
-
-ClientSide/package-lock.json
+ServerSide/package-lock.json
 ServerSide/databases/
