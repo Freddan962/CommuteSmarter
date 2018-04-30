@@ -6,21 +6,32 @@ router.post('/twitter-account', (request, result) => {
   console.log(request.body);
 
   let body = request.body;
+
   let response = {
     status: 200
   };
 
   checkUserDetails(body, response);
 
-  // if the response code is 200 the user details were recived.
+  // if the response code is stiil set to 200 the user details were recived.
   if(response.status === 200) {
+    let user = {
+      userId: body.userId,
+      userToken: body.userToken
+      lastLogin: 'Best way to get Current Time'
+    }
+
     //add to database
-    response['messages'] = ["Added the user successfully!"];
-    response['amountMessages'] = 1;
+    models.Twitter.create(user).then(event => {
+      response['messages'] = ["Added the user successfully!"];
+      response['amountMessages'] = 1;
+    });
   }
 
   result.json(response);
 });
+
+module.exports = router;
 
 function checkUserDetails(body, response) {
   if(userIdIsMissing(body)) {
