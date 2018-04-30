@@ -23,41 +23,41 @@ router.post('/twitter-account', (request, result) => {
 });
 
 function checkUserDetails(body, response) {
-if(userIdIsMissing(body)) {
-  pushAnError(response, "The userId seems to be missing!");
-}
+  if(userIdIsMissing(body)) {
+    pushAnError(response, "The userId seems to be missing!");
+  }
 
-if(!userIdIsMissing(body) && body.userId.length <= 0) {
-  pushAnError(response, "The userId seems to be way to short!");
-}
+  if(!userIdIsMissing(body) && body.userId.length <= 0) {
+    pushAnError(response, "The userId seems to be way to short!");
+  }
 
-if(userTokenIsMissing(body)) {
-  pushAnError(response, "The userToken seems to be missing!");
-}
+  if(userTokenIsMissing(body)) {
+    pushAnError(response, "The userToken seems to be missing!");
+  }
 
-if(!userTokenIsMissing(body) && body.userToken.length <= 0) {
-  pushAnError(response, "The userToken seems to be way to short!");
-}
+  if(!userTokenIsMissing(body) && body.userToken.length <= 0) {
+    pushAnError(response, "The userToken seems to be way to short!");
+  }
 }
 
 function userIdIsMissing(body) {
-return body.userId === undefined || body.userId === null;
+  return body.userId === undefined || body.userId === null;
 }
 
 function userTokenIsMissing(body) {
-return body.userToken === undefined || body.userToken === null;
+  return body.userToken === undefined || body.userToken === null;
 }
 
 function createErrorObject(response) {
-response['status'] = 400;
-response['messages'] = [];
-response['amountMessages'] = 0;
+  response['status'] = 400;
+  response['messages'] = [];
+  response['amountMessages'] = 0;
 }
 
 function pushAnError(object, error) {
-if(object.amountMessages === undefined) {
-  createErrorObject(object);
-}
-object.messages.push(error);
-++object.amountMessages;
+  if(object.amountMessages === undefined) {
+    createErrorObject(object);
+  }
+  object.messages.push(error);
+  ++object.amountMessages;
 }
