@@ -1,5 +1,15 @@
 {
   "development": {
+    "dialect": "sqlite",
+    "storage": "databases/database_test.sqlite",
+    "operatorsAliases": false    
+  },
+  "test": {
+    "dialect": "sqlite",
+    "storage": "databases/database_test.sqlite",
+    "operatorsAliases": false
+  },
+  "production": {
     "database": "nigr0607", 
     "username": "nigr0607",
     "password": "vaiM0reedeiy",
@@ -12,15 +22,5 @@
       "acquire": 30000,
       "idle": 10000
     }
-  },
-  "test": {
-    "dialect": "sqlite",
-    "storage": "databases/database_test.sqlite",
-    "operatorsAliases": false
-  },
-  "production": {
-    "dialect": "sqlite",
-    "storage": "databases/database_test.sqlite",
-    "operatorsAliases": false
   }
 }
