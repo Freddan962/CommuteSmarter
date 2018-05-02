@@ -153,15 +153,14 @@ export class MapPage {
    * @memberof MapPage
    */
   centerMapToLocation() {
-    if(locationMarker == null) {
-      locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
-    }
-
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
+        if(locationMarker == null) {
+          locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+        }
         locationMarker.setPosition(latLng);
       }, (err) => {
         console.log(err);
