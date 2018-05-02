@@ -36,9 +36,3 @@ router.get('/api/events/:id', (req, res) => {
 });
 
 module.exports = router;
-
-//Just for test demo
-function sum(a, b) {
-  return a + b;
-}
-module.exports = sum;
