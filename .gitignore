@@ -34,7 +34,7 @@ ClientSide/package-lock.json
 Thumbs.db
 UserInterfaceState.xcuserstate
 ngrok
-
-ClientSide/package-lock.json
 ServerSide/package-lock.json
+ClientSide/package-lock.json
+build.txt
 ServerSide/databases/
