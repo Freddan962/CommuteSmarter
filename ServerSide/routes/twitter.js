@@ -2,6 +2,9 @@ const models = require('../models');
 const express = require('express');
 const router = express.Router();
 
+/**
+* Route for adding a new twitter user to the database.
+*/
 router.post('/api/twitter', (request, result) => {
   console.log(request.body);
 
