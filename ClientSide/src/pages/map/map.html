@@ -16,9 +16,9 @@
     </div>
     <button (click)="closeMapEventInfo()" id="close-map-event"><ion-icon name="close-circle"></ion-icon></button>
     <h2>{{mapEventInfo.title}}</h2>
-    <p>Reported {{mapEventInfo.time}} min ago | {{mapEventInfo.distance}} {{mapEventInfo.unit}}</p>
+    <p>{{'Map.reported' | translate}} {{mapEventInfo.time}} {{'Map.minAgo' | translate}} | {{mapEventInfo.distance}} {{mapEventInfo.unit}}</p>
     <p>Yes, this is a lot of text that serve as a placeholder... More of the text.</p>
-    <button ion-button block (click)="shareEvent">Share this event</button>
+    <button ion-button block (click)="shareEvent">{{'Events.shareEvent' | translate}}</button>
   </div>
 
   <div #map id="map"></div>

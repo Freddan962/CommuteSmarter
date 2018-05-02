@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Event Notifications</ion-title>
+    <ion-title>{{ 'EventNotifications.title' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,13 +17,13 @@
   <ion-row>
     <ion-col>
       <div id="settings-container">
-        <p class="setting-text setting-title">GENERAL</p>
+        <p class="setting-text setting-title">{{ 'EventNotifications.general' | translate }}</p>
         <ion-list class="settings-list">
           <ion-item>
             <div item-content col-12>
               <ion-row> 
                 <ion-col col-8>
-                  <ion-label >Toggle all notifications</ion-label>
+                  <ion-label >{{ 'EventNotifications.toggleAll' | translate }}</ion-label>
                 </ion-col>
                 <ion-col col-4>
                   <ion-toggle [(ngModel)]="notifications" id="notifications-toggle" (ngModelChange)="onNotificationChange()" color="secondary"></ion-toggle>
@@ -43,9 +43,9 @@
             </div>
           </ion-item>
         </ion-list>
-        <p class="setting-text">The slider determines how big area you want to receive notifications from.</p>
+        <p class="setting-text">{{ 'EventNotifications.sliderInfo' | translate }}</p>
 
-        <p class="setting-text setting-title">NOTIFICATIONS</p>
+        <p class="setting-text setting-title">{{ 'EventNotifications.notifications' | translate }}</p>
         <ion-list class="settings-list">
           
           <ion-item *ngFor="let setting of notificationSettings">
