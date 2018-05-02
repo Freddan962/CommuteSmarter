@@ -1,3 +1,7 @@
+/**
+ * The main application file in which express is
+ * instansiated.
+ */
 const createError = require('http-errors');
 const express = require('express');
 const logger = require('morgan');
