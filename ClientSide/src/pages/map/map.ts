@@ -111,7 +111,8 @@ export class MapPage {
       center: latLng,
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      clickableIcons: false
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
