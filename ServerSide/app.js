@@ -1,23 +1,20 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+/**
+ * The main application file in which express is
+ * instansiated.
+ */
+const createError = require('http-errors');
+const express = require('express');
+const logger = require('morgan');
 
-var events = require('./routes/events');
-var twitter = require('./routes/twitter');
-
-var app = express();
+const app = express();
+const models = require('./models');
 
 // view engine setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(events);
-app.use(twitter);
+require('./routes')(app, models);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
