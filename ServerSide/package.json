@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "heroku-prebuild": "node_modules/.bin/sequelize db:seed:all",
     "start": "node ./bin/www"
   },
   "dependencies": {
