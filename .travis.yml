@@ -1,8 +1,8 @@
 language: node_js
 node_js:
-  -"8"
+  - "8"
 before_install:
-  -"cd ServerSide"
+  - "cd ServerSide"
 branches:
    only:
      - master
