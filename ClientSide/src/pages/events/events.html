@@ -19,12 +19,12 @@
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-        <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
+        <button ion-button color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
       </div>
     </div>
   </ion-list>
 
   <ion-footer>
-    <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">Report Incident</button>
+    <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">{{'Events.reportIncident' | translate}}</button>
   </ion-footer>
 </ion-content>
