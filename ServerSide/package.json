@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "test": "jest",
     "start": "node ./bin/www"
   },
   "dependencies": {
@@ -14,5 +15,9 @@
     "sequelize": "^4.37.6",
     "sequelize-cli": "^4.0.0",
     "sqlite3": "^4.0.0"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3",
+    "supertest": "^3.0.0"
   }
 }
