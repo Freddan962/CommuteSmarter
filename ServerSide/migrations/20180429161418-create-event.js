@@ -23,7 +23,7 @@ module.exports = {
       title: {
         type: Sequelize.STRING
       },
-      report: {
+      reported: {
         type: Sequelize.STRING
       },
       description:{
