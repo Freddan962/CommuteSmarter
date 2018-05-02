@@ -6,21 +6,57 @@
     "appDescription": "Ett bra verktyg...",
     "featureMapTitle": "Kartvy",
     "featureMapDesc": "Skrolla och...",
-    "featureListTitle": "Händelse Lista",
+    "featureListTitle": "Händelselista",
     "featureListDesc": "Detaljerad lista...",
     "featureMoreTitle": "Mer",
     "featureMoreDesc": "Ändra dina notifikationer...",
     "goToAppButton": "Ta mig till appen"
   },
+  "Tabs": {
+    "map": "Karta",
+    "events": "Händelser",
+    "more": "Mer"
+  },
   "More": {
     "notSignedIn": "Ej inloggad",
-    "tapToRegister": "tryck för registrera eller logga in",
-    "tapToSignOut": "tryck för att logga ut",
+    "tapToRegister": "Tryck för registrera eller logga in",
+    "tapToSignOut": "Tryck för att logga ut",
     "eventNoti": "Händelsenotiser",
     "lang": "Språk",
-    "contact": "Kontakta utvecklarna"
+    "contact": "Kontakta utvecklarna",
+    "title": "Mer inställningar"
   },
   "Events": {
-    "event": "Händelser"
+    "event": "Händelser",
+    "reportIncident": "Rapportera händelse",
+    "shareEvent": "Dela händelse"
+  },
+  "EventsReport": {
+    "title": "Rapportera händelse",
+    "describe": "Beskriv händelsen",
+    "addPhoto": "Lägg till foto eller video",
+    "sendReport": "Skicka rapport"
+  },
+  "EventNotifications": {
+    "title": "Händelsenotiser",
+    "general": "Generellt",
+    "toggleAll": "Slå på/av alla notiser",
+    "sliderInfo": "Dra för att ändra inom hur stort område du vill få notiser.",
+    "notifications": "Notiser"
+  },
+  "Map": {
+    "reported": "Rapporterades för",
+    "minAgo": "minuter sedan"
+  },
+  "Lang": {
+    "title": "Språk"
+  },
+  "Filter": {
+    "title": "Filter",
+    "critical": "Kritisk varning",
+    "cautious": "Var uppmärksam",
+    "other": "Annat"
+
   }
+
 }

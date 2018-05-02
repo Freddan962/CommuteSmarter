@@ -1,9 +1,7 @@
 
 <ion-header>
         <ion-navbar>
-          <ion-title>
-            Filters
-          </ion-title>
+          <ion-title>{{'Filter.title' | translate}}</ion-title>
         </ion-navbar>
       </ion-header>
       
@@ -12,7 +10,7 @@
           <ion-row>
             <ion-col>
               <div id="settings-container">
-                <p class="warning-title">Critical warning</p>
+                <p class="warning-title">{{'Filter.critical' | translate}}</p>
                 <ion-list class="settings-list">
                   
                   <ion-item *ngFor="let setting of criticalWarningSettings">
@@ -33,7 +31,7 @@
                   
                 
                 </ion-list>
-                <p class="warning-title">Be cautious</p>
+                <p class="warning-title">{{'Filter.cautious' | translate}}</p>
                 <ion-list class="settings-list">
                   
                   <ion-item *ngFor="let setting of filterSettingsBeCautious">
@@ -53,7 +51,7 @@
                   </ion-item>
 
                 </ion-list>
-                <p class="warning-title">Other</p>
+                <p class="warning-title">{{'Filter.other' | translate}}</p>
                 <ion-list class="settings-list">
                   
                   <ion-item *ngFor="let setting of filterSettingsOther">

@@ -1,6 +1,7 @@
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the MoreeventnotificationsPage page.
@@ -45,19 +46,19 @@ export class MoreeventnotificationsPage {
     */
     this.notificationSettings = [
       {
-        name: 'Road Work', 
+        name: 'Road work', 
         storageName: 'roadWork',
         ngModel: this.notificationState.roadWork, 
         color: 'red'
       },
       {
-        name: 'Critical Obstacle', 
+        name: 'Critical obstacle', 
         storageName: 'criticalObstacle',
         ngModel: this.notificationState.criticalObstacle, 
         color: 'red'
       },
 	    {
-        name: 'Road Closed', 
+        name: 'Road closed', 
         storageName: 'roadClosed',
         ngModel: this.notificationState.roadClosed,
         color: 'red'
