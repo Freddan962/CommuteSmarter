@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var events = require('./routes/events');
+var twitter = require('./routes/twitter');
 
 var app = express();
 

@@ -2,7 +2,7 @@ const models = require('../models');
 const express = require('express');
 const router = express.Router();
 
-router.post('/twitter-account', (request, result) => {
+router.post('/api/twitter', (request, result) => {
   console.log(request.body);
 
   let body = request.body;
@@ -17,7 +17,7 @@ router.post('/twitter-account', (request, result) => {
   if(response.status === 200) {
     let user = {
       userId: body.userId,
-      userToken: body.userToken
+      userToken: body.userToken,
       lastLogin: 'Best way to get Current Time'
     }
 
