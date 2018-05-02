@@ -1,8 +1,17 @@
 {
   "development": {
-    "dialect": "sqlite",
-    "storage": "databases/database_development.sqlite",
-    "operatorsAliases": false
+    "database": "nigr0607", 
+    "username": "nigr0607",
+    "password": "vaiM0reedeiy",
+    "dialect": "mysql",
+    "host": "mysql.dsv.su.se",
+    "operatorsAliases": false,
+    "pool": {
+      "max": 5,
+      "min": 0,
+      "acquire": 30000,
+      "idle": 10000
+    }
   },
   "test": {
     "dialect": "sqlite",
