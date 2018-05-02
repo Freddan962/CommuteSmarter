@@ -1,7 +1,6 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
 
 router.post('/api/events', function (req, res) {
   let eventInfo = {
