@@ -3,6 +3,7 @@ import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'eventsreport.html',

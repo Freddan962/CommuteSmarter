@@ -31,6 +31,12 @@
     "reportIncident": "Rapportera händelse",
     "shareEvent": "Dela händelse"
   },
+  "EventsReport": {
+    "title": "Rapportera händelse",
+    "describe": "Beskriv händelsen",
+    "addPhoto": "Lägg till foto eller video",
+    "sendReport": "Skicka rapport"
+  },
   "EventNotifications": {
     "title": "Händelsenotiser",
     "general": "Generellt",
@@ -44,5 +50,13 @@
   },
   "Lang": {
     "title": "Språk"
+  },
+  "Filter": {
+    "title": "Filter",
+    "critical": "Kritisk varning",
+    "cautious": "Var uppmärksam",
+    "other": "Annat"
+
   }
+
 }

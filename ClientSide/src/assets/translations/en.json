@@ -31,13 +31,18 @@
     "reportIncident": "Report incident",
     "shareEvent": "Share this event"
   },
+  "EventsReport": {
+    "title": "Report Incident",
+    "describe": "Describe the event",
+    "addPhoto": "Add a photo or video",
+    "sendReport": "Send report"
+  },
   "EventNotifications": {
     "title": "Event notifications",
     "general": "General",
     "toggle": "Toggle all notifications",
     "sliderInfo": "The slider determines how big area you want to receive notifications from.",
     "notifications": "Notifications"
-
   },
   "Map": {
     "reported": "Reported",
@@ -45,5 +50,11 @@
   },
   "Lang": {
     "title": "Language"
+  },
+  "Filter": {
+    "title": "Filters",
+    "critical": "Critical warning",
+    "cautious": "Be cautious",
+    "other": "Other"
   }
 }
