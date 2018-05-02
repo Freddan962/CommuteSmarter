@@ -1,6 +1,7 @@
 var models = require('../models');
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 
 router.post('/api/events', function (req, res) {
   let eventInfo = {
@@ -36,3 +37,9 @@ router.get('/api/events/:id', (req, res) => {
 });
 
 module.exports = router;
+
+//Just for test demo
+function sum(a, b) {
+  return a + b;
+}
+module.exports = sum;
