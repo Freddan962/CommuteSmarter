@@ -6,3 +6,5 @@ before_install:
 branches:
    only:
      - master
+notifications:
+  slack: pvt73:NrLVDaqqfU0ebV3FaUrJHO6i
