@@ -6,7 +6,7 @@ import { EventService } from './../../app/services/eventService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
-
+import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 declare var google;
 
@@ -20,6 +20,7 @@ export class EventsPage {
   items: any;
 
   constructor(public navCtrl: NavController,
+    public geolocation: Geolocation,
     public navParams: NavParams,
     public eventService: EventService,
     public translate:TranslateService,
@@ -38,9 +39,21 @@ export class EventsPage {
     return moment(time).fromNow();
   }
 
-  distance() {
-    let currentLocation = new google.maps.LatLng(59.405539, 17.942470);
-    let marker = new google.maps.LatLng(65.405539, 17.942470);
+  getCurrentLocation(){
+  let latLng : any;
+  this.geolocation.getCurrentPosition().then
+      ((position) => {
+        let latLng = new google.maps.LatLng
+          (position.coords.latitude, position.coords.longitude);
+        }, (err) => {
+          console.log(err);
+        });
+        return latLng;
+      }
+
+  distance(lat, long) {
+    let currentLocation = new google.maps.LatLng(this.getCurrentLocation());
+    let marker = new google.maps.LatLng(lat, long);
     let unit = 'km';
 
     let currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker);
