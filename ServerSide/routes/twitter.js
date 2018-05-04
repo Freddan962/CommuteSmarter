@@ -37,6 +37,36 @@ module.exports = function(app, models) {
       });
     }
   });
+
+  /**
+  * For turing on or off user access.
+  */
+  app.put('/api/twitter/user/access', (request, result) => {
+    console.log(request.body);
+
+    let body = request.body;
+
+    let response = {
+      status: 200
+    };
+
+    result.json(response);
+  });
+
+  /**
+  * For getting user access status.
+  */
+  app.get('/api/twitter/user/access', (request, result) => {
+    console.log(request.body);
+
+    let body = request.body;
+
+    let response = {
+      status: 200
+    };
+
+    result.json(response);
+  });
 }
 
 function checkUserDetails(body, response) {
