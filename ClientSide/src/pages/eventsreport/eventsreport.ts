@@ -16,11 +16,12 @@ export class EventsReportPage {
   selectedLocation: any;
   reportDescription: any;
   isenabled: boolean;
+  settings: any;
   constructor(
     public navCtrl: NavController, 
     public modalCtrl: ModalController,
     private camera: Camera,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
   ) {
     this.defaultSelected = 'Select type';
     this.defaultLocation = 'Select Location'
@@ -39,8 +40,6 @@ export class EventsReportPage {
       this.descriptionInput['_elementRef'].nativeElement.style.height = (scrollHeight + 30) + 'px';
     }
   }
-
-
 
   //Open report type modal
   openReportTypeModal() {
