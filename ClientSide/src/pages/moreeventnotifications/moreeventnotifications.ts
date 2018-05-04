@@ -54,8 +54,6 @@ export class MoreeventnotificationsPage {
     this.storage.set(name, state);
   }
 
-
-
   /**
    * onNotificationDistanceChange()
    * 
