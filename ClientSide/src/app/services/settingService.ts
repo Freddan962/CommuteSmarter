@@ -94,11 +94,10 @@ export class SettingService {
    */
   private prepareModels(settings, name) {
     settings.categories.forEach(category => {
+      category.formattedName = (category.name).replace(/\s+/g, '').toLowerCase();
       category.settings.forEach(setting => {
-        setting.formattedName = (setting.name + name).replace(/\s+/g, '').toLowerCase();
-        
+        setting.formattedName = (setting.name + name).replace(/\s+/g, '').toLowerCase() + category.formattedName;
         settings.states[setting.formattedName] = true;
-        setting.ngModel = settings.states[setting.formattedsettingName];
         setting.storageName = (setting.storageName + name).replace(/\s+/g, '').toLowerCase();        
       });
     });
@@ -126,7 +125,6 @@ export class SettingService {
       category.settings.forEach(setting => {
 
         this.storage.get(setting.storageName).then((state) => {
-          let settingName = (setting.name + name).replace(/\s+/g, '').toLowerCase();
           if (state == undefined) return;
           settings.states[setting.formattedName] = state;
         });
