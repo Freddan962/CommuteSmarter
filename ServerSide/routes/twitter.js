@@ -14,27 +14,28 @@ module.exports = function(app, models) {
       status: 200
     };
 
-    checkUserDetails(body, response);
-
-    // if the response code still is set to 200 both of the required
-    // paramters with user details were successfully recived and the
-    // user did not already exist.
-    if(response.status === 200) {
+    // Both of the required paramters with user details were successfully
+    // recived if the response code still is set to 200.
+    if(checkUserDetails(body, response)) {
       let user = {
         userId: body.userId,
         userToken: body.userToken,
-        lastLogin: 'Best way to get Current Time'
+        lastLogin: new Date()
       }
 
       //add to database
-      models.Twitter.create(user).then(user => {
+      models.Twitter.create(user)
+      .then(user => {
         console.log(user);
         response['messages'] = ["Added the user successfully!"];
         response['amountMessages'] = 1;
+        result.json(response);
+      })
+      .catch(err => {
+        result.status(400);
+        result.json(err);
       });
     }
-
-    result.json(response);
   });
 }
 
@@ -54,6 +55,8 @@ function checkUserDetails(body, response) {
   if(!userTokenIsMissing(body) && body.userToken.length <= 0) {
     pushAnError(response, "The userToken seems to be way to short!");
   }
+
+  return response.status === 200;
 }
 
 function userIdIsMissing(body) {

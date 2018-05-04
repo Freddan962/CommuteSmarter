@@ -12,7 +12,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       lastLogin: {
-        type: Sequelize.STRING
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
