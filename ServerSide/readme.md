@@ -10,7 +10,7 @@ Datatyper: http://docs.sequelizejs.com/variable/index.html
 ## Seeders
     sequelize seed:create --name events
 
-Skapar en seeder i mappen seeders. 
+Skapar en seeder i mappen seeders.
 
     sequelize db:seed:all
 

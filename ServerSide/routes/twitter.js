@@ -5,7 +5,7 @@ module.exports = function(app, models) {
   * Requires the user to post a body containing the key/value
   * pairs: userId. userToken.
   */
-  app.post('/api/twitter', (request, result) => {
+  app.post('/api/twitter/user', (request, result) => {
     console.log(request.body);
 
     let body = request.body;
