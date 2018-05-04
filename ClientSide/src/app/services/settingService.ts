@@ -18,18 +18,23 @@ export class SettingService {
     this.settings.categories.push({
       name: 'Road Closed',
       color: 'red',
+      translateName: 'roadClosed',
       settings: [
         {
           name: 'Obstacle on the road',
+          translateName: '',
         },
         {
           name: 'Roadwork',
+          translateName: '',          
         },
         {
           name: 'Closed for event',
+          translateName: '',          
         },
         {
           name: 'Other (road closed)',
+          translateName: '',          
         }
       ]
     });
@@ -37,18 +42,23 @@ export class SettingService {
     this.settings.categories.push({
       name: 'Limited passability',
       color: 'orange',
+      translateName: 'limitedPassability',
       settings: [
         {
           name: 'Obstacle on the road',
+          translateName: '',          
         },
         {
           name: 'Roadwork',
+          translateName: '',          
         },
         {
           name: 'Traffic Jam',
+          translateName: '',          
         },
         {
           name: 'Other (limited passability)',
+          translateName: '',          
         },
       ]
     });
@@ -56,15 +66,19 @@ export class SettingService {
     this.settings.categories.push({
       name: 'Emergency Vehicles',
       color: 'blue',
+      translateName: 'emergencyVehicles',
       settings: [
         {
-          name: 'Emergency Vehicle Passing', 
+          name: 'Emergency Vehicle Passing',
+          translateName: '',           
         },
         {
-          name: 'Police Control', 
+          name: 'Police Control',
+          translateName: '',           
         },
         {
           name: 'Other (emergency vehicles)',
+          translateName: '',          
         }
       ]
     });
