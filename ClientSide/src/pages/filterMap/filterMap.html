@@ -26,7 +26,7 @@
                     <ion-label >{{setting.name}}</ion-label>
                   </ion-col>
                   <ion-col col-4>
-                    <ion-toggle [(ngModel)]="settings.states[setting.formattedName]" (ionChange)="onFilterSettingValueChange(setting.storageName, settings.states[setting.formattedName])" (ngModelChange)="onFilterSettingValueChange(setting.storageName, settings.states[setting.formattedName])" color="secondary"></ion-toggle>
+                    <ion-toggle [(ngModel)]="settings.states[setting.formattedName]" (ionChange)="onFilterSettingValueChange(setting.formattedName, settings.states[setting.formattedName])" (ngModelChange)="onFilterSettingValueChange(setting.formattedName, settings.states[setting.formattedName])" color="secondary"></ion-toggle>
                   </ion-col>
                 </ion-row>
               </div>

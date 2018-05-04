@@ -21,19 +21,15 @@ export class SettingService {
       settings: [
         {
           name: 'Obstacle on the road',
-          storageName: 'obstacleOnTheRoad',
         },
         {
           name: 'Roadwork',
-          storageName: 'roadWork',
         },
         {
           name: 'Closed for event',
-          storageName: 'closedForEvent',
         },
         {
           name: 'Other (road closed)',
-          storageName: 'otherRoadClosed'
         }
       ]
     });
@@ -44,19 +40,15 @@ export class SettingService {
       settings: [
         {
           name: 'Obstacle on the road',
-          storageName: 'obstacleOnTheRoad',
         },
         {
           name: 'Roadwork',
-          storageName: 'roadWork',
         },
         {
           name: 'Traffic Jam',
-          storageName: 'Traffic Jam',
         },
         {
           name: 'Other (limited passability)',
-          storageName: 'limitedPassability',
         },
       ]
     });
@@ -67,15 +59,12 @@ export class SettingService {
       settings: [
         {
           name: 'Emergency Vehicle Passing', 
-          storageName: 'emergencyVehiclePassing',
         },
         {
           name: 'Police Control', 
-          storageName: 'policeControl',
         },
         {
           name: 'Other (emergency vehicles)',
-          storageName: 'emergencyVehiclePassing',
         }
       ]
     });
@@ -98,7 +87,6 @@ export class SettingService {
       category.settings.forEach(setting => {
         setting.formattedName = (setting.name + name).replace(/\s+/g, '').toLowerCase() + category.formattedName;
         settings.states[setting.formattedName] = true;
-        setting.storageName = (setting.storageName + name).replace(/\s+/g, '').toLowerCase();        
       });
     });
 
@@ -120,15 +108,21 @@ export class SettingService {
     return this.prepareModels(settingCopy, name);
   }
 
+  /**
+   * loadExistingData(settings)
+   * 
+   * Loads existing locally stored states for the provided settings object
+   * 
+   * @param {any} settings 
+   * @memberof SettingService
+   */
   loadExistingData(settings) {
     settings.categories.forEach(category => {
       category.settings.forEach(setting => {
-
-        this.storage.get(setting.storageName).then((state) => {
+        this.storage.get(setting.formattedName).then((state) => {
           if (state == undefined) return;
           settings.states[setting.formattedName] = state;
         });
-
       });
     });
   }
