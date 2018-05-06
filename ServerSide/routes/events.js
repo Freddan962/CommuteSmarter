@@ -9,7 +9,7 @@ router.post('/api/events', function (req, res) {
     lat: req.body.lat,
     long: req.body.long,
     title: req.body.title,
-    report: req.body.report,
+    reported: req.body.reported,
     description: req.body.description
   };
 

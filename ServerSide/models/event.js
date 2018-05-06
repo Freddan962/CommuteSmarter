@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     lat: DataTypes.FLOAT,
     long: DataTypes.FLOAT,
     title: DataTypes.STRING,
-    report: DataTypes.STRING,
+    reported: DataTypes.STRING,
     description: DataTypes.STRING
   }, {});
   Event.associate = function(models) {
