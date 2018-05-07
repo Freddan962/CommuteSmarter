@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     location: {
       type: DataTypes.STRING,
       allowNull: false,
+      notEmpty: true,
     },
     lat: {
       type: DataTypes.FLOAT,
@@ -42,16 +43,21 @@ module.exports = (sequelize, DataTypes) => {
     },
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      notEmpty: true,
     },
     reported: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      notEmpty: true,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false, 
+      notEmpty: true
     }
+}, {
+  timestamps: false  
 });
 
   Event.associate = function(models) {
