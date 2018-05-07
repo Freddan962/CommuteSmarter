@@ -11,8 +11,6 @@ module.exports = {
         title:'Obstacle',
         reported:'2018-04-27 09:30',
         description: 'car crash',
-        createdAt: '',
-        updatedAt: ''
       },
       {
         color:'orange', 
@@ -22,8 +20,6 @@ module.exports = {
         title:'closed for Marathon',
         reported:'2018-04-27 11:30', 
         description:'Marathon',
-        createdAt: '',
-        updatedAt: ''
       },
       {
         color:'blue', 
@@ -33,8 +29,6 @@ module.exports = {
         title:'emergency response vehicle', 
         reported:'2018-04-27 14:30', 
         description:'something',
-        createdAt: '',
-        updatedAt: ''
       }
     ], {});
   },
