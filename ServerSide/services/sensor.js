@@ -6,10 +6,10 @@ function findRandomId(table, perform) {
     table.findAndCountAll({}).then((result) => {
         let count = result.count;
         let random = Math.floor(Math.random()*count);
-    
+
         console.log("Antal " + count);
         console.log("Id: " + random);
-        
+
         table.findById(random).then((sensor) => {
             perform(sensor);
         })
@@ -21,7 +21,7 @@ function getRandomEventType(models, perform) {
 }
 
 module.exports.getRandomEvent = function(models, perform) {
-    getRandomSensor(models, (sensor =>{
+    getRandomSensor(models, (sensor => {
         getRandomEventType(models, (type => {
             let eventInfo = {
                 color: type.color,
@@ -34,10 +34,9 @@ module.exports.getRandomEvent = function(models, perform) {
             };
             models.Event.create(eventInfo).then(event => {
                 console.log("HÄRDÅ???");
-                
+
                 perform(event);
             });
         }));
     }));
 }
-
