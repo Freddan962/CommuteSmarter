@@ -15,8 +15,6 @@ let httpMethods = {
             });
 
             result.on('end', function() {
-                console.log(body);
-                
                 callback(JSON.parse(body));
             }); 
         });

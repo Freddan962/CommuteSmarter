@@ -15,7 +15,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const coordinatesService = require('./services/get-coordinates');
-coordinatesService.populateCoordsTable(app, models, 44);
+coordinatesService.populateCoordsTable(models, 44);
+const sensorService = require('./services/sensor');
+sensorService.getRandomEvent(models, (data)=> {
+  console.log("here");
+  
+});
 
 require('./routes')(app, models);
 
