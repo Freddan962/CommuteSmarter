@@ -17,10 +17,12 @@ module.exports = function(app, models) {
     // Both of the required paramters with user details were successfully
     // recived if the response code still is set to 200.
     if(checkUserDetails(body, response)) {
+      let date = new Date();
       let user = {
         userId: body.userId,
         userToken: body.userToken,
-        lastLogin: new Date()
+        lastLogin: date,
+        createdAt: date
       }
 
       //add to database
