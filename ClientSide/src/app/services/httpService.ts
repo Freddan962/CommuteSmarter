@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 //import { HTTP } from '@ionic-native/http'; //fungerar inte i browser
+import { Http } from '@angular/http'; //kräver cors https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -12,6 +13,7 @@ export class HttpService {
     
     return this.http.get('https://pvt73trafficinfo.herokuapp.com/api/' + route)
       .map(response => response.json());
+
 
  
     /*  return new Promise(resolve => {
