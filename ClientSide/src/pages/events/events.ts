@@ -114,12 +114,10 @@ export class EventsPage {
   }
 
   openReportPage() {
-    if(this.isLoggedIn()) {
+    if (this.isLoggedIn() || 
+        document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
       this.navCtrl.push(EventsReportPage);
     }
-    if (document.URL.startsWith('http')){
-      this.navCtrl.push(EventsReportPage);
-    } 
     else {
       this.navCtrl.push(MorePage);
     }
