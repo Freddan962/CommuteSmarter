@@ -1,3 +1,5 @@
+const httpMethods = require('../services/http.js');
+
 module.exports = function(app, models) {
   /**
   * Route for adding a new twitter user to the database.
@@ -16,37 +18,45 @@ module.exports = function(app, models) {
     // Both of the required paramters with user details were successfully
     // recived if the response code still is set to 200.
     if(checkUserDetails(body, response)) {
-      models.Twitter.find({ where: { userId: body.userId } }).then( user => {
-        if(user) {
-          user.updateAttributes({
-            token: body.token
-          }).then( () => {
-            response['access'] = true;
-            response['messages'] = ["User successfully signed in!"];
-            response['amountMessages'] = 1;
-            result.json(response);
-          });
-        } else {
-          //add to database
-          let date = new Date();
-          let newUser = {
-            userId: body.userId,
-            userToken: body.userToken,
-            lastLogin: date,
-            createdAt: date
-          }
+      checkUserTokenWithTwitter(body, response, (twitterResponse) => {
+        //console.log(twitterResponse);
+        if(twitterResponse.id !== undefined) {
+          models.Twitter.find({ where: { userId: body.userId } }).then( user => {
+            if(user) {
+              user.updateAttributes({
+                token: body.token
+              }).then( () => {
+                response['access'] = true;
+                response['messages'] = ["User successfully signed in!"];
+                response['amountMessages'] = 1;
+                result.json(response);
+              });
+            } else {
+              //add to database
+              let date = new Date();
+              let newUser = {
+                userId: body.userId,
+                userToken: body.userToken,
+                lastLogin: date,
+                createdAt: date
+              }
 
-          models.Twitter.create(newUser).then(user => {
-            response['access'] = true;
-            response['messages'] = ["Added the user successfully!"];
-            response['amountMessages'] = 1;
-            result.json(response);
-          }).catch(err => {
-            result.status(400);
-            result.json(err);
-          });
+              models.Twitter.create(newUser).then(user => {
+                response['access'] = true;
+                response['messages'] = ["Added the user successfully!"];
+                response['amountMessages'] = 1;
+                result.json(response);
+              }).catch(err => {
+                result.status(400);
+                result.json(err);
+              });
+            }
+          })
+        } else {
+          result.status(twitterResponse.errors[0].code);
+          result.json(twitterResponse);
         }
-      })
+      });
     } else {
       result.status(400);
       result.json(response);
@@ -92,6 +102,13 @@ module.exports = function(app, models) {
       result.json(response);
     }
   });
+}
+
+function checkUserTokenWithTwitter(body, response, perform) {
+  const hostname = "api.twitter.com";
+  let request = "/1.1/account/verify_credentials.json?oauth_access_token=" + body.userToken;
+
+  httpMethods.httpGetRequest(hostname, request, 443, perform);
 }
 
 function checkIfStausOk(response) {
