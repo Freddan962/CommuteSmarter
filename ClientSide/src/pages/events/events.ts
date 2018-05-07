@@ -10,6 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 declare var google;
 
+
 @IonicPage()
 @Component({
   selector: 'page-events',
@@ -27,37 +28,67 @@ export class EventsPage {
     private loginWithTwitterService:LoginWithTwitterService,
     private socialSharing: SocialSharing) {
        this.getEvents();
+       
   }
 
+  location: {
+    latitude: number,
+    longitude: number
+  };
+
   private getEvents(){
-    this.eventService.getEvents().then(data => {
-      this.items = data;
-    });
+    this.eventService.getEvents().subscribe(
+      data => this.items = data,
+      error => console.error('Error: ' + error),
+      () => console.log('Done!')
+    );
+    
+    
   }
 
   parseTime(time) {
     return moment(time).fromNow();
   }
 
-  getCurrentLocation(){
-  let latLng : any;
-  this.geolocation.getCurrentPosition().then
-      ((position) => {
-        let latLng = new google.maps.LatLng
-          (position.coords.latitude, position.coords.longitude);
-        }, (err) => {
-          console.log(err);
-        });
-        return latLng;
-      }
+  findUserLocation(){
+    
+
+    this.geolocation.getCurrentPosition().then
+    ((position) => {
+ 
+      this.location = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      };
+      this.init(this.location);
+ 
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+  }
+
+  init(location){ 
+    console.log(location);
+  }
 
   distance(lat, long) {
-    let currentLocation = new google.maps.LatLng(this.getCurrentLocation());
+    console.log('lat: '+ lat + ' long: '+ long);
+    this.findUserLocation();
+    console.log(this.location);
     let marker = new google.maps.LatLng(lat, long);
     let unit = 'km';
-
-    let currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker);
-
+    let currentLocation;
+    //let currentLocation = new google.maps.LatLng(59.326137, 18.071325); //endast för testning
+    //let currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker); ///endast för testning
+    let currentdistance;
+   
+    if(this.location != undefined){
+      currentLocation = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+      currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker);
+    }
+    else{
+      this.findUserLocation(); //kanske onödig?
+    }
     if(currentdistance < 1000) {
       unit = 'm';
     } else {
