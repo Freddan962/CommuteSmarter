@@ -11,24 +11,26 @@ module.exports = function(app, models) {
     };
 
     models.Event.create(eventInfo).then(event => {
-      res.json(event);
+      res.status(201).json(event);
+    }).catch(error => {
+      res.status(400).send({ error: 'Bad request: ' + error.message });
     });
   });
 
   app.get('/api/events', (req, res) => {
     models.Event.findAll().then(events => {
-      res.json(events);
+      res.status(200).json(events);
     });
   });
 
   app.get('/api/events/:id', (req, res) => {
     models.Event.findById(parseInt(req.params.id)).then(event => {
-      if (!event) {
-        res.status(404).send('The event with the provided ID was not found');
+      if (event == null) {
+        res.status(404).send('The event with the ID' + req.params.id + 'was not found');
         return;
       }
-
-      res.json(event);
+      
+      res.status(200).json(event);
     });
   });
 };

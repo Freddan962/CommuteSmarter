@@ -2,23 +2,6 @@ const request = require('supertest');
 const app = require('../app')
 const models = require('../models');
 
-/***********/
-/* ROUTES */
-/**********/
-
-/*describe('Test GET Events', () => {
-  test('Should repspond with HTTP status code 200', (done) => {
-    request(app).get('/api/events').then((response) => {
-        expect(response.statusCode).toBe(200);
-        done();
-    });
-  });
-});*/
-
-/***********/
-/* MODELS */
-/**********/
-
 const validEventData = {
   color: 'red',
   location: 'Olofs Väg 37',
@@ -28,6 +11,68 @@ const validEventData = {
   reported: '2018-04-27 09:30',
   description: 'Lorem Ipsum'
 }
+
+/***********/
+/* ROUTES */
+/**********/
+
+describe('Test GET Events', () => {
+  test('Should respond with HTTP status code 200', (done) => {
+    request(app).get('/api/events').then((response) => {
+      expect(response.statusCode).toBe(200);
+      done();
+    });
+  });
+
+  test('Should respond with the correct amount of events', (done) => {
+    models.Event.count().then(count => {
+      request(app).get('/api/events').then((response) => {
+        expect(response.body.length).toBe(count);
+        done();
+       });
+    });
+  });
+
+  test('Should respond with status code 404 for request with non-existant event ID', (done) => {
+    request(app).get('/api/events/377').then((response) => {
+     expect(response.statusCode).toBe(404);
+     done();
+    });
+  });
+});
+
+describe('Test POST events', () => {
+  test('Should create a new event and respond with status code 201', (done) => {
+    models.Event.count().then(initialCount => {
+      request(app).post('/api/events').send(validEventData).then((response) => {
+        expect(response.statusCode).toBe(201);
+        models.Event.count().then(count => {
+          expect(count).toBe(initialCount+1);        
+          done();
+        });
+      });
+    });
+  });
+
+  test('Should not create a new event if a post request contains invalid data', (done) => {
+    let event = Object.assign({}, validEventData);
+    event.lat = -900;
+
+    models.Event.count().then(initialCount => {
+      request(app).post('/api/events').send(event).then((response) => {
+        expect(response.statusCode).toBe(400);
+        models.Event.count().then(count => {
+          expect(count).toBe(initialCount);        
+          done();
+        });
+      });
+    });
+  });
+});
+
+/***********/
+/* MODELS */
+/**********/
 
 describe('Test event creation', () => {
   /**********************/
