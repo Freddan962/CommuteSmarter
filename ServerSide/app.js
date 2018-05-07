@@ -14,7 +14,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-require('./services/get-coordinates')(models);
+const coordinatesService = require('./services/get-coordinates');
+coordinatesService.populateCoordsTable(app, models, 44);
+
 require('./routes')(app, models);
 
 // catch 404 and forward to error handler
