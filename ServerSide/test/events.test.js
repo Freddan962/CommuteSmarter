@@ -25,9 +25,11 @@ describe('Test GET Events', () => {
   });
 
   test('Should respond with the correct amount of events', (done) => {
-    request(app).get('/api/events').then((response) => {
-     expect(response.body.length).toBe(3);
-     done();
+    models.Event.count().then(count => {
+      request(app).get('/api/events').then((response) => {
+        expect(response.body.length).toBe(count);
+        done();
+       });
     });
   });
 
@@ -41,11 +43,13 @@ describe('Test GET Events', () => {
 
 describe('Test POST events', () => {
   test('Should create a new event and respond with status code 201', (done) => {
-    request(app).post('/api/events').send(validEventData).then((response) => {
-      expect(response.statusCode).toBe(201);
-      models.Event.count().then(count => {
-        expect(count).toBe(4);        
-        done();
+    models.Event.count().then(initialCount => {
+      request(app).post('/api/events').send(validEventData).then((response) => {
+        expect(response.statusCode).toBe(201);
+        models.Event.count().then(count => {
+          expect(count).toBe(initialCount+1);        
+          done();
+        });
       });
     });
   });
@@ -54,11 +58,13 @@ describe('Test POST events', () => {
     let event = Object.assign({}, validEventData);
     event.lat = -900;
 
-    request(app).post('/api/events').send(event).then((response) => {
-      expect(response.statusCode).toBe(400);
-      models.Event.count().then(count => {
-        expect(count).toBe(4);        
-        done();
+    models.Event.count().then(initialCount => {
+      request(app).post('/api/events').send(event).then((response) => {
+        expect(response.statusCode).toBe(400);
+        models.Event.count().then(count => {
+          expect(count).toBe(initialCount);        
+          done();
+        });
       });
     });
   });
