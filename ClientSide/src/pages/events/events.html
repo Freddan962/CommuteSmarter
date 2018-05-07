@@ -1,15 +1,7 @@
-<!--
-  Generated template for the EventsPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>Events</ion-title>
+    <ion-title>{{ 'Events.event' | translate }}</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
@@ -19,21 +11,20 @@
         <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
-        {{ item.title + ' - ' + item.location }}
-        <p>{{ item.time + ' ' + item.distance + ' km'}}</p>
+        {{ item.title }} - {{ item.location }}
+        <p>{{ parseTime(item.reported) }}, {{ distance(item.lat, item.long) }}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
       </div>
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-        <button ion-button color=default (click)="shareEvent(item)">Share this event</button>
+        <button ion-button color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
       </div>
-    </div>  
-
+    </div>
   </ion-list>
 
   <ion-footer>
-    <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">Report Incident</button>
+    <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">{{'Events.reportIncident' | translate}}</button>
   </ion-footer>
 </ion-content>

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      More Settings
+      {{ 'More.title' | translate }}
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,12 +13,12 @@
         <ion-icon ios="ios-contact" md="ios-contact"></ion-icon>
       </ion-thumbnail>
       <div *ngIf="!getIfSignedIn()" (click)="loginWithTwitter()">
-        <h2>Not signed in</h2>
-        <p>tap to register or sign in</p>
+        <h2>{{ 'More.notSignedIn' | translate }}</h2>
+        <p>{{ 'More.tapToRegister' | translate }}</p>
       </div>
       <div *ngIf="getIfSignedIn()" (click)="logOutTwitter()">
         <h1>{{ userName() }}</h1>
-        <p>tap to sign out</p>
+        <p>{{ 'More.tapToSignOut' | translate }}</p>
       </div>
       <button ion-button clear item-end><ion-icon name="arrow-forward"></ion-icon></button>
     </ion-item>
@@ -28,15 +28,15 @@
   <ion-list>
     <a ion-item (click)="openNotificationModal()">
       <ion-icon name="notifications-outline" [ngStyle]="" item-start></ion-icon>
-      Event Notifications
+       {{ 'More.eventNoti' | translate }}
     </a>
     <a ion-item (click)="openLanguageModal()">
       <ion-icon name="ios-globe-outline" [ngStyle]="" item-start></ion-icon>
-      Language
+      {{ 'More.lang' | translate }}
     </a>
     <a ion-item href="mailto:info@somedomain.net?subject=my%20App">
       <ion-icon name="ios-call-outline" [ngStyle]="" item-start></ion-icon>
-      Contact Developers
+      {{ 'More.contact' | translate }}
     </a>
   </ion-list>
 </ion-content>

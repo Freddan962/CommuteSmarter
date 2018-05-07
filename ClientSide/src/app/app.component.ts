@@ -19,16 +19,19 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public Storage: Storage, translate: TranslateService, language: LanguageService) {
     this.storageService = Storage;
-    this.alwaysShowWelcomePage = true;
+    this.alwaysShowWelcomePage = false;
+    
     platform.ready().then(() => {
+      this.handleWelcomeScreen();
       statusBar.styleDefault();
       splashScreen.hide();
     });
   }
 
   handleWelcomeScreen() {
-    if (this.alwaysShowWelcomePage)
+    if (this.alwaysShowWelcomePage){
       this.rootPage = WelcomePage;
+    }
 
     this.storageService.get('finalizedWelcome').then((state) => {
       if (!state) {

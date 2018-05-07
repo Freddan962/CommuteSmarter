@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Event Notifications</ion-title>
+    <ion-title>{{ 'EventNotifications.title' | translate }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -17,13 +17,13 @@
   <ion-row>
     <ion-col>
       <div id="settings-container">
-        <p class="setting-text setting-title">GENERAL</p>
+        <p class="setting-text setting-title">{{ 'EventNotifications.general' | translate }}</p>
         <ion-list class="settings-list">
           <ion-item>
             <div item-content col-12>
               <ion-row> 
                 <ion-col col-8>
-                  <ion-label >Toggle all notifications</ion-label>
+                  <ion-label >{{ 'EventNotifications.toggleAll' | translate }}</ion-label>
                 </ion-col>
                 <ion-col col-4>
                   <ion-toggle [(ngModel)]="notifications" id="notifications-toggle" (ngModelChange)="onNotificationChange()" color="secondary"></ion-toggle>
@@ -43,27 +43,27 @@
             </div>
           </ion-item>
         </ion-list>
-        <p class="setting-text">The slider determines how big area you want to receive notifications from.</p>
+        <p class="setting-text">{{ 'EventNotifications.sliderInfo' | translate }}</p>
 
-        <p class="setting-text setting-title">NOTIFICATIONS</p>
+        <p class="setting-text setting-title">{{ 'EventNotifications.notifications' | translate }}</p>
         <ion-list class="settings-list">
-          
-          <ion-item *ngFor="let setting of notificationSettings">
-            <div item-content col-12>
-              <ion-row> 
-                <ion-col col-2>
-                <span [ngClass]="'dot-' + setting.color"></span>
+          <div no-padding *ngFor="let category of settings.categories">
+            <ion-item *ngFor="let setting of category.settings">
+              <div item-content col-12>
+                <ion-row> 
+                  <ion-col col-2>
+                  <span [ngClass]="'dot-' + category.color"></span>
+                    </ion-col>
+                  <ion-col col-6>
+                    <ion-label >{{setting.name}}</ion-label>
                   </ion-col>
-                <ion-col col-6>
-                  <ion-label >{{setting.name}}</ion-label>
-                </ion-col>
-                <ion-col col-4>
-                  <ion-toggle [(ngModel)]="setting.ngModel" (ionChange)="onNotificationSettingValueChange(setting.storageName, setting.ngModel)" (ngModelChange)="onNotificationSettingValueChange(setting.storageName, setting.ngModel)" [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
-                </ion-col>
-              </ion-row>
-            </div>
-          </ion-item>
-        
+                  <ion-col col-4>
+                    <ion-toggle [(ngModel)]="settings.states[setting.formattedName]" (ionChange)="onNotificationSettingValueChange(setting.formattedName, settings.states[setting.formattedName])" (ngModelChange)="onNotificationSettingValueChange(setting.formattedName, settings.states[setting.formattedName])" [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </ion-item>
+          </div>
         </ion-list>
       </div>
     </ion-col>

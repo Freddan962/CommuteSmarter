@@ -1,4 +1,5 @@
 import { EventService } from './services/eventService';
+import { HttpService } from './services/httpService';
 import { LoginWithTwitterService } from './services/loginWithTwitterService';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -11,13 +12,11 @@ import { EventsReportPage } from '../pages/eventsreport/eventsreport';
 import { EventsreporttypemodalPage } from '../pages/eventsreporttypemodal/eventsreporttypemodal';
 import { PositionselectorPage } from '../pages/positionselector/positionselector';
 
-
 import { MapPage } from '../pages/map/map';
 import { MorePage } from '../pages/more/more';
 import { MoreeventnotificationsPage } from './../pages/moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from './../pages/morelanguage/morelanguage';
 import { filterMap } from './../pages/filterMap/filterMap';
-
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -27,8 +26,10 @@ import { HttpModule } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera } from '@ionic-native/camera';
 import { LanguageService } from './services/LanguageService';
+import { SettingService } from './services/settingService';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core/'
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HTTP } from '@ionic-native/http';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
@@ -85,11 +86,14 @@ export function createTranslateLoader(http: HttpClient) {
     StatusBar,
     SplashScreen,
     EventService,
+    HttpService,
     LoginWithTwitterService,
     SocialSharing,
     TwitterConnect,
     Camera,
     LanguageService,
+    SettingService,
+    HTTP,
 	Geolocation,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

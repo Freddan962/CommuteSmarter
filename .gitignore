@@ -29,10 +29,12 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
-
+ClientSide/package-lock.json
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
 ngrok
-
+ServerSide/package-lock.json
+ClientSide/package-lock.json
 build.txt
+ServerSide/databases/

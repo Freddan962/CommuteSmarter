@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { filterMap } from '../filterMap/filterMap';
-
+import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
 
@@ -29,7 +29,8 @@ export class MapPage {
   obstacles: any;
 
   constructor(public navCtrl: NavController, public geolocation: Geolocation,
-    private socialSharing: SocialSharing) {
+    private socialSharing: SocialSharing,
+    private cdRef:ChangeDetectorRef) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
 
@@ -41,11 +42,11 @@ export class MapPage {
 
     this.obstacles = [
       {
-        type: 'line', 
+        type: 'line',
         start: new google.maps.LatLng(59.407433, 17.947650),
         end: new google.maps.LatLng(59.406676, 17.945710),
         color: this.colors['orange']
-      }, 
+      },
       {
         type: 'line',
         start: new google.maps.LatLng(59.405539, 17.942470),
@@ -61,7 +62,7 @@ export class MapPage {
           time: 30,
           distance: 1.9,
           unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
         }
       },
       {
@@ -73,19 +74,19 @@ export class MapPage {
           time: 128,
           distance: 41,
           unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
         }
       },
       {
         type: 'icon',
         start: new google.maps.LatLng(59.408559, 17.940394),
-        color: 'yellow', 
+        color: 'yellow',
         data: {
           title: 'Something illegal',
           time: 12,
           distance: 2.3,
           unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'    
+          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
         }
       }
     ]
@@ -98,9 +99,9 @@ export class MapPage {
 
   /**
    * loadMap()
-   * 
+   *
    * Responsible for creating the initial map.
-   * 
+   *
    * @memberof MapPage
    */
   loadMap() {
@@ -110,7 +111,8 @@ export class MapPage {
       center: latLng,
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
-      disableDefaultUI: true
+      disableDefaultUI: true,
+      clickableIcons: false
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
@@ -119,9 +121,9 @@ export class MapPage {
 
   /**
    * renderObstacles()
-   * 
+   *
    * Handles and renders obstacles on the map.
-   * 
+   *
    * @memberof MapPage
    */
   renderObstacles() {
@@ -141,50 +143,50 @@ export class MapPage {
 
   onClicked(){
     this.navCtrl.push(filterMap);
-  }    
+  }
 
   /**
    * centerMapToLocation()
-   * 
+   *
    * Prepares the center marker and centers the map on current geolocation.
-   * 
+   *
    * @memberof MapPage
    */
   centerMapToLocation() {
-    if(locationMarker == null) {
-      locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter()); 
-    }
-
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
+        if(locationMarker == null) {
+          locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+        }
         locationMarker.setPosition(latLng);
       }, (err) => {
         console.log(err);
       });
 	}
-  
+
   /**
    * openMapEventinfo()
-   * 
+   *
    * Reveals the display box displaying the provided data.
-   * 
+   *
    * @param {any} data The data to be displayed in the box.
    * @memberof MapPage
    */
   openMapEventInfo(data) {
-    this.mapEventInfo = data; 
+    this.mapEventInfo = data;
     this.displayMapEventCard = true;
+    this.cdRef.detectChanges();
   }
 
 
   /**
-  * shareEvent() 
-  * 
+  * shareEvent()
+  *
   * Callback function fopr the shareEvent button on the map.
-  * 
+  *
   * @memberof MapPage
   */
   shareEvent() {
@@ -193,35 +195,38 @@ export class MapPage {
 
   /**
    * closeMapEventInfo()
-   * 
+   *
    * Closes the box with information regarding a specific event.
-   * 
-   * @memberof MapPage 
+   *
+   * @memberof MapPage
    */
   closeMapEventInfo() {
     this.animateEventCard = 'fadeAway';
-    
+    this.cdRef.detectChanges();
+
     setTimeout(() => {
       this.displayMapEventCard = false;
+      this.cdRef.detectChanges();
+
       this.animateEventCard = 'reveal';
     }, 1000);
   }
-  
+
   /**
    * addMarker()
-   * 
+   *
    * Adds a marker to the map.
-   * 
+   *
    * @param {any} markerImage The image of the marker.
    * @param {any} position The position of the marker.
-   * @returns 
+   * @returns
    * @memberof MapPage
    */
   addMarker(markerImage, position) {
     let marker = new google.maps.Marker({
       map: this.map,
       animation: google.maps.Animation.DROP,
-      icon: 
+      icon:
       new google.maps.MarkerImage(
         markerImage,
         null, /* size is determined at runtime */
@@ -238,12 +243,12 @@ export class MapPage {
 
 /**
  * addInfoMarker()
- * 
- * Adds a info markeron the map. 
- * 
+ *
+ * Adds a info markeron the map.
+ *
  * @param {any} markerImage The image to be displayed.
  * @param {any} position The position of the marker.
- * @param {any} data 
+ * @param {any} data
  * @memberof MapPage
  */
 addInfoMarker(markerImage, position, data) {
@@ -258,9 +263,9 @@ addInfoMarker(markerImage, position, data) {
 
 /**
  * drawPath()
- * 
- * Draws a line on the map from the startPos to the endPos with the desired color. 
- * 
+ *
+ * Draws a line on the map from the startPos to the endPos with the desired color.
+ *
  * @param {any} startPos The position to start routing from.
  * @param {any} endPos The position to route to.
  * @param {any} color The color of the line.
@@ -286,10 +291,10 @@ drawPath(startPos, endPos, color) {
   }
 /**
  * drawIcon()
- * 
+ *
  * Renders a icon at the specified position using the provided color and
  * prepares callbacks to deal with display of data.
- * 
+ *
  * @param {any} pos The position where the marker is placed.
  * @param {any} color The target color of the marker.
  * @param {any} data The data that gets displayed in the reaveled box.

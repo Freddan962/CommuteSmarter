@@ -3,6 +3,7 @@ import { NavController, ModalController, AlertController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'eventsreport.html',
@@ -15,11 +16,12 @@ export class EventsReportPage {
   selectedLocation: any;
   reportDescription: any;
   isenabled: boolean;
+  settings: any;
   constructor(
     public navCtrl: NavController, 
     public modalCtrl: ModalController,
     private camera: Camera,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
   ) {
     this.defaultSelected = 'Select type';
     this.defaultLocation = 'Select Location'
@@ -39,16 +41,18 @@ export class EventsReportPage {
     }
   }
 
-
-
   //Open report type modal
   openReportTypeModal() {
     let myParam = { selectedType: this.selectedType}
     let modal = this.modalCtrl.create(EventsreporttypemodalPage, myParam);
     modal.present();
     modal.onDidDismiss(data => {
-      this.selectedType = data;
-      this.activateSendButton()
+      console.log(data)
+      if(!(data === undefined)){
+        this.selectedType = data;
+        this.activateSendButton()
+      }
+      console.log(this.selectedType)
     });
   }
 
@@ -65,6 +69,7 @@ export class EventsReportPage {
     modal.present();
 
     modal.onDidDismiss(data => {
+      
       this.selectedLocation = data;
       this.activateSendButton()
     });

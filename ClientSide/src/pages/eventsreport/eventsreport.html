@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Report incident</ion-title>
+    <ion-title>{{'EventsReport.title' | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +12,7 @@
     </ion-item>
 
     <ion-item no-lines>
-      <a ion-item (click)="openPositionPickerModal()">
+      <a  ion-item (click)="openPositionPickerModal()">
         {{selectedLocation}}
         <span class="mandatory">*</span>
       </a>
@@ -20,7 +20,7 @@
   </ion-list>
 
   <ion-item no-lines>
-    <ion-label  floating class="report-desc-title">Describe the event</ion-label>
+    <ion-label  floating class="report-desc-title">{{'EventsReport.describe' | translate}}</ion-label>
     <ion-textarea (click)="descriptionInput.setFocus()" #descriptionInput id="descriptionInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
 
@@ -29,14 +29,14 @@
       <ion-col col-6>
         <button ion-button round outline icon-start (click)="takePhoto(1)">
           <ion-icon name='camera' is-active="false"></ion-icon>
-          Add photo/video
+          {{'EventsReport.addPhoto' | translate}}
         </button>
       </ion-col>
     </ion-row>
   </ion-grid>
 
   <ion-footer>
-      <button ion-button block no-lines  (click)='showConfirm()' [disabled]="!isenabled">Send report</button>
+      <button ion-button block no-lines  (click)='showConfirm()' [disabled]="!isenabled">{{'EventsReport.sendReport' | translate}}</button>
   </ion-footer>
 </ion-content>
 

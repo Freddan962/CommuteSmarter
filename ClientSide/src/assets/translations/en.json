@@ -1,23 +1,60 @@
 {
   "Welcome": {
     "welcomeTitle": "Welcome to",
-    "selectLanguageText": "Please select your prefered language",
+    "selectLanguageText": "Please select your preferred language",
     "nextSlide": "Next",
-    "appDescription": "A great tool for monitoroing traffic and getting an overview of current events affecting your commute.",
+    "appDescription": "A great tool for monitoring traffic and getting an overview of current events affecting your commute.",
     "goToAppButton": "Take me to the app",
-    "featureMapTitle": "Map Overview",
+    "featureMapTitle": "Map overview",
     "featureMapDesc": "Scroll and press current events to get a more in-depth description.",
     "featureListTitle": "Event List",
     "featureListDesc": "Detailed list of all events within your range. Report an ongoing event.",
     "featureMoreTitle": "More",
     "featureMoreDesc": "Adjust your notification preferences and register to unlock reporting feature."
   },
+  "Tabs": {
+    "map": "Map",
+    "events": "Events",
+    "more": "More"
+  },
   "More": {
     "notSignedIn": "Not signed in",
-    "tapToRegister": "tap to register or sign in",
-    "tapToSignOut": "tap to sign out",
+    "tapToRegister": "Tap to register or sign in",
+    "tapToSignOut": "Tap to sign out",
     "eventNoti": "Event Notifications",
     "lang": "Language",
-    "contact": "Contact Developers" 
+    "contact": "Contact Developers",
+    "title": "More settings"
+  },
+  "Events": {
+    "event": "Events",
+    "reportIncident": "Report incident",
+    "shareEvent": "Share this event"
+  },
+  "EventsReport": {
+    "title": "Report Incident",
+    "describe": "Describe the event",
+    "addPhoto": "Add a photo or video",
+    "sendReport": "Send report"
+  },
+  "EventNotifications": {
+    "title": "Event notifications",
+    "general": "General",
+    "toggle": "Toggle all notifications",
+    "sliderInfo": "The slider determines how big area you want to receive notifications from.",
+    "notifications": "Notifications"
+  },
+  "Map": {
+    "reported": "Reported",
+    "minAgo": "min ago"
+  },
+  "Lang": {
+    "title": "Language"
+  },
+  "Filter": {
+    "title": "Filters",
+    "critical": "Critical warning",
+    "cautious": "Be cautious",
+    "other": "Other"
   }
 }

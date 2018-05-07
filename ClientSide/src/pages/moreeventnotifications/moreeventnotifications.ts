@@ -1,6 +1,8 @@
+import { SettingService } from './../../app/services/settingService';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the MoreeventnotificationsPage page.
@@ -17,64 +19,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class MoreeventnotificationsPage {
 
   storage: any;
-
-  notificationSettings: any;
-  notificationDistance: any;
-  notificationState: any;
-
   notifications: any;
+  notificationDistance: any;
+  settings: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
     this.storage = storageService;
-
-    //Contains all the states for the different notification settings
-    this.notificationState = {
-      roadWork: true,
-      criticalObstacle: true,
-      roadClosed: true,
-      obstacle: true,
-      trafficJam: true
-    }
-
-    /** 
-     * Represents data for all the different notification settings     
-     * Name = The visual name.
-     * storageName = The key to store the state in local memory. 
-     * ngModel = The variable used for the notification setting's databinding.
-     * color = The dot color, as defined in the app's main scss file.
-    */
-    this.notificationSettings = [
-      {
-        name: 'Road Work', 
-        storageName: 'roadWork',
-        ngModel: this.notificationState.roadWork, 
-        color: 'red'
-      },
-      {
-        name: 'Critical Obstacle', 
-        storageName: 'criticalObstacle',
-        ngModel: this.notificationState.criticalObstacle, 
-        color: 'red'
-      },
-	    {
-        name: 'Road Closed', 
-        storageName: 'roadClosed',
-        ngModel: this.notificationState.roadClosed,
-        color: 'red'
-      },
-      {
-        name: 'Obstacle',
-        storageName: 'obstacle',
-        ngModel: this.notificationState.obstacle,
-        color: 'orange'
-      },
-      {
-        name: 'Traffic Jam', 
-        storageName: 'trafficJam',
-        ngModel: this.notificationState.trafficJam, 
-        color: 'orange'
-      }
-    ];
+    this.settings = settingService.getSettings('notifications');
+    settingService.loadExistingData(this.settings);
 
     //Loads the slider's notification distance
     this.storage.get('notificationDistance').then((distance) => {
@@ -85,7 +37,6 @@ export class MoreeventnotificationsPage {
     })
 
     //Prepare states locally for buttons
-    this.loadNotificationStates();
     this.updateNotificationState();
   }
 
@@ -128,28 +79,6 @@ export class MoreeventnotificationsPage {
   }
 
   /**
-   * loadNotificationStates()
-   * 
-   * Loads the local stored state for the different notification settings
-   * and assigns correct state values in memory.
-   *  
-   * @memberof MoreeventnotificationsPage
-   */
-  loadNotificationStates() {
-    this.notificationSettings.forEach(setting => {
-      this.storage.get(setting.storageName).then((state) => {
-        if (state == undefined)
-          return;
-        
-        if (!state)
-          this.notifications = false;
-
-        setting.ngModel = state;
-      });
-    });
-  }
-
-  /**
    * updateNotificationState()
    * 
    * Updates main notification toggler state 
@@ -161,12 +90,15 @@ export class MoreeventnotificationsPage {
    * @memberof MoreeventnotificationsPage
    */
   updateNotificationState() {
+    console.log(this.settings.states);
     let state = true;
-    this.notificationSettings.forEach(setting => {
-      if (!setting.ngModel) {
-        state = false;
+
+    for (let property in this.settings.states) {
+      if (this.settings.states.hasOwnProperty(property)) {
+        if (!this.settings.states[property])
+          state = false;
       }
-    });
+    }
 
     this.notifications = state;
   }
@@ -181,8 +113,10 @@ export class MoreeventnotificationsPage {
    * @memberof MoreeventnotificationsPage
    */
   setNotificationStates(state) {
-    this.notificationSettings.forEach(setting => {
-      setting.ngModel = state;
-    });
+    for (let property in this.settings.states) {
+      if (this.settings.states.hasOwnProperty(property)) {
+        this.settings.states[property] = state;
+      }
+    }
   }
 }
