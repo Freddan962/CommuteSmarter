@@ -72,7 +72,11 @@ export class EventsPage {
   openReportPage() {
     if(this.isLoggedIn()) {
       this.navCtrl.push(EventsReportPage);
-    } else {
+    }
+    if (document.URL.startsWith('http')){
+      this.navCtrl.push(EventsReportPage);
+    } 
+    else {
       this.navCtrl.push(MorePage);
     }
   }

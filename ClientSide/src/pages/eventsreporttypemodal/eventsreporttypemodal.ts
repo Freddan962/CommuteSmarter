@@ -40,6 +40,16 @@ export class EventsreporttypemodalPage {
     }
   }
 
+
+  isSelected(item){
+    if(item == this.myParam){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
   onSelectType(item) {
     this.selectedType = item;
   }

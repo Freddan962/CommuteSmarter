@@ -47,8 +47,12 @@ export class EventsReportPage {
     let modal = this.modalCtrl.create(EventsreporttypemodalPage, myParam);
     modal.present();
     modal.onDidDismiss(data => {
-      this.selectedType = data;
-      this.activateSendButton()
+      console.log(data)
+      if(!(data === undefined)){
+        this.selectedType = data;
+        this.activateSendButton()
+      }
+      console.log(this.selectedType)
     });
   }
 
@@ -65,6 +69,7 @@ export class EventsReportPage {
     modal.present();
 
     modal.onDidDismiss(data => {
+      
       this.selectedLocation = data;
       this.activateSendButton()
     });
