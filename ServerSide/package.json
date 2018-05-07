@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "node_modules/.bin/sequelize db:seed:undo:all && node_modules/.bin/sequelize db:seed:all && jest",
+    "test": "node_modules/.bin/sequelize db:migrate --env test && node_modules/.bin/sequelize db:seed:undo:all --env test && node_modules/.bin/sequelize db:seed:all --env test && jest",
     "heroku-prebuild": "node_modules/.bin/sequelize db:seed:all",
     "start": "node ./bin/www"
   },

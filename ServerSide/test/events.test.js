@@ -6,14 +6,21 @@ const models = require('../models');
 /* ROUTES */
 /**********/
 
-/*describe('Test GET Events', () => {
+describe('Test GET Events', () => {
   test('Should repspond with HTTP status code 200', (done) => {
     request(app).get('/api/events').then((response) => {
         expect(response.statusCode).toBe(200);
         done();
     });
   });
-});*/
+
+  test('Should respond with the correct amount of events', (done) => {
+    request(app).get('/api/events').then((response) => {
+     expect(response.body.length).toBe(3);
+     done();
+    });
+  });
+});
 
 /***********/
 /* MODELS */
