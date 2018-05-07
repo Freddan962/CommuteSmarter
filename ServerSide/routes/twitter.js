@@ -54,7 +54,8 @@ module.exports = function(app, models) {
   });
 
   /**
-  * For turning off user access.
+  * For turning off user access. Requires user to post
+  * body with userId.
   */
   app.post('/api/twitter/logout', (request, result) => {
     console.log(request.body);
