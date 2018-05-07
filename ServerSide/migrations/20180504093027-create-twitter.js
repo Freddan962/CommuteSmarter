@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
       },
       userToken: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING
       },
       lastLogin: {
