@@ -29,9 +29,8 @@ export class HttpService {
     });*/
   }
   getDataFromExternal(link) {
-
     return this.http.get(link)
-      .map(response => response.json());
+      .map((response: any) => response.json());
   
     /*
     return new Promise(resolve => {
