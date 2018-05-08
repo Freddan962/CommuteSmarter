@@ -5,8 +5,8 @@ import { HttpService } from '../../app/services/httpService';
 
 declare let google;
 let locationMarker;
-let apiKey = 'AIzaSyAwKXMJki7n_K1eNUEw-h3wXfCh_S2o9Uo'  //google geolocation api (limited quota)
-
+// let apiKey = 'AIzaSyAwKXMJki7n_K1eNUEw-h3wXfCh_S2o9Uo'  //google geolocation api (limited quota)
+let apiKey = 'AIzaSyBAuhoPibIl4c0OlG_dmOiWKn-bY49X0Rs'
 
 @IonicPage()
 @Component({
