@@ -9,16 +9,14 @@ module.exports = {
         primaryKey: true,
       },
       userToken: {
+        allowNull: true,
         type: Sequelize.STRING
       },
       lastLogin: {
-        type: Sequelize.DATE
-      },
-      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE
       }

@@ -9,12 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       color: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       type: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       subtype: {
+        allowNull: false,
         type: Sequelize.STRING
       }
     });

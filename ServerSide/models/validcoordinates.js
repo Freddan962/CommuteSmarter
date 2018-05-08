@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var ValidCoordinates = sequelize.define('ValidCoordinates', {
-    latitude: DataTypes.DOUBLE,
-    longitude: DataTypes.DOUBLE
-  }, {});
+    latitude: DataTypes.FLOAT,
+    longitude: DataTypes.FLOAT
+  }, { timestamps: false } );
   ValidCoordinates.associate = function(models) {
     // associations can be defined here
   };

@@ -15,12 +15,12 @@ export class LoginWithTwitterService {
   constructor(private twitter: TwitterConnect,
     private storage: Storage,
     private toastCtrl: ToastController) {
-      this.storage.get('twittwerUser').then((twittwerUser) => {
-        if(twittwerUser === undefined || twittwerUser === null) {
+      this.storage.get('twitterUser').then((twitterUser) => {
+        if(twitterUser === undefined || twitterUser === null) {
           this.setUserDetailsNull();
           this.signedIn = false;
         } else  {
-          this.setAllUserDetails(twittwerUser);
+          this.setAllUserDetails(twitterUser);
           this.signedIn = true;
         }
       });
@@ -33,7 +33,7 @@ export class LoginWithTwitterService {
         this.signedIn = true;
         this.storage.set('twittwerLoginStatus', true);
 
-        this.storage.set('twittwerUser', result);
+        this.storage.set('twitterUser', result);
         this.setAllUserDetails(result);
 
         let successMessage = this.toastCtrl.create({
@@ -67,11 +67,11 @@ export class LoginWithTwitterService {
     this.token = null;
   }
 
-  private setAllUserDetails(twittwerUser) {
-    this.userName = twittwerUser.userName;
-    this.userId = twittwerUser.userId;
-    this.secret = twittwerUser.secret;
-    this.token = twittwerUser.token;
+  private setAllUserDetails(twitterUser) {
+    this.userName = twitterUser.userName;
+    this.userId = twitterUser.userId;
+    this.secret = twitterUser.secret;
+    this.token = twitterUser.token;
   }
 
   logOutTwitter() {
@@ -81,7 +81,7 @@ export class LoginWithTwitterService {
         this.signedIn = false;
         this.storage.set('twittwerLoginStatus', false);
 
-        this.storage.set('twittwerUser', null);
+        this.storage.set('twitterUser', null);
         this.setUserDetailsNull();
 
         let successMessage = this.toastCtrl.create({
