@@ -9,18 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       latitude: {
-        type: Sequelize.DOUBLE
+        allowNull: false,
+        type: Sequelize.FLOAT
       },
       longitude: {
-        type: Sequelize.DOUBLE
-      },
-      createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.FLOAT
       }
     });
   },

@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     color: DataTypes.STRING,
     type: DataTypes.STRING,
     subtype: DataTypes.STRING
-  }, {});
+  }, { timestamps: false });
   EventTypes.associate = function(models) {
     // associations can be defined here
   };

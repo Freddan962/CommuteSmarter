@@ -47,17 +47,17 @@ module.exports = (sequelize, DataTypes) => {
       notEmpty: true,
     },
     reported: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: false,
       notEmpty: true,
     },
     description: {
       type: DataTypes.STRING,
-      allowNull: false, 
+      allowNull: true,
       notEmpty: true
     }
 }, {
-  timestamps: false  
+  timestamps: false
 });
 
   Event.associate = function(models) {
