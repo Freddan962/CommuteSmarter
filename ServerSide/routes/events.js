@@ -5,7 +5,7 @@ module.exports = function(app, models) {
       location: req.body.location,
       lat: req.body.lat,
       long: req.body.long,
-      title: req.body.title,
+      category: req.body.category,
       reported: req.body.reported,
       description: req.body.description
     };

@@ -22,19 +22,19 @@ export class SettingService {
       settings: [
         {
           name: 'Obstacle on the road',
-          translateName: '',
+          translateName: 'obstacle',
         },
         {
           name: 'Roadwork',
-          translateName: '',          
+          translateName: 'roadWork',          
         },
         {
           name: 'Closed for event',
-          translateName: '',          
+          translateName: 'closedForEvent',          
         },
         {
           name: 'Other (road closed)',
-          translateName: '',          
+          translateName: 'otherClosed',          
         }
       ]
     });
@@ -46,19 +46,19 @@ export class SettingService {
       settings: [
         {
           name: 'Obstacle on the road',
-          translateName: '',          
+          translateName: 'obstacle',          
         },
         {
           name: 'Roadwork',
-          translateName: '',          
+          translateName: 'roadWork',          
         },
         {
           name: 'Traffic Jam',
-          translateName: '',          
+          translateName: 'trafficJam',          
         },
         {
           name: 'Other (limited passability)',
-          translateName: '',          
+          translateName: 'otherPassability',          
         },
       ]
     });
@@ -70,15 +70,15 @@ export class SettingService {
       settings: [
         {
           name: 'Emergency Vehicle Passing',
-          translateName: '',           
+          translateName: 'emergencyVehicle',           
         },
         {
           name: 'Police Control',
-          translateName: '',           
+          translateName: 'policeControl',           
         },
         {
           name: 'Other (emergency vehicles)',
-          translateName: '',          
+          translateName: 'otherEmergency',          
         }
       ]
     });

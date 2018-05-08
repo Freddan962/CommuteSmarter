@@ -24,8 +24,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.FLOAT
       },
-      title: {
-        allowNull: false,
+      category: {
         type: Sequelize.STRING
       },
       reported: {

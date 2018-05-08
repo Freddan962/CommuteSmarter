@@ -1,19 +1,19 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">Done</button>
+      <button ion-button (click)="dismiss()">{{'EventReport.done' | translate}}</button>
     </ion-buttons>
-    <ion-title>Choose typ of incident</ion-title>
+    <ion-title>{{ 'EventReport.chooseType' | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding >
   <div radio-group>
     <ion-list *ngFor="let category of settings.categories">
-      <ion-list-header><span [ngClass]="'dot-' + category.color"></span>{{ category.translateName | translate}}</ion-list-header>
+      <ion-list-header><span [ngClass]="'dot-' + category.color"></span>{{ ('Settings.' + category.translateName) | translate}}</ion-list-header>
       <ion-item *ngFor="let setting of category.settings">
-        <ion-label color="dark"> {{ setting.name }}</ion-label>
-        <ion-radio checked="isSelected(setting.name)" (click)="onSelectType(setting.name)" [value]="setting.formattedName" value="{{ setting.formattedName }}"></ion-radio>
+        <ion-label color="dark"> {{ ('Settings.' + setting.translateName) | translate }}</ion-label>
+        <ion-radio checked="isSelected(setting.name)" (click)="onSelectType(setting.translateName)" [value]="setting.formattedName" value="{{ setting.formattedName }}"></ion-radio>
       </ion-item>
     </ion-list>
   </div>

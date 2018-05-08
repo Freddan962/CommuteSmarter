@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    title: {
+    category: {
       type: DataTypes.STRING,
       allowNull: false,
       notEmpty: true,
