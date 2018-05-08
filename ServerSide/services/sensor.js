@@ -4,6 +4,7 @@ function getRandomSensor(models, perform) {
 
 function findRandomId(table, perform) {
     table.findAndCountAll({}).then((result) => {
+
         const min = 1;
         let count = result.count;
         let random = Math.floor(Math.random() * (count - min + 1)) + min;
@@ -23,6 +24,7 @@ function getRandomEventType(models, perform) {
 
 function getRandomEvent(models, perform) {
     getRandomSensor(models, (sensor => {
+
         getRandomEventType(models, (type => {
             let eventInfo = {
                 color: type.color,

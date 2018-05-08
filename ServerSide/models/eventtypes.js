@@ -6,8 +6,10 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     subtype: DataTypes.STRING
   }, { timestamps: false });
+
   EventTypes.associate = function(models) {
     // associations can be defined here
   };
   return EventTypes;
 };
+
