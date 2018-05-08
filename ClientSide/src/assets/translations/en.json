@@ -69,9 +69,16 @@
     "limitedPassability": "Limited passability",
     "trafficJam": "Traffic jam",
     "otherPassability": "Other (limited passability)",
-    "emergenyVehicles": "Emergency vehicles",
+    "emergencyVehicles": "Emergency vehicles",
     "emergencyVehicle": "Emergency vehicle passing",
     "policeControl": "Police Control",
-    "otherEmergency": "Other (emergency vehicles)"
+    "otherEmergency": "Other (emergency vehicles)",
+    "selectType": "Select type",
+    "selectLocation": "Select location"
+  },
+  "EventReport": {
+    "done": "Done",
+    "chooseType": "Choose type of incident",
+    "selectPosition": "Select position"
   }
 }

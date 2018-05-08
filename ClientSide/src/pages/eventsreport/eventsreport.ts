@@ -23,8 +23,8 @@ export class EventsReportPage {
     private camera: Camera,
     public alertCtrl: AlertController,
   ) {
-    this.defaultSelected = 'Select type';
-    this.defaultLocation = 'Select Location'
+    this.defaultSelected = 'selectType';
+    this.defaultLocation = 'selectLocation'
     this.selectedType = this.defaultSelected; 
     this.selectedLocation = this.defaultLocation;
   }

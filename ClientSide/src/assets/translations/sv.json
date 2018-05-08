@@ -70,10 +70,17 @@
     "limitedPassability": "Begränsad framkomlighet",
     "trafficJam": "Trafiksylt",
     "otherPassability": "Annat (begränsad framkomlighet)",
-    "emergenyVehicles": "Utryckningsfordon",
+    "emergencyVehicles": "Utryckningsfordon",
     "emergencyVehicle": "Passerande utryckningsfordon",
     "policeControl": "Poliskontroll",
-    "otherEmergency": "Annat (Utryckningsfordon)"
+    "otherEmergency": "Annat (Utryckningsfordon)",
+    "selectType": "Välj typ",
+    "selectLocation": "Välj plats"
+  },
+  "EventReport": {
+    "done": "Klar",
+    "chooseType": "Välj händelsetyp",
+    "selectPosition": "Välj plats"
   }
 
 }
