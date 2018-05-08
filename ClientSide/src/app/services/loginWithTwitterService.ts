@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { ToastController } from 'ionic-angular';
+import { HttpService } from './httpService';
 
 @Injectable()
 export class LoginWithTwitterService {
@@ -14,7 +15,8 @@ export class LoginWithTwitterService {
 
   constructor(private twitter: TwitterConnect,
     private storage: Storage,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    private httpService:HttpService) {
       this.storage.get('twitterUser').then((twitterUser) => {
         if(twitterUser === undefined || twitterUser === null) {
           this.setUserDetailsNull();
@@ -35,6 +37,8 @@ export class LoginWithTwitterService {
 
         this.storage.set('twitterUser', result);
         this.setAllUserDetails(result);
+
+        this.httpService.sendDataToServer('/twitter/access', { userId: result.userId, userToken: result.token });
 
         let successMessage = this.toastCtrl.create({
           message: 'Signed in '+ result.userName + ' with Twitter',
