@@ -9,12 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       color: {
+
+        allowNull: false,
         type: Sequelize.STRING
       },
       type: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       subtype: {
+        allowNull: false,
         type: Sequelize.STRING
       }
     });
@@ -22,4 +26,6 @@ module.exports = {
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('EventTypes');
   }
+
 };
+
