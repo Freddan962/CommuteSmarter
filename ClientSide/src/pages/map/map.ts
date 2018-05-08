@@ -45,50 +45,30 @@ export class MapPage {
         type: 'line',
         start: new google.maps.LatLng(59.407433, 17.947650),
         end: new google.maps.LatLng(59.406676, 17.945710),
-        color: this.colors['orange']
+        color: this.colors['orange'],
+        data: {
+          category: 'Obstacle',
+          location: 'Den Ökända Vägen 23',
+          color: 'red',
+          reported: '2012-07-02',
+          time: 37,
+          description: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
+        }
       },
       {
         type: 'line',
         start: new google.maps.LatLng(59.405539, 17.942470),
         end: new google.maps.LatLng(59.406084, 17.943790),
-        color: this.colors['blue']
-      },
-      {
-        type: 'icon',
-        start: new google.maps.LatLng(59.405539, 17.942470),
-        color: 'red',
+        color: this.colors['blue'],
         data: {
-          title: 'Car Crash',
-          time: 30,
-          distance: 1.9,
-          unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
+          category: 'Police Control',
+          location: 'Den Okända Vägen 23',
+          time: 17,
+          color: 'blue',
+          reported: '2018-04-02',
+          description: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
         }
       },
-      {
-        type: 'icon',
-        start: new google.maps.LatLng(59.408429, 17.944525),
-        color: 'blue',
-        data: {
-          title: 'Obstacle',
-          time: 128,
-          distance: 41,
-          unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
-        }
-      },
-      {
-        type: 'icon',
-        start: new google.maps.LatLng(59.408559, 17.940394),
-        color: 'yellow',
-        data: {
-          title: 'Something illegal',
-          time: 12,
-          distance: 2.3,
-          unit: 'km',
-          text: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
-        }
-      }
     ]
   }
 
@@ -133,7 +113,7 @@ export class MapPage {
           this.drawIcon(obstacle.start, obstacle.color, obstacle.data);
           break;
           case 'line':
-          this.drawPath(obstacle.start, obstacle.end, obstacle.color);
+          this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
           break;
         default:
           break;
@@ -271,7 +251,7 @@ addInfoMarker(markerImage, position, data) {
  * @param {any} color The color of the line.
  * @memberof MapPage
  */
-drawPath(startPos, endPos, color) {
+drawPath(startPos, endPos, color, line) {
     let request = {
       origin: startPos,
       destination: endPos,
@@ -281,26 +261,66 @@ drawPath(startPos, endPos, color) {
     let directionService = new google.maps.DirectionsService;
     let directionsDisplay = new google.maps.DirectionsRenderer;
 
-    let polyLineOptions = { strokeColor: color }
     directionsDisplay.setMap(this.map);
-    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true, polylineOptions: polyLineOptions });
+    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true });
 
-    directionService.route(request, function(result, status) {
-      directionsDisplay.setDirections(result);
+    directionService.route(request, (result, status) => {
+      this.renderDirection(result, color, line);
     });
   }
-/**
- * drawIcon()
- *
- * Renders a icon at the specified position using the provided color and
- * prepares callbacks to deal with display of data.
- *
- * @param {any} pos The position where the marker is placed.
- * @param {any} color The target color of the marker.
- * @param {any} data The data that gets displayed in the reaveled box.
- * @memberof MapPage
- */
-drawIcon(pos, color, data) {
+
+  /**
+   * RenderDirection
+   * 
+   * Responsible for rendering and hooking the polylines between the different events.
+   * 
+   * @param {any} response The response from the directionService.route() call
+   * @param {any} color The color of the road, e.g '#272E34'
+   * @param {any} line The line object to draw
+   * @memberof MapPage
+   */
+  renderDirection(response, color, line) {
+    let polylineOptions = {
+      strokeColor: color,
+      strokeOpacity: 1,
+      strokeWeight: 4
+    };
+
+    let polylines = [];
+    for (let i = 0; i < polylines.length; i++) 
+      polylines[i].setMap(null);
+
+    let legs = response.routes[0].legs;
+    for (let i = 0; i < legs.length; i++) {
+      let steps = legs[i].steps;
+
+      for (let j = 0; j < steps.length; j++) {
+        let nextSegment = steps[j].path;
+        let stepPolyline = new google.maps.Polyline(polylineOptions);
+
+        for (let k = 0; k < nextSegment.length; k++)
+          stepPolyline.getPath().push(nextSegment[k]);
+
+          stepPolyline.setMap(this.map);
+        polylines.push(stepPolyline);
+        google.maps.event.addListener(stepPolyline, 'click', (evt) => {
+          this.openMapEventInfo(line.data);
+        })
+      }
+    }
+  }
+  /**
+   * drawIcon()
+   *
+   * Renders a icon at the specified position using the provided color and
+   * prepares callbacks to deal with display of data.
+   *
+   * @param {any} pos The position where the marker is placed.
+   * @param {any} color The target color of the marker.
+   * @param {any} data The data that gets displayed in the reaveled box.
+   * @memberof MapPage
+   */
+  drawIcon(pos, color, data) {
     this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
   }
 }

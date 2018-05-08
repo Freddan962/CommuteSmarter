@@ -8,10 +8,8 @@ module.exports = {
         location: 'Torsgatan',
         lat: 54.566456,
         long: 56.77998,
-
         category:'obstacle',
         reported:'2018-04-27 09:30',
-
         description: 'car crash',
       },
       {
@@ -21,7 +19,6 @@ module.exports = {
         long: 56.77998,
         category:'trafficJam',
         reported:'2018-04-27 11:30', 
-
         description:'Marathon',
       },
       {
@@ -31,7 +28,6 @@ module.exports = {
         long: 56.77998,
         category:'policeControl', 
         reported:'2018-04-27 14:30', 
-
         description:'something',
       }
     ], {});
