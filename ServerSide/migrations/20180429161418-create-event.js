@@ -20,7 +20,7 @@ module.exports = {
       long: {
         type: Sequelize.FLOAT
       },
-      title: {
+      category: {
         type: Sequelize.STRING
       },
       reported: {
