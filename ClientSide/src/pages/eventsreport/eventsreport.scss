@@ -16,6 +16,12 @@
 
 }
 
+a .ion-label, .label-ios, .label-md { /* this solution is ugly since it interfere with the global scope. */
+ white-space: initial !important;
+ overflow: normal !important;
+}
+
+
 
  .dot,
  .dot-orange,

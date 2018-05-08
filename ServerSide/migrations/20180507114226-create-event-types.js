@@ -1,33 +1,25 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Twitters', {
+    return queryInterface.createTable('EventTypes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userId: {
+      color: {
         type: Sequelize.STRING
       },
-      userToken: {
+      type: {
         type: Sequelize.STRING
       },
-      lastLogin: {
+      subtype: {
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Twitters');
+    return queryInterface.dropTable('EventTypes');
   }
 };

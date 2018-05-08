@@ -9,12 +9,15 @@
 
 <ion-content padding >
   <div radio-group>
-  <ion-list *ngFor="let event of events">
-  <ion-list-header><span [ngClass]="'dot-' + event.color"></span>{{ event.eventtype | translate}}</ion-list-header>
-    <ion-item *ngFor="let item of event.eventsubtype">
-      <ion-label color="dark"> {{ item | translate}}</ion-label>
-      <ion-radio (click)="onSelectType(item)" [value]="item" value="{{ item }}">is</ion-radio>
-    </ion-item>
-  </ion-list>
+    <ion-list *ngFor="let category of settings.categories">
+      <ion-list-header><span [ngClass]="'dot-' + category.color"></span>{{ category.translateName | translate}}</ion-list-header>
+      <ion-item *ngFor="let setting of category.settings">
+        <ion-label color="dark"> {{ setting.name }}</ion-label>
+        <ion-radio checked="isSelected(setting.name)" (click)="onSelectType(setting.name)" [value]="setting.formattedName" value="{{ setting.formattedName }}"></ion-radio>
+      </ion-item>
+    </ion-list>
   </div>
+
+
+
 </ion-content>

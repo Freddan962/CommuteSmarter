@@ -28,16 +28,6 @@ module.exports = {
       },
       description:{
         type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: sequelize.literal('NOW()')
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: sequelize.literal('NOW()')
       }
     });
   },
