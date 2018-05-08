@@ -4,8 +4,9 @@ function getRandomSensor(models, perform) {
 
 function findRandomId(table, perform) {
     table.findAndCountAll({}).then((result) => {
+        const min = 1;
         let count = result.count;
-        let random = Math.floor(Math.random()*count);
+        let random = Math.floor(Math.random() * (count - min + 1)) + min;
 
         console.log("Antal " + count);
         console.log("Id: " + random);
@@ -40,18 +41,3 @@ function getRandomEvent(models, perform) {
 }
 
 module.exports.getRandomEvent = getRandomEvent;
-
-module.exports.doRandomEventCreation = function(models){
-    const max = 10000;
-    const min = 5000;
-    do {
-        let random = Math.floor(Math.random() * (max - min + 1)) + min;
-        console.log(random);
-        
-        setInterval(function() {
-            getRandomEvent(models, () => { 
-                console.log("Called create random event!");
-             })
-        }, random);
-    } while(true);
-}
