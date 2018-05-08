@@ -8,7 +8,7 @@ const logger = require('morgan');
 
 const app = express();
 const models = require('./models');
-
+const workers = require('./workers');
 // view engine setup
 app.use(logger('dev'));
 app.use(express.json());
