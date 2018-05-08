@@ -55,6 +55,23 @@
     "title": "Filters",
     "critical": "Critical warning",
     "cautious": "Be cautious",
-    "other": "Other"
+    "other": "Other",
+    "roadClosed": "Road Closed",
+    "limitedPass": "Limited Passability",
+    "emergencyVehicles": "Emergency Vehicles"
+  },
+  "Settings": {
+    "roadClosed": "Road Closed",
+    "obstacle": "Obstacle on the road",
+    "roadWork": "Road work",
+    "closedForEvent": "Closed for event",
+    "otherClosed": "Other (road closed)",
+    "limitedPassability": "Limited passability",
+    "trafficJam": "Traffic jam",
+    "otherPassability": "Other (limited passability)",
+    "emergenyVehicles": "Emergency vehicles",
+    "emergencyVehicle": "Emergency vehicle passing",
+    "policeControl": "Police Control",
+    "otherEmergency": "Other (emergency vehicles)"
   }
 }

@@ -55,8 +55,25 @@
     "title": "Filter",
     "critical": "Kritisk varning",
     "cautious": "Var uppmärksam",
-    "other": "Annat"
+    "other": "Annat",
+    "roadClosed": "Avstängd väg",
+    "limitedPass": "Begränsad framkomlighet",
+    "emergencyVehicles": "Utryckningsfordon"
 
+  },
+  "Settings": {
+    "roadClosed": "Avstängd väg",
+    "obstacle": "Hinder på vägen",
+    "roadWork": "Vägarbete",
+    "closedForEvent": "Stängt pga evenemang",
+    "otherClosed": "Annat (avstängd väg)",
+    "limitedPassability": "Begränsad framkomlighet",
+    "trafficJam": "Trafiksylt",
+    "otherPassability": "Annat (begränsad framkomlighet)",
+    "emergenyVehicles": "Utryckningsfordon",
+    "emergencyVehicle": "Passerande utryckningsfordon",
+    "policeControl": "Poliskontroll",
+    "otherEmergency": "Annat (Utryckningsfordon)"
   }
 
 }
