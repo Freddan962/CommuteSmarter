@@ -8,7 +8,7 @@ let httpMethods = {
             path: path,
             method: 'GET'
         }, function(result) {
-            let body = '';            
+            let body = '';
 
             result.on('data', function(data){
                 body += data;
@@ -16,8 +16,11 @@ let httpMethods = {
 
             result.on('end', function() {
                 callback(JSON.parse(body));
-            }); 
+            });
         });
+    },
+    httpPostRequest: function(url, data, successCallback, errorCallback) {
+      http.post(url, data).then(successCallback, errorCallback);
     }
 }
 
