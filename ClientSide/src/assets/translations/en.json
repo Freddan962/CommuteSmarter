@@ -40,7 +40,7 @@
   "EventNotifications": {
     "title": "Event notifications",
     "general": "General",
-    "toggle": "Toggle all notifications",
+    "toggleAll": "Toggle all notifications",
     "sliderInfo": "The slider determines how big area you want to receive notifications from.",
     "notifications": "Notifications"
   },
