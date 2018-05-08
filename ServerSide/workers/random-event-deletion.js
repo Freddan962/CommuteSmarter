@@ -6,5 +6,9 @@ module.exports = {
   name: 'Random Event Deletion',
   interval: 5500,
   func: function() {
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
   }
 }
