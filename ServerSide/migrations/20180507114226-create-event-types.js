@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Events', {
+    return queryInterface.createTable('EventTypes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,32 +12,17 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      location: {
+      type: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      lat: {
+      subtype: {
         allowNull: false,
-        type: Sequelize.FLOAT
-      },
-      long: {
-        allowNull: false,
-        type: Sequelize.FLOAT
-      },
-      category: {
-        type: Sequelize.STRING
-      },
-      reported: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      description:{
-        allowNull: true,
         type: Sequelize.STRING
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Events');
+    return queryInterface.dropTable('EventTypes');
   }
 };

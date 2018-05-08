@@ -7,12 +7,16 @@ const express = require('express');
 const logger = require('morgan');
 
 const app = express();
-const models = require('./models');
-const workers = require('./workers');
+
 // view engine setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+const models = require('./models');
+const workers = require('./workers');
+const coordinatesService = require('./services/get-coordinates');
+coordinatesService.populateCoordsTable(models, 44);
 
 require('./routes')(app, models);
 

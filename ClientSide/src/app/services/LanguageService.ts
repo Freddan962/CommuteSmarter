@@ -22,7 +22,7 @@ export class LanguageService {
 
     //Prepare default settings for translation pipe
     this.translate.addLangs(this.getLanguageIDs());    
-    this.translate.setDefaultLang(this.getLanguageIDs[0]);
+    this.translate.setDefaultLang(this.getLanguageIDs()[0]);
   
     //Promise based call to fetch locally stored language identifier
     this.storage.get("language").then((id) => {

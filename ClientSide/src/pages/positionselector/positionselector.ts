@@ -1,96 +1,128 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-let google;
+import { HttpService } from '../../app/services/httpService';
+
+declare let google;
+let locationMarker;
+let apiKey = 'AIzaSyAwKXMJki7n_K1eNUEw-h3wXfCh_S2o9Uo'  //google geolocation api (limited quota)
+
 
 @IonicPage()
 @Component({
   selector: 'page-positionselector',
   templateUrl: 'positionselector.html',
 })
+
+
 export class PositionselectorPage {
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   marker: any;
+  nearbyPlace: any;
+  markers: any[];
+  locationMarker: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public geolocation: Geolocation) {
-  }
+    public geolocation: Geolocation,
+    private httpService: HttpService
+    ) {
+      this.markers = [];
+      this.locationMarker;
+    }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PositionselectorPage');
-    this.loadMap()
+    this.loadMap();
   }
 
-  loadMap(){
-    // Create a map object and specify the DOM element for display.
-    var map = new google.maps.Map(document.getElementById('map'), {
-      center: {
-        lat: 59.329852,
-        lng: 18.068461
-      },
+  /**
+   * loadMap()
+   *
+   * Responsible for creating the initial map.
+   *
+   * @memberof MapPage
+   */
+  loadMap() {
+    let latLng = new google.maps.LatLng(59.326137, 18.071325);
+
+    let mapOptions = {
+      center: latLng,
       zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
-    });
+      clickableIcons: false
+    }
 
-    //TODO: Set this to whatever is the current location
-     this.marker = null; 
-    
-    map.addListener('click', function(e) {
-      var lat = e.latLng.lat();
-      var lng = e.latLng.lng();
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.centerMapToLocation();
 
-      if (this.marker) 
-        this.marker.setMap(null);
-      
-      this.marker = new google.maps.Marker({
-        map: map,
-        draggable: false,
-        position: {lat: lat, lng: lng}
-      });
-      console.log(this.marker.position.lat)
+    //Makes map clickable
+    this.map.addListener('click', (e) => {
+      this.placeMarkerAndPanTo(e.latLng, this.map);
     });
   }
 
 
+
+  placeMarkerAndPanTo(latLng, map) {
+    this.removeMarkers();
+    let marker = new google.maps.Marker({
+      position: latLng,
+      map: this.map,
+    });
+    this.markers.push(marker); //add current marker to markers array (so you can remove previous marker when setting a new)
+        
+    this.map.panTo(latLng) //centers map to marked location
+    return marker
+  }
+
+
+  //removes previous marker when setting a new one
+ removeMarkers() {
+   for (let i = 0; i < this.markers.length; i++) {
+    this.markers[i].setMap(null);
+  }
+}
+
+  /**
+    * centerMapToLocation()
+    *
+    * Prepares the center marker and centers the map on current geolocation.
+    *
+    * @memberof MapPage
+    */
   centerMapToLocation() {
-    if (this.marker == null) this.addMarker
-      ('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
     this.geolocation.getCurrentPosition().then
       ((position) => {
-        let latLng = new google.maps.LatLng
-          (position.coords.latitude, position.coords.longitude);
+        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        
         this.map.setCenter(latLng);
-        this.marker.setPosition(latLng);
+        this.locationMarker = this.placeMarkerAndPanTo(latLng, this.map.getCenter())
+        this.locationMarker.setPosition(latLng);
       }, (err) => {
         console.log(err);
-      });
+      }
+    );
   }
 
-  addMarker(markerImage, position) {
-
-    this.marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      icon:
-        new google.maps.MarkerImage(
-          markerImage,
-          null, /* size is determined at runtime */
-          null, /* origin is 0,0 */
-          null, /* anchor is bottom center of the scaled image */
-          new google.maps.Size(25, 25) /* marker size */
-        ),
-      position: position
-    });
-  }
-
-
+  getLocationOfMarker(){
+    let geolocationRequest = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.markers[0].position.lat()},${this.markers[0].position.lng()}&key=${apiKey}`
+  //google geolocation api request
+  this.httpService.getDataFromExternal(geolocationRequest).subscribe(
+    data => this.nearbyPlace = data,
+    error => this.viewCtrl.dismiss('could not locate your position')
+     /*console.error('Error: ' + error)*/,
+    () =>  
+      this.viewCtrl.dismiss(this.nearbyPlace.results[0].formatted_address)
+     
+  );
+}
 
    dismiss() {
-     this.viewCtrl.dismiss(this.marker);
+     this.getLocationOfMarker() //waits for response from map api before exiting modal - Not the best solution but it works
   }
 }
