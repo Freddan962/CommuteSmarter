@@ -21,7 +21,7 @@ export class EventsreporttypemodalPage {
   category: string;
   color: string;
 
-
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

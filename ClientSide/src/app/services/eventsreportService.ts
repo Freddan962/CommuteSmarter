@@ -1,49 +1,39 @@
 import { Injectable } from '@angular/core';
-import { HttpService } from './httpService';
-import { HttpClientModule } from '@angular/common/http'; 
-import { HttpModule } from '@angular/http';
+// import { HttpService } from './httpService';
+import { Http, Headers } from '@angular/http';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class EventsReportService {  
 
-  constructor(private httpService: HttpService) { 
-    this.httpService = httpService;
+  constructor(/*private httpService: HttpService,*/ private http: Http) { 
+    // this.httpService = httpService;
   }
-
-
-// this.httpService.sendDataToServer('/twitter/access', { userId: result.userId, userToken: result.token });
-
 
   sendReportToServer(report){
-    
-    this.httpService.sendDataToServer('/events/', { 
-      color: report.color, 
-      location: report.location, 
-      lat: report.lat, 
-      long: report.lng,
+    const reqData = {
+      color: report.color,
+      location: report.location,
+      lat: report.lat,
+      long: report.long,
+      reported: new Date(),
       category: report.category,
-      reported: Date.now()
-      });
+      description: report.description,
+    }
 
-      console.log('Sent report to server: ' + report)
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json')
 
-    // let eventInfo = {
-    //   color: req.body.color,
-    //   location: req.body.location,
-    //   lat: req.body.lat,
-    //   long: req.body.long,
-    //   category: req.body.category,
-    //   reported: req.body.reported,
-    //   description: req.body.description
-    // };
 
-    //send twitter user id
+    // let url = 'http://localhost:3000/api/events'; 
+    let url = 'https://pvt73trafficinfo.herokuapp.com/api/events'; //
+    this.http.post(url, JSON.stringify(reqData), {headers: headers})
+    .map(res => res.json())
+    .subscribe(data => {
+        console.log('server response:'),
+        console.log(data)
+    }
+    )
+    console.log('Report sent to server:')
   }
-
 }
-
-// sendDataToServer(route, data) {
-//   return this.http.post('https://pvt73trafficinfo.herokuapp.com/api/' + route, data)
-//     .map(response => response.json())
-// }
-// }
