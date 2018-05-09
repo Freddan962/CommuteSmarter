@@ -27,8 +27,8 @@ export class EventsReportPage {
     public alertCtrl: AlertController,
     private DomSanitizer: DomSanitizer,
   ) {
-    this.defaultSelected = 'Select type';
-    this.defaultLocation = 'Select Location'
+    this.defaultSelected = 'selectType';
+    this.defaultLocation = 'selectLocation'
     this.selectedType = this.defaultSelected; 
     this.selectedLocation = this.defaultLocation;
   }

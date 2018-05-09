@@ -7,20 +7,22 @@ const express = require('express');
 const logger = require('morgan');
 
 const app = express();
-const models = require('./models');
 
 // view engine setup
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+const models = require('./models');
+const workers = require('./workers');
 const coordinatesService = require('./services/get-coordinates');
 coordinatesService.populateCoordsTable(models, 44);
-const sensorService = require('./services/sensor');
-sensorService.getRandomEvent(models, (data)=> {
-  console.log("here");
-  
-});
 
 require('./routes')(app, models);
 

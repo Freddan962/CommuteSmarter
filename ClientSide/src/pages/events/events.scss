@@ -5,7 +5,7 @@ page-events {
         top: 10px;
     }
 
-    .dot, .dot-orange, .dot-red {
+    .dot, .dot-orange, .dot-red, .dot-blue {
         height: 25px;
         width: 25px;
         background-color: #bbb;
@@ -18,5 +18,8 @@ page-events {
     }
     .dot-red {
         background-color: red;
+    }
+    .dot-blue {
+        background-color: blue;
     }
 }

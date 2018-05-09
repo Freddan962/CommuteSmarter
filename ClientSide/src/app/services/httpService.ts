@@ -10,12 +10,10 @@ export class HttpService {
   {}
 
   getDataFromServer(route) {
-    
+
     return this.http.get('https://pvt73trafficinfo.herokuapp.com/api/' + route)
       .map(response => response.json());
 
-
- 
     /*  return new Promise(resolve => {
       this.http.get('https://pvt73trafficinfo.herokuapp.com/api/' + route, {}, {})
       .then((data: any) => {
@@ -28,10 +26,11 @@ export class HttpService {
       });
     });*/
   }
+
   getDataFromExternal(link) {
     return this.http.get(link)
       .map((response: any) => response.json());
-  
+
     /*
     return new Promise(resolve => {
       this.http.get(link, {}, {})
@@ -44,5 +43,10 @@ export class HttpService {
         console.log(error.headers);
       });
     });*/
+  }
+
+  sendDataToServer(route, data) {
+    return this.http.post('https://pvt73trafficinfo.herokuapp.com/api/' + route, data)
+      .map(response => response.json())
   }
 }

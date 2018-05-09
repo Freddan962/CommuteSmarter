@@ -9,24 +9,30 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       color: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       location: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       lat: {
+        allowNull: false,
         type: Sequelize.FLOAT
       },
       long: {
+        allowNull: false,
         type: Sequelize.FLOAT
       },
-      title: {
+      category: {
         type: Sequelize.STRING
       },
       reported: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.DATE
       },
       description:{
+        allowNull: true,
         type: Sequelize.STRING
       }
     });
