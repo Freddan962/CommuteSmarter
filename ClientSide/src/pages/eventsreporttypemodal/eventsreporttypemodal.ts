@@ -19,7 +19,7 @@ export class EventsreporttypemodalPage {
   selectedType: any;
   settings: any;
 
-
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

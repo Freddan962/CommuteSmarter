@@ -29,7 +29,7 @@ export class HttpService {
 
   getDataFromExternal(link) {
     return this.http.get(link)
-      .map((response: any) => response.json());
+      .map((response) => response.json());
 
     /*
     return new Promise(resolve => {

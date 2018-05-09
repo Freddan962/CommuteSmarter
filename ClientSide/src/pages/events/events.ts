@@ -8,7 +8,9 @@ import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
-declare var google;
+import { Observable } from "rxjs/Rx"
+
+declare const google;
 
 
 @IonicPage()
@@ -18,6 +20,8 @@ declare var google;
 })
 
 export class EventsPage {
+
+  public items$: Observable<any>
   items: any;
 
   constructor(public navCtrl: NavController,
@@ -26,9 +30,7 @@ export class EventsPage {
     public eventService: EventService,
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
-    private socialSharing: SocialSharing) {
-       this.getEvents();
-       
+    private socialSharing: SocialSharing) {  
   }
 
   location: {
@@ -36,15 +38,24 @@ export class EventsPage {
     longitude: number
   };
 
-  private getEvents(){
-    this.eventService.getEvents().subscribe(
-      data => this.items = data,
-      error => console.error('Error: ' + error),
-      () => console.log('Done!')
-    );
-    
-    
+  public ngOnInit() {
+    this.items$ = this.eventService.getEvents();
+    console.log('Server responded with: \n'+ JSON.stringify(this.items$))
   }
+
+  // private getEvents(){
+  //   console.log('initiated!')
+    
+  //   this.eventService.getEvents().subscribe(
+  //     data => {
+  //       this.items = data,
+  //       this.disactivate()
+  //     }),
+  //     error => console.error('Error: ' + error),
+  //     () => console.log("Hello!");    
+  // }
+
+
 
   parseTime(time) {
     moment.locale(this.translate.currentLang);
@@ -52,35 +63,22 @@ export class EventsPage {
   }
 
   findUserLocation(){
-    
-
     this.geolocation.getCurrentPosition().then
     ((position) => {
- 
       this.location = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
-      };
-      this.init(this.location);
- 
+      }; 
      }).catch((error) => {
        console.log('Error getting location', error);
      });
   }
 
-  init(location){ 
-    console.log(location);
-  }
-
   distance(lat, long) {
-    console.log('lat: '+ lat + ' long: '+ long);
     this.findUserLocation();
-    console.log(this.location);
     let marker = new google.maps.LatLng(lat, long);
     let unit = 'km';
     let currentLocation;
-    //let currentLocation = new google.maps.LatLng(59.326137, 18.071325); //endast för testning
-    //let currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker); ///endast för testning
     let currentdistance;
    
     if(this.location != undefined){
@@ -104,9 +102,9 @@ export class EventsPage {
     item.accordionOpen = !item.accordionOpen;
   }
 
+  
   shareEvent(item) {
     console.log('called share event');
-
     this.socialSharing.share(item.title, item.text, null, null);
   }
 
@@ -125,6 +123,6 @@ export class EventsPage {
   }
 
   markAsFinished(item){
-    
+    //remove finished item?
   }
 }
