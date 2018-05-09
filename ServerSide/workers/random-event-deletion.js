@@ -6,6 +6,8 @@ module.exports = {
   name: 'Random Event Deletion',
   interval: 5500,
   func: function() {
-
+    sensor.deleteRandomEvent(models,(() => {
+      console.log("Called delete random event!");
+    }));
   }
 }
