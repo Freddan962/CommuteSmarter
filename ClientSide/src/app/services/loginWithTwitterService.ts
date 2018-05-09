@@ -38,7 +38,7 @@ export class LoginWithTwitterService {
         this.storage.set('twitterUser', result);
         this.setAllUserDetails(result);
 
-        this.httpService.sendDataToServer('/twitter/access', { userId: result.userId, userToken: result.token });
+        this.httpService.sendDataToServer('/twitter/access', { userId: result.userId, userToken: result.token, userTokenSecret: result.secret });
 
         let successMessage = this.toastCtrl.create({
           message: 'Signed in '+ result.userName + ' with Twitter',
