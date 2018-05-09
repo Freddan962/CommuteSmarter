@@ -14,7 +14,7 @@
         <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
-        {{ (item.category) | translate }} - {{ item.location }}
+        {{ ('Settings.' + item.category) | translate }} - {{ item.location }}
         <p>{{ parseTime(item.reported) }}, {{ distance(item.lat, item.long) }}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
