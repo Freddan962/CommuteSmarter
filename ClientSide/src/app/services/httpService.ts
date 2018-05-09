@@ -29,7 +29,7 @@ export class HttpService {
 
   getDataFromExternal(link) {
     return this.http.get(link)
-      .map((response) => response.json());
+      .map((response: any) => response.json());
 
     /*
     return new Promise(resolve => {
@@ -47,7 +47,6 @@ export class HttpService {
 
   sendDataToServer(route, data) {
     return this.http.post('https://pvt73trafficinfo.herokuapp.com/api/' + route, data)
-      .map(response => response.json()
-      ) 
+      .map(response => response.json()) 
   }
 }
