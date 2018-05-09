@@ -38,11 +38,6 @@ export class EventsPage {
     longitude: number
   };
 
-  ionViewDidEnter(){ //refreshes events everytime page is opened
-    // this.refreshEvents()
-  }
-
-  
   refreshEvents(){ 
     this.items$ = this.eventService.getEvents(); //Fetches from the database
     console.log('Server responded with:')
@@ -52,7 +47,7 @@ export class EventsPage {
 
   // private getEvents(){
   //   console.log('initiated!')
-    
+
   //   this.eventService.getEvents().subscribe(
   //     data => {
   //       this.items = data,
