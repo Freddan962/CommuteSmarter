@@ -13,7 +13,7 @@
       <ion-list-header><span [ngClass]="'dot-' + category.color"></span>{{ ('Settings.' + category.translateName) | translate}}</ion-list-header>
       <ion-item *ngFor="let setting of category.settings">
         <ion-label color="dark"> {{ ('Settings.' + setting.translateName) | translate }}</ion-label>
-        <ion-radio checked="isSelected(setting.name)" (click)="onSelectType(setting.translateName)" [value]="setting.formattedName" value="{{ setting.formattedName }}"></ion-radio>
+        <ion-radio checked="isSelected(setting.name)" (click)="onSelectType(setting.translateName, category.name, category.color)" [value]="setting.formattedName" value="{{ setting.formattedName }}"></ion-radio>
       </ion-item>
     </ion-list>
   </div>

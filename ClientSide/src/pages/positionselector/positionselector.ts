@@ -117,7 +117,11 @@ export class PositionselectorPage {
     error => this.viewCtrl.dismiss('could not locate your position')
      /*console.error('Error: ' + error)*/,
     () =>  
-      this.viewCtrl.dismiss(this.nearbyPlace.results[0].formatted_address)
+      this.viewCtrl.dismiss({
+        location: this.nearbyPlace.results[0].formatted_address, 
+        lat: this.markers[0].position.lat(),
+        lng: this.markers[0].position.lng()
+      })
      
   );
 }

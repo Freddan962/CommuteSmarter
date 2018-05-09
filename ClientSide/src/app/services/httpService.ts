@@ -47,6 +47,7 @@ export class HttpService {
 
   sendDataToServer(route, data) {
     return this.http.post('https://pvt73trafficinfo.herokuapp.com/api/' + route, data)
-      .map(response => response.json())
+      .map(response => console.log(response.json())
+      )
   }
 }

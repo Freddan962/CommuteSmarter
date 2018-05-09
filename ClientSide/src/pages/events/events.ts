@@ -27,7 +27,7 @@ export class EventsPage {
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
     private socialSharing: SocialSharing) {
-       this.getEvents();
+      //  this.getEvents();
        
   }
 
@@ -37,11 +37,12 @@ export class EventsPage {
   };
 
   private getEvents(){
-    this.eventService.getEvents().subscribe(
+    setInterval(this.eventService.getEvents().subscribe(
       data => this.items = data,
       error => console.error('Error: ' + error),
       () => console.log('Done!')
-    );
+    ), 5000);
+
     
     
   }

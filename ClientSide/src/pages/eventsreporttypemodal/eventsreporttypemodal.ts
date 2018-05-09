@@ -18,6 +18,8 @@ export class EventsreporttypemodalPage {
   form: string;
   selectedType: any;
   settings: any;
+  category: string;
+  color: string;
 
 
   constructor(
@@ -45,17 +47,22 @@ export class EventsreporttypemodalPage {
     if(item == this.myParam){
       return true
     }
-    else{
       return false
-    }
+    
   }
 
-  onSelectType(item) {
+  onSelectType(item, category, color) {
+    this.category = category
+    this.color = color;
+    console.log((this.category))
     this.selectedType = item;
   }
 
   dismiss() {
-    this.viewCtrl.dismiss(this.selectedType);
+    this.viewCtrl.dismiss({
+      type: this.selectedType, 
+      category: this.category,
+      color: this.color});
   }
 }
 

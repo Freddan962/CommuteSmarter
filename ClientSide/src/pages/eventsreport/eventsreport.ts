@@ -5,6 +5,7 @@ import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { EventsReportService } from './../../app/services/eventsreportService';
 
 
 @Component({
@@ -19,13 +20,18 @@ export class EventsReportPage {
   reportDescription: any;
   isenabled: boolean;
   settings: any;
-  public eventImage: string; 
+  color: any;
+  category: string;
+  selectedLocationLatLng: any[]
+  public eventImage: string;
+
   constructor(
     public navCtrl: NavController, 
     public modalCtrl: ModalController,
     private camera: Camera,
     public alertCtrl: AlertController,
     private DomSanitizer: DomSanitizer,
+    private EventsReportService: EventsReportService
   ) {
     this.defaultSelected = 'selectType';
     this.defaultLocation = 'selectLocation'
@@ -50,13 +56,13 @@ export class EventsReportPage {
     let myParam = { selectedType: this.selectedType}
     let modal = this.modalCtrl.create(EventsreporttypemodalPage, myParam);
     modal.present();
-    modal.onDidDismiss(data => {
-      console.log(data)
-      if(!(data === undefined)){
-        this.selectedType = data;
+    modal.onDidDismiss((data)  => {
+      if (!(data === undefined)){
+        this.selectedType = data.type;
+        this.category = data.category;
+        this.color = data.color;
         this.activateSendButton()
       }
-      console.log(this.selectedType)
     });
   }
 
@@ -73,8 +79,9 @@ export class EventsReportPage {
     modal.present();
 
     modal.onDidDismiss(data => {
-      
-      this.selectedLocation = data;
+      this.selectedLocation = data.location;
+      this.selectedLocationLatLng = [data.lat, data.lng]
+      console.log(this.selectedLocationLatLng)
       this.activateSendButton()
     });
   }
@@ -96,7 +103,6 @@ export class EventsReportPage {
     this.camera.getPicture(options).then((imageData) => {
       this.eventImage = 'data:image/jpeg;base64,' + imageData;
       console.log(this.eventImage);
-
       // this.imageAdded()
     }, (err) => {
       // Handle error
@@ -132,11 +138,29 @@ setImage(){
         {
           text: 'Send',
           handler: () => {
+            this.sendReport();
             console.log('Send clicked');
           }
         }
       ]
     });
     confirm.present();
+  }
+
+  sendReport(){
+
+    let report = {
+      color: this.color,
+      type: this.selectedType,
+      location: this.selectedLocation,
+      lat: this.selectedLocationLatLng[0],
+      long: this.selectedLocationLatLng[1],
+      category: this.category,
+      description: this.reportDescription,
+      image: this.eventImage,
+    }
+
+    console.log(report)
+    this.EventsReportService.sendReportToServer(report)
   }
 }
