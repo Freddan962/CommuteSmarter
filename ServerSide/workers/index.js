@@ -5,7 +5,6 @@ var path      = require('path');
 var basename  = path.basename(__filename);
 var workers       = {};
 
-
 /*
   To create a worker simply add a JS file to the workers directory,
   with the following exported content:
@@ -20,7 +19,7 @@ var workers       = {};
 
   Name = The name of the worker, used for load logging.
   Interval = The interval of which the worker should be executed.
-  Func = The function to be executed. 
+  Func = The function to be executed.
 */
 
 fs

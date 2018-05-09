@@ -29,7 +29,8 @@
   "Events": {
     "event": "Events",
     "reportIncident": "Report incident",
-    "shareEvent": "Share this event"
+    "shareEvent": "Share this event",
+    "reportFinished": "Mark as solved"
   },
   "EventsReport": {
     "title": "Report Incident",

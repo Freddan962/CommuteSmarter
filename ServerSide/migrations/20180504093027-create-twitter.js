@@ -3,7 +3,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Twitters', {
       userId: {
-        type: Sequelize.STRING(32),
+        type: Sequelize.STRING(18),
         allowNull: false,
         unique: true,
         primaryKey: true,

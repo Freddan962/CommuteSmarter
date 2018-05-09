@@ -124,4 +124,8 @@ export class EventsPage {
       this.navCtrl.push(MorePage);
     }
   }
+
+  markAsFinished(item){
+    
+  }
 }

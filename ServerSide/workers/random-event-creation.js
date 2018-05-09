@@ -6,7 +6,7 @@ module.exports = {
   name: 'Random Event Creation',
   interval: 5500,
   func: function() {
-    sensor.getRandomEvent(models, () => { 
+    sensor.getRandomEvent(models, () => {
         console.log("Called create random event!");
      })
   }
