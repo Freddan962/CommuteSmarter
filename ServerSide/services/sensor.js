@@ -3,23 +3,45 @@ function getRandomSensor(models, perform) {
 }
 
 function findRandomId(table, perform) {
-    table.findAndCountAll({}).then((result) => {
+    maxMin(table, (max, min) => {
+        let random = Math.floor(Math.random() * (max - min + 1)) + min;
 
-        const min = 1;
-        let count = result.count;
-        let random = Math.floor(Math.random() * (count - min + 1)) + min;
-
-        console.log("Antal " + count);
+        console.log("Max " + max);
+        console.log("Min " + min);
         console.log("Id: " + random);
-
+    
         table.findById(random).then((sensor) => {
             perform(sensor);
+        }) 
+    });
+}
+
+function maxMin(table, perform) {
+    findMinId(table, (min)=>{
+        findMaxId(table, (max)=> {
+            perform(max, min)
         })
+    });
+}
+
+function findMaxId(table, perform) {
+    table.max('id').then((result) => {
+        perform(result);
+    });
+}
+
+function findMinId(table, perform) {
+    table.min('id').then((result) => {
+         perform(result);
     });
 }
 
 function getRandomEventType(models, perform) {
     findRandomId(models.EventTypes, perform);
+}
+
+function getRandomEventFromDb(models, perform) {
+    findRandomId(models.Event, perform);
 }
 
 function getRandomEvent(models, perform) {
@@ -31,7 +53,7 @@ function getRandomEvent(models, perform) {
                 location: '',
                 lat: sensor.latitude,
                 long: sensor.longitude,
-                title: type.subtype,
+                category: type.subtype,
                 reported: new Date(),
                 description: ''
             };
@@ -42,4 +64,20 @@ function getRandomEvent(models, perform) {
     }));
 }
 
+function deleteRandomEvent(models) {
+    getRandomEventFromDb(models,(event => {
+        if(event !== null) {
+            console.log("------ RADERA ----------");
+            console.log(event.id);
+            console.log("------------------------");
+            models.Event.destroy({
+                where: {
+                    id: event.id
+                }
+            })
+        }
+    }))
+}
+
 module.exports.getRandomEvent = getRandomEvent;
+module.exports.deleteRandomEvent = deleteRandomEvent;
