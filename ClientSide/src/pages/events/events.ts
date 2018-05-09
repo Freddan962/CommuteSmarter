@@ -47,6 +47,7 @@ export class EventsPage {
   }
 
   parseTime(time) {
+    moment.locale(this.translate.currentLang);
     return moment(time).fromNow();
   }
 
