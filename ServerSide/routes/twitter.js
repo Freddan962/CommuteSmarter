@@ -1,4 +1,5 @@
 const httpMethods = require('../services/http.js');
+const Twitter = require('twitter');
 
 module.exports = function(app, models) {
   /**
@@ -19,12 +20,12 @@ module.exports = function(app, models) {
     // recived if the response code still is set to 200.
     if(checkUserDetails(body, response)) {
       checkUserTokenWithTwitter(body, response, (twitterResponse) => {
-        //console.log(twitterResponse);
+        console.log(twitterResponse);
         if(twitterResponse.id !== undefined) {
           models.Twitter.find({ where: { userId: body.userId } }).then( user => {
             if(user) {
               user.updateAttributes({
-                token: body.token
+                userToken: body.userToken
               }).then( () => {
                 response['access'] = true;
                 response['messages'] = ["User successfully signed in!"];
@@ -53,7 +54,6 @@ module.exports = function(app, models) {
             }
           })
         } else {
-          result.status(twitterResponse.errors[0].code);
           result.json(twitterResponse);
         }
       });
@@ -105,10 +105,21 @@ module.exports = function(app, models) {
 }
 
 function checkUserTokenWithTwitter(body, response, perform) {
-  const hostname = "api.twitter.com";
-  let request = "/1.1/account/verify_credentials.json?oauth_access_token=" + body.userToken;
+  var client = new Twitter({
+    consumer_key: 'hIzBoitCUPwhc66FR534X1DIo',
+    consumer_secret: 'gsP1h3j8GghjX2HZRJzhe33Bs57pgvRPuYQPT9CR0wuxueZEGL',
+    access_token_key: body.userToken,
+    access_token_secret: body.userTokenSecret
+  });
 
-  httpMethods.httpGetRequest(hostname, request, 443, perform);
+  var params = {screen_name: 'nodejs'};
+  client.get('account/verify_credentials', params, function(error, tweets, response) {
+    if (!error) {
+      perform(tweets);
+    } else {
+      perform(error);
+    }
+  });
 }
 
 function checkIfStausOk(response) {
