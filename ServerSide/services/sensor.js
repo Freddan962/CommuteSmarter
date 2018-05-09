@@ -68,7 +68,7 @@ function deleteRandomEvent(models) {
     getRandomEventFromDb(models,(event => {
         if(event !== null) {
             const min = 60 * 1000;
-            if((new Date() - event.reported) > min/2) {
+            if((new Date() - event.reported) > min) {
               console.log("------ RADERA ----------");
               console.log(event.id);
               console.log("------------------------");
