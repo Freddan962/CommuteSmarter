@@ -9,10 +9,10 @@ function findRandomId(table, perform) {
         console.log("Max " + max);
         console.log("Min " + min);
         console.log("Id: " + random);
-    
+
         table.findById(random).then((sensor) => {
             perform(sensor);
-        }) 
+        })
     });
 }
 
@@ -67,14 +67,17 @@ function getRandomEvent(models, perform) {
 function deleteRandomEvent(models) {
     getRandomEventFromDb(models,(event => {
         if(event !== null) {
-            console.log("------ RADERA ----------");
-            console.log(event.id);
-            console.log("------------------------");
-            models.Event.destroy({
-                where: {
-                    id: event.id
-                }
-            })
+            const min = 60 * 1000;
+            if((new Date() - event.reported) > (3 * min)) {
+              console.log("------ RADERA ----------");
+              console.log(event.id);
+              console.log("------------------------");
+              models.Event.destroy({
+                  where: {
+                      id: event.id
+                  }
+              })
+            }
         }
     }))
 }
