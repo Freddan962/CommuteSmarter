@@ -31,7 +31,7 @@ function getRandomEvent(models, perform) {
                 location: '',
                 lat: sensor.latitude,
                 long: sensor.longitude,
-                title: type.subtype,
+                category: type.subtype,
                 reported: new Date(),
                 description: ''
             };
