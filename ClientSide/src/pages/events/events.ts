@@ -27,8 +27,10 @@ export class EventsPage {
     public eventService: EventService,
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
-    private socialSharing: SocialSharing) {  
-    this.refreshEvents(); 
+    private socialSharing: SocialSharing){
+      moment.locale(this.translate.currentLang);
+      this.findUserLocation();
+      this.refreshEvents(); 
   }
 
   location: {
@@ -43,8 +45,9 @@ export class EventsPage {
   
   refreshEvents(){ 
     this.items$ = this.eventService.getEvents(); //Fetches from the database
-    console.log('Server responded with: ')
+    console.log('Server responded with:')
     console.log(this.items$)
+
   }
 
   // private getEvents(){
@@ -61,43 +64,39 @@ export class EventsPage {
 
 
   parseTime(time) {
-    moment.locale(this.translate.currentLang);
     return moment(time).fromNow();
   }
 
   findUserLocation(){
-    this.geolocation.getCurrentPosition().then
-    ((position) => {
+    this.geolocation.getCurrentPosition().then((position) => {
       this.location = {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
-      }; 
+      };
      }).catch((error) => {
        console.log('Error getting location', error);
      });
   }
 
   distance(lat, long) {
-    this.findUserLocation();
-    let marker = new google.maps.LatLng(lat, long);
     let unit = 'km';
     let currentLocation;
     let currentdistance;
-   
-    if(this.location != undefined){
+    let poi = new google.maps.LatLng(lat, long);
+    if(this.location != undefined) {
       currentLocation = new google.maps.LatLng(this.location.latitude, this.location.longitude);
-      currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, marker);
-    }
-    else{
-      this.findUserLocation(); //kanske onödig?
-    }
-    if(currentdistance < 1000) {
-      unit = 'm';
-    } else {
-      currentdistance = currentdistance / 1000;
-    }
+      currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, poi);
 
-    return currentdistance.toFixed(2) + ' ' + unit;
+      if(currentdistance < 1000) {
+        unit = 'm';
+      } else {
+        currentdistance = currentdistance / 1000;
+      }
+
+      return currentdistance.toFixed(2) + ' ' + unit;
+    } else {
+      return "";
+    }
   }
 
   itemSelected(item){
@@ -116,16 +115,13 @@ export class EventsPage {
   }
 
   openReportPage() {
-    if (this.isLoggedIn() || 
-        document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
+    if (this.isLoggedIn() || document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
       this.navCtrl.push(EventsReportPage);
-    }
-    else {
+    } else {
       this.navCtrl.push(MorePage);
     }
   }
 
   markAsFinished(item){
-    //remove finished item?
   }
 }
