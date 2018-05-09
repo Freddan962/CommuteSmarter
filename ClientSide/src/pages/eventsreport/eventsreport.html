@@ -33,6 +33,7 @@
         </button>
       </ion-col>
     </ion-row>
+    <img [src]="DomSanitizer.bypassSecurityTrustUrl(eventImage)" class="eventImage" *ngIf="eventImage" />
   </ion-grid>
 
   <ion-footer>
