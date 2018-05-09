@@ -5,8 +5,8 @@ import { HttpService } from '../../app/services/httpService';
 
 declare let google;
 let locationMarker;
-let apiKey = 'AIzaSyAwKXMJki7n_K1eNUEw-h3wXfCh_S2o9Uo'  //google geolocation api (limited quota)
-
+// let apiKey = 'AIzaSyAwKXMJki7n_K1eNUEw-h3wXfCh_S2o9Uo'  //google geolocation api (limited quota)
+let apiKey = 'AIzaSyBAuhoPibIl4c0OlG_dmOiWKn-bY49X0Rs'
 
 @IonicPage()
 @Component({
@@ -117,7 +117,11 @@ export class PositionselectorPage {
     error => this.viewCtrl.dismiss('could not locate your position')
      /*console.error('Error: ' + error)*/,
     () =>  
-      this.viewCtrl.dismiss(this.nearbyPlace.results[0].formatted_address)
+      this.viewCtrl.dismiss({
+        location: this.nearbyPlace.results[0].formatted_address, 
+        lat: this.markers[0].position.lat(),
+        lng: this.markers[0].position.lng()
+      })
      
   );
 }
