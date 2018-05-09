@@ -28,6 +28,7 @@ export class EventsPage {
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
     private socialSharing: SocialSharing) {  
+    this.refreshEvents(); 
   }
 
   location: {
@@ -36,8 +37,9 @@ export class EventsPage {
   };
 
   ionViewDidEnter(){ //refreshes events everytime page is opened
-    this.refreshEvents()
+    // this.refreshEvents()
   }
+
   
   refreshEvents(){ 
     this.items$ = this.eventService.getEvents(); //Fetches from the database
