@@ -29,7 +29,8 @@
   "Events": {
     "event": "Händelser",
     "reportIncident": "Rapportera händelse",
-    "shareEvent": "Dela händelse"
+    "shareEvent": "Dela händelse",
+    "reportFinished": "Markera som  löst"
   },
   "EventsReport": {
     "title": "Rapportera händelse",
