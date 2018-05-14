@@ -33,7 +33,8 @@ export class EventsReportPage {
     public alertCtrl: AlertController,
     private DomSanitizer: DomSanitizer,
     private EventsReportService: EventsReportService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private translate: TranslateService
   ) {
     this.defaultSelected = 'selectType';
     this.defaultLocation = 'selectLocation'
@@ -91,15 +92,15 @@ export class EventsReportPage {
   
   //photo api for adding photos - this needs more tweaking later
   takePhoto(sourceType: number) {
-    // if (document.URL.startsWith('http')) {
-    //   this.setImage()
-    // }else{
+    if (document.URL.startsWith('http')) {
+      this.setImage()
+    }else{
       const options: CameraOptions = {
         destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 500,
-        targetHeight: 500,
+        targetWidth: 1000,
+        targetHeight: 1000,
         correctOrientation: true,
-        sourceType: 1,
+        sourceType: 0,
         mediaType: 0       
     }
 
@@ -110,7 +111,7 @@ export class EventsReportPage {
     }, (err) => {
       // Handle error
     });
-  // }
+  }
   }
 
   
@@ -162,6 +163,7 @@ setImage(){
       description: this.reportDescription,
       image: this.eventImage,
     }
+
     console.log(report)
     this.EventsReportService.sendReportToServer(report)
     this.reportSent = true;
@@ -169,14 +171,12 @@ setImage(){
   }
 
   showToastWithCloseButton() {
+    let translation:string = this.translate.getParsedResult(this.translate.instant, 'EventsReport.sentReport');
     const toast = this.toastCtrl.create({
-      message: "{{'EventsReport.sent' | translate}}",
+      message: translation,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
     toast.present();
-    toast.onDidDismiss((data, role) => {
-      this.navCtrl.pop();
-    });
   }
 }
