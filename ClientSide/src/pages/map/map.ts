@@ -384,6 +384,7 @@ drawPath(startPos, endPos, color, line) {
   }
 
   sendSolved(item){
-    this.http.sendDataToServer('/api/events/' + item.id + '/mark-as-solved', {});
+    let response = this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
+    console.log(response.subscribe());
   }
 }

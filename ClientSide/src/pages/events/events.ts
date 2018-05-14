@@ -135,8 +135,8 @@ export class EventsPage {
 
     confirm.present();
   }
-  
+
   sendSolved(item){
-    this.http.sendDataToServer('/api/events/' + item.id + '/mark-as-solved', {});
+    this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
   }
 }
