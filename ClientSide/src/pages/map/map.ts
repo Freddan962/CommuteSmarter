@@ -8,6 +8,7 @@ import moment from 'moment';
 import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Observable } from "rxjs/Rx"
 
 declare var google;
 var locationMarker;

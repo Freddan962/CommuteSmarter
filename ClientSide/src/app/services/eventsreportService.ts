@@ -19,14 +19,15 @@ export class EventsReportService {
       reported: new Date(),
       category: report.category,
       description: report.description,
+      image: report.image
     }
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json')
 
 
-    // let url = 'http://localhost:3000/api/events'; 
-    let url = 'https://pvt73trafficinfo.herokuapp.com/api/events'; //
+    let url = 'http://localhost:3000/api/events'; 
+    // let url = 'https://pvt73trafficinfo.herokuapp.com/api/events'; //
     this.http.post(url, JSON.stringify(reqData), {headers: headers})
     .map(res => res.json())
     .subscribe(data => {

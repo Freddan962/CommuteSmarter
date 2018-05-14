@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController, } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HttpService } from '../../app/services/httpService';
 
@@ -24,19 +24,23 @@ export class PositionselectorPage {
   markers: any[];
   locationMarker: any;
   positionOnMap: any;
+  isenabled: boolean;
+  loading: any;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController,
     public geolocation: Geolocation,
-    private httpService: HttpService
+    private httpService: HttpService,
+    public loadingCtrl: LoadingController
     ) {
       this.markers = [];
       this.locationMarker;
     }
 
   ionViewDidLoad() {
+    this.presentLoading()
     this.loadMap();
   }
 
@@ -48,10 +52,10 @@ export class PositionselectorPage {
    * @memberof MapPage
    */
   loadMap() {
-    let latLng = new google.maps.LatLng(59.326137, 18.071325);
+    // let latLng = new google.maps.LatLng(59.326137, 18.071325);
 
     let mapOptions = {
-      center: latLng,
+      center: this.centerMapToLocation(),
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP,
       disableDefaultUI: true,
@@ -66,6 +70,19 @@ export class PositionselectorPage {
     this.map.addListener('click', (e) => {
       this.placeMarkerAndPanTo(e.latLng, this.map);
     });
+  }
+
+  presentLoading() {
+     this.loading = this.loadingCtrl.create({
+      content: 'Finding your location...'
+    });
+    this.loading.present();
+  }
+  dismissLoading() {
+    if (this.loading) {
+      this.loading.dismiss();
+      this.loading = null;
+    }
   }
 
 
@@ -100,9 +117,10 @@ export class PositionselectorPage {
     * @memberof MapPage
     */
   centerMapToLocation() {
+    let latLng;
     this.geolocation.getCurrentPosition().then
       ((position) => {
-        let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
         this.locationMarker = this.placeMarkerAndPanTo(latLng, this.map.getCenter())
         this.locationMarker.setPosition(latLng);
@@ -110,6 +128,7 @@ export class PositionselectorPage {
         console.log(err);
       }
     );
+    return latLng;
   }
 
   getLocationOfMarker(){
@@ -119,7 +138,11 @@ export class PositionselectorPage {
     data => this.nearbyPlace = data.results[0].formatted_address,
     error => this.viewCtrl.dismiss('could not locate your position')
      /*console.error('Error: ' + error)*/,
-    () => console.log('Found: ' + this.nearbyPlace)
+      () => (console.log('Found: ' + this.nearbyPlace),
+         this.isenabled = true,
+         console.log(this.isenabled),
+          this.dismissLoading()
+          )
   );
 
 }

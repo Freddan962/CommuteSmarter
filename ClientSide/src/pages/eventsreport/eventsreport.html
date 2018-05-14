@@ -25,7 +25,7 @@
     <ion-textarea (click)="descriptionInput.setFocus()" #descriptionInput id="descriptionInput" minHeight="100" rows="1" (keyup)="resize()" [(ngModel)]="reportDescription"></ion-textarea>
   </ion-item>
 
-  <ion-grid padding>
+  <ion-grid no-lines padding>
     <ion-row>
       <ion-col col-6>
         <button ion-button round outline icon-start (click)="takePhoto(1)">

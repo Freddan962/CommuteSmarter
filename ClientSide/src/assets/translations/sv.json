@@ -81,7 +81,8 @@
   "EventReport": {
     "done": "Klar",
     "chooseType": "Välj händelsetyp",
-    "selectPosition": "Välj plats"
+    "selectPosition": "Välj plats",
+    "chooseLocation": "Vald plats"
   }
 
 }

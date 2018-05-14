@@ -56,8 +56,8 @@ export class EventsreporttypemodalPage {
     this.color = color;
     console.log(('COLOR' + color))
     console.log(('Valt: ' + item))
-
     this.selectedType = item;
+   this.dismiss()
   }
 
   dismiss() {
