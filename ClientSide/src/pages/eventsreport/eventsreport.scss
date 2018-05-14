@@ -15,6 +15,15 @@
     margin-left: 0.8em;
 
 }
+.label-md[floating] {
+    margin-left: 10px;
+}
+
+.label-ios[floating],
+.label-md[floating] {
+    color: #000;
+}
+
 
 a .ion-label, .label-ios, .label-md { /* this solution is ugly since it interfere with the global scope. */
  white-space: initial !important;

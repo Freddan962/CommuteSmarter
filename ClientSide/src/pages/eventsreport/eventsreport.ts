@@ -33,7 +33,8 @@ export class EventsReportPage {
     public alertCtrl: AlertController,
     private DomSanitizer: DomSanitizer,
     private EventsReportService: EventsReportService,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    private translate: TranslateService
   ) {
     this.defaultSelected = 'selectType';
     this.defaultLocation = 'selectLocation'
@@ -170,15 +171,15 @@ setImage(){
   }
 
   showToastWithCloseButton() {
+    let translation:string = (this.translate.instant('EventsReport.sentReport'));
     const toast = this.toastCtrl.create({
-      message: 'Your report were successfully sent!',
+      message: translation,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
     toast.present();
-    toast.dismiss((data, role) => {
-      // this.modalCtrl.close(data);
-       
+    toast.onDidDismiss((data, role) => {
+      this.navCtrl.pop();
     });
   }
 }
