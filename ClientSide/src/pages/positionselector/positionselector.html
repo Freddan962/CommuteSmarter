@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">{{ 'EventReport.done' | translate }}</button>
+      <button ion-button [disabled]="!isenabled" (click)="dismiss()">{{ 'EventReport.done' | translate }}</button>
     </ion-buttons>
     <ion-title>
       {{'EventReport.selectPosition' | translate}}
@@ -10,10 +10,16 @@
 </ion-header>
 
 <ion-content no-padding>
+  
+  <ion-fab top right id="center-location">
+    <button ion-fab mini (click)="centerMapToLocation()">
+      <ion-icon name="navigate"></ion-icon>
+    </button>
+  </ion-fab>
+
   <div #map id="map"></div>
-
-    <ion-footer>
-      <ion-title class="map-location">Chosen location:<br>{{nearbyPlace}}</ion-title>
-    </ion-footer>
-
+  <div id="map-event-information">
+    <h3>{{'EventReport.chooseLocation' | translate}}</h3>
+    <p>{{this.nearbyPlace}}</p>
+  </div>
 </ion-content>

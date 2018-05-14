@@ -18,7 +18,7 @@ module.exports = function(app, models) {
   });
 
   app.get('/api/events', (req, res) => {
-    models.Event.findAll().then(events => {
+    models.Event.findAll({order: [['reported', 'DESC']]}).then(events => {
       res.status(200).json(events);
     });
   });
@@ -29,7 +29,7 @@ module.exports = function(app, models) {
         res.status(404).send('The event with the ID' + req.params.id + 'was not found');
         return;
       }
-      
+
       res.status(200).json(event);
     });
   });
