@@ -38,7 +38,7 @@
     "describe": "Beskriv händelsen",
     "addPhoto": "Lägg till foto eller video",
     "sendReport": "Skicka rapport",
-    "sent": "Din rapport har skickats!"
+    "sentReport": "Din rapport har skickats!"
   },
   "EventNotifications": {
     "title": "Händelsenotiser",

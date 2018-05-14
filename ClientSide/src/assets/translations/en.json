@@ -38,7 +38,7 @@
     "describe": "Describe the event",
     "addPhoto": "Add a photo or video",
     "sendReport": "Send report",
-    "sent": "Your report was successfully sent!"
+    "sentReport": "Your report was successfully sent!"
   },
   "EventNotifications": {
     "title": "Event notifications",
