@@ -63,6 +63,7 @@ export class EventsReportPage {
         this.selectedType = data.type;
         this.category = data.category;
         this.color = data.color;
+        
         this.activateSendButton()
       }
     });
@@ -175,5 +176,9 @@ setImage(){
       closeButtonText: 'Ok'
     });
     toast.present();
+    toast.dismiss((data, role) => {
+      // this.modalCtrl.close(data);
+       
+    });
   }
 }
