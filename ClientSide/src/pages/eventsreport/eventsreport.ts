@@ -91,9 +91,9 @@ export class EventsReportPage {
   
   //photo api for adding photos - this needs more tweaking later
   takePhoto(sourceType: number) {
-    if (document.URL.startsWith('http')) {
-      this.setImage()
-    }else{
+    // if (document.URL.startsWith('http')) {
+    //   this.setImage()
+    // }else{
       const options: CameraOptions = {
         destinationType: this.camera.DestinationType.DATA_URL,
         targetWidth: 1000,
@@ -110,7 +110,7 @@ export class EventsReportPage {
     }, (err) => {
       // Handle error
     });
-  }
+  // }
   }
 
   
