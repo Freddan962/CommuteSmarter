@@ -1,9 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { filterMap } from '../filterMap/filterMap';
 import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { WelcomePage } from './../welcome/welcome';
 import moment from 'moment';
 import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
