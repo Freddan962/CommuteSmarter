@@ -9,6 +9,7 @@ import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from "rxjs/Rx"
+import { HttpService } from './../../app/services/httpService';
 
 declare var google;
 var locationMarker;
@@ -41,6 +42,7 @@ export class MapPage {
     private eventService: EventService,
     private translate: TranslateService,
     private alertCtrl: AlertController,
+    private http: HttpService
   ) {
     moment.locale(this.translate.currentLang);
 
@@ -219,18 +221,17 @@ export class MapPage {
     return marker;
   }
 
-
-/**
- * addInfoMarker()
- *
- * Adds a info markeron the map.
- *
- * @param {any} markerImage The image to be displayed.
- * @param {any} position The position of the marker.
- * @param {any} data
- * @memberof MapPage
- */
-addInfoMarker(markerImage, position, data) {
+  /**
+  * addInfoMarker()
+  *
+  * Adds a info markeron the map.
+  *
+  * @param {any} markerImage The image to be displayed.
+  * @param {any} position The position of the marker.
+  * @param {any} data
+  * @memberof MapPage
+  */
+  addInfoMarker(markerImage, position, data) {
     let marker = this.addMarker(markerImage, position);
     marker.data = data;
 
@@ -238,7 +239,6 @@ addInfoMarker(markerImage, position, data) {
       this.openMapEventInfo(marker.data);
     });
   }
-
 
 /**
  * drawPath()
@@ -329,6 +329,7 @@ drawPath(startPos, endPos, color, line) {
   parseTime(time) {
     return moment(time).fromNow();
   }
+
   /**
    * Calculate the distance to an event from current location.
    */
@@ -355,7 +356,7 @@ drawPath(startPos, endPos, color, line) {
   }
 
   markAsFinished(item){
-    // Alert modal to confirmsssssssssss
+    // Alert modal to confirm
     let confirm = this.alertCtrl.create({
       title: 'Confirm',
       message:
@@ -377,14 +378,12 @@ drawPath(startPos, endPos, color, line) {
           }
         }
       ],
-
     });
 
     confirm.present();
-
-
   }
-  sendSolved(item){
 
+  sendSolved(item){
+    this.http.sendDataToServer('/api/events/' + item.id + '/mark-as-solved', {});
   }
 }

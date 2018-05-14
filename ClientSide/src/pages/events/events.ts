@@ -9,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Observable } from "rxjs/Rx"
+import { HttpService } from './../../app/services/httpService';
 
 declare const google;
 
@@ -19,19 +20,22 @@ declare const google;
 })
 
 export class EventsPage {
-  public items$: Observable<any>
+  public items$: Observable<any>;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public geolocation: Geolocation,
     public navParams: NavParams,
     public eventService: EventService,
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
     public alertCtrl: AlertController,
-    private socialSharing: SocialSharing){
+    private socialSharing: SocialSharing,
+    private http: HttpService
+  ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-      this.refreshEvents(); 
+      this.refreshEvents();
   }
 
   location: {
@@ -39,25 +43,11 @@ export class EventsPage {
     longitude: number
   };
 
-  refreshEvents(){ 
+  refreshEvents(){
     this.items$ = this.eventService.getEvents(); //Fetches from the database
     console.log('Server responded with:')
     console.log(this.items$)
-
   }
-
-  // private getEvents(){
-  //   console.log('initiated!')
-
-  //   this.eventService.getEvents().subscribe(
-  //     data => {
-  //       this.items = data,
-  //       this.disactivate()
-  //     }),
-  //     error => console.error('Error: ' + error),
-  //     () => console.log("Hello!");    
-  // }
-
 
   parseTime(time) {
     return moment(time).fromNow();
@@ -100,7 +90,6 @@ export class EventsPage {
     item.accordionOpen = !item.accordionOpen;
   }
 
-  
   shareEvent(item) {
     console.log('called share event');
     this.socialSharing.share(item.title, item.text, null, null);
@@ -119,7 +108,7 @@ export class EventsPage {
   }
 
   markAsFinished(item){
-    // Alert modal to confirmsssssssssss
+    // Alert modal to confirm
     let confirm = this.alertCtrl.create({
       title: 'Confirm',
       message:
@@ -141,14 +130,13 @@ export class EventsPage {
           }
         }
       ],
-      
-    });
-    
-    confirm.present();
 
-    
+    });
+
+    confirm.present();
   }
+  
   sendSolved(item){
-    
+    this.http.sendDataToServer('/api/events/' + item.id + '/mark-as-solved', {});
   }
 }
