@@ -27,11 +27,19 @@ module.exports = function(app, models) {
     models.Event.find({where: {id: req.param.id}})
     .on('success', function(event) {
       if(event) {
-        event.updateAttributes({
-          solvedCount: event.solvedCount++
-        }).success(function(){
-          res.status(200).json({status: 200, message: 'Successfully voted to close the event!'});
-      })
+        if (event.solvedCount < 5){
+          event.updateAttributes({
+            solvedCount: event.solvedCount++
+          }).success(function(){
+            res.status(200).json({status: 200, message: 'Successfully voted to close the event!'});
+          })
+        } else {
+          models.Event.destroy({
+            where: {
+                id: event.id
+          }
+        })
+      }    
     }
   })
 
