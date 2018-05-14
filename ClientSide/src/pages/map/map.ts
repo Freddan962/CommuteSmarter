@@ -49,7 +49,7 @@ export class MapPage {
         end: new google.maps.LatLng(59.406676, 17.945710),
         color: this.colors['orange'],
         data: {
-          category: 'Obstacle',
+          category: 'obstacle',
           location: 'Den Ökända Vägen 23',
           color: 'red',
           reported: '2012-07-02',

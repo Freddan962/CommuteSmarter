@@ -80,6 +80,7 @@
   "EventReport": {
     "done": "Done",
     "chooseType": "Choose type of incident",
-    "selectPosition": "Select position"
+    "selectPosition": "Select position",
+    "chooseLocation": "Chosen location"
   }
 }
