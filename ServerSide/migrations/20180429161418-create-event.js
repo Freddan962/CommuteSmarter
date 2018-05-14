@@ -34,6 +34,14 @@ module.exports = {
       description:{
         allowNull: true,
         type: Sequelize.STRING
+      },
+      imageString: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      solvedCount: {
+        type: DataTypes.STRING,
+        allowNull: true,
       }
     });
   },

@@ -55,6 +55,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
       notEmpty: true
+    },
+    imageString: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    solvedCount: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
 }, {
   timestamps: false

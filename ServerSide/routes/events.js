@@ -30,18 +30,20 @@ module.exports = function(app, models) {
         if (event.solvedCount < 5){
           event.updateAttributes({
             solvedCount: event.solvedCount++
-          }).success(function(){
+          })
+          .success(function(){
             res.status(200).json({status: 200, message: 'Successfully voted to close the event!'});
           })
         } else {
           models.Event.destroy({
             where: {
-                id: event.id
-          }
-        })
-      }    
-    }
-  })
+              id: event.id
+            }
+          })
+        }
+      }
+    });
+  });
 
   app.get('/api/events/:id', (req, res) => {
     models.Event.findById(parseInt(req.params.id)).then(event => {
