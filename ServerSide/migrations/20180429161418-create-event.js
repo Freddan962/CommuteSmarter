@@ -36,11 +36,11 @@ module.exports = {
         type: Sequelize.STRING
       },
       imageString: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       solvedCount: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         allowNull: true,
       }
     });
