@@ -23,7 +23,7 @@ module.exports = function(app, models) {
     });
   });
 
-  app.post('/api/events/:id/marked-as-solved', (req, res) => {
+  app.post('/api/events/:id/mark-as-solved', (req, res) => {
     models.Event.find({where: {id: req.param.id}})
     .on('success', function(event) {
       if(event) {
