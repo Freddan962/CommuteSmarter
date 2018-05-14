@@ -171,12 +171,15 @@ setImage(){
   }
 
   showToastWithCloseButton() {
-    let translation:string = this.translate.getParsedResult(this.translate.instant, 'EventsReport.sentReport');
+    let translation:string = (this.translate.instant('EventsReport.sentReport'));
     const toast = this.toastCtrl.create({
       message: translation,
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
     toast.present();
+    toast.onDidDismiss((data, role) => {
+      this.navCtrl.pop();
+    });
   }
 }
