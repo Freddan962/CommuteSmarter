@@ -74,7 +74,7 @@ export class PositionselectorPage {
 
   presentLoading() {
      this.loading = this.loadingCtrl.create({
-      content: 'Loading map...'
+      content: 'Finding your location...'
     });
     this.loading.present();
   }
