@@ -19,8 +19,8 @@
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
-    <preference name="TwitterConsumerKey" value="agC1meoWus9BLERR6pLKhbIk2" />
-    <preference name="TwitterConsumerSecret" value="UWLv3b9hqZmm7fZXKoGZR0PWcstKYIwP0efJOoDp30umYjN3xs" />
+    <preference name="TwitterConsumerKey" value="hIzBoitCUPwhc66FR534X1DIo" />
+    <preference name="TwitterConsumerSecret" value="gsP1h3j8GghjX2HZRJzhe33Bs57pgvRPuYQPT9CR0wuxueZEGL" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
@@ -106,5 +106,5 @@
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
     <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="4.5.4" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>
