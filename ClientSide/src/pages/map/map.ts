@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { filterMap } from '../filterMap/filterMap';
 import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
@@ -8,6 +8,8 @@ import moment from 'moment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
+import { Geolocation } from '@ionic-native/geolocation';
+import { EventsPage } from '../events/events';
 
 declare var google;
 var locationMarker;
@@ -23,6 +25,7 @@ export class MapPage {
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   navController: NavController;
+
   map: any;
   displayMapEventCard: boolean;
   animateEventCard: string;
@@ -37,7 +40,9 @@ export class MapPage {
     private socialSharing: SocialSharing,
     private cdRef: ChangeDetectorRef,
     private eventService: EventService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private alertCtrl: AlertController,
+    private cdRef:ChangeDetectorRef
   ) {
     moment.locale(this.translate.currentLang);
 
@@ -350,5 +355,39 @@ drawPath(startPos, endPos, color, line) {
     } else {
       return "";
     }
+  }
+
+  markAsFinished(item){
+    // Alert modal to confirmsssssssssss
+    let confirm = this.alertCtrl.create({
+      title: 'Confirm',
+      message:
+        `<p>Report the following event as solved?<\p>
+        <p>${item.category} at ${item.location}.<p>
+      `,
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            this.sendSolved(item);
+            console.log('Send clicked');
+          }
+        }
+      ],
+      
+    });
+    
+    confirm.present();
+
+    
+  }
+  sendSolved(item){
+    
   }
 }

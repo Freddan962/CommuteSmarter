@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
-import { NavController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, ModalController, AlertController, ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
@@ -23,6 +23,7 @@ export class EventsReportPage {
   color: any;
   category: string;
   selectedLocationLatLng: any[]
+  reportSent: boolean;
   public eventImage: string;
 
   constructor(
@@ -31,7 +32,8 @@ export class EventsReportPage {
     private camera: Camera,
     public alertCtrl: AlertController,
     private DomSanitizer: DomSanitizer,
-    private EventsReportService: EventsReportService
+    private EventsReportService: EventsReportService,
+    public toastCtrl: ToastController
   ) {
     this.defaultSelected = 'selectType';
     this.defaultLocation = 'selectLocation'
@@ -61,6 +63,7 @@ export class EventsReportPage {
         this.selectedType = data.type;
         this.category = data.category;
         this.color = data.color;
+        
         this.activateSendButton()
       }
     });
@@ -148,19 +151,34 @@ setImage(){
   }
 
   sendReport(){
-
+    this.showToastWithCloseButton()
     let report = {
       color: this.color,
-      type: this.selectedType,
+      // type: this.selectedType,
       location: this.selectedLocation,
       lat: this.selectedLocationLatLng[0],
       long: this.selectedLocationLatLng[1],
-      category: this.category,
+      category: this.selectedType,
       description: this.reportDescription,
       image: this.eventImage,
     }
 
     console.log(report)
     this.EventsReportService.sendReportToServer(report)
+    this.reportSent = true;
+    this.isenabled = !this.isenabled;
+  }
+
+  showToastWithCloseButton() {
+    const toast = this.toastCtrl.create({
+      message: 'Your report were successfully sent!',
+      showCloseButton: true,
+      closeButtonText: 'Ok'
+    });
+    toast.present();
+    toast.dismiss((data, role) => {
+      // this.modalCtrl.close(data);
+       
+    });
   }
 }

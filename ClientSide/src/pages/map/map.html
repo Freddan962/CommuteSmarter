@@ -20,7 +20,7 @@
     <p>{{mapEventInfo.description}}</p>
     <button ion-button block (click)="shareEvent">{{'Events.shareEvent' | translate}}</button>
     <p>
-    <button ion-button block (click)="markAsFinished">{{'Events.reportFinished' | translate}}</button></p>
+    <button ion-button block (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button></p>
   </div>
 
   <div #map id="map"></div>
