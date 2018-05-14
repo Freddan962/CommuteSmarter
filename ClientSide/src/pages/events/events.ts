@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
 import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
@@ -27,6 +27,7 @@ export class EventsPage {
     public eventService: EventService,
     public translate:TranslateService,
     private loginWithTwitterService:LoginWithTwitterService,
+    public alertCtrl: AlertController,
     private socialSharing: SocialSharing){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
@@ -118,5 +119,36 @@ export class EventsPage {
   }
 
   markAsFinished(item){
+    // Alert modal to confirmsssssssssss
+    let confirm = this.alertCtrl.create({
+      title: 'Confirm',
+      message:
+        `<p>Report the following event as solved?<\p>
+        <p>${item.category} at ${item.location}.<p>
+      `,
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            this.sendFinished(item);
+            console.log('Send clicked');
+          }
+        }
+      ],
+      
+    });
+    
+    confirm.present();
+
+    
+  }
+  sendFinished(item){
+
   }
 }
