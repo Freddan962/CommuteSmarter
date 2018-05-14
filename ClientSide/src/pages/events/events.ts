@@ -136,7 +136,7 @@ export class EventsPage {
         {
           text: 'Send',
           handler: () => {
-            this.sendFinished(item);
+            this.sendSolved(item);
             console.log('Send clicked');
           }
         }
@@ -148,7 +148,7 @@ export class EventsPage {
 
     
   }
-  sendFinished(item){
-
+  sendSolved(item){
+    
   }
 }

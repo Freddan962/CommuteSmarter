@@ -1,11 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { filterMap } from '../filterMap/filterMap';
 import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
-
 import { Geolocation } from '@ionic-native/geolocation';
+import { EventsPage } from '../events/events';
 
 declare var google;
 var locationMarker;
@@ -21,6 +21,7 @@ export class MapPage {
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   navController: NavController;
+
   map: any;
   displayMapEventCard: boolean;
   animateEventCard: string;
@@ -30,6 +31,7 @@ export class MapPage {
 
   constructor(public navCtrl: NavController, public geolocation: Geolocation,
     private socialSharing: SocialSharing,
+    private alertCtrl: AlertController,
     private cdRef:ChangeDetectorRef) {
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
@@ -322,5 +324,39 @@ drawPath(startPos, endPos, color, line) {
    */
   drawIcon(pos, color, data) {
     this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
+  }
+
+  markAsFinished(item){
+    // Alert modal to confirmsssssssssss
+    let confirm = this.alertCtrl.create({
+      title: 'Confirm',
+      message:
+        `<p>Report the following event as solved?<\p>
+        <p>${item.category} at ${item.location}.<p>
+      `,
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Send',
+          handler: () => {
+            this.sendSolved(item);
+            console.log('Send clicked');
+          }
+        }
+      ],
+      
+    });
+    
+    confirm.present();
+
+    
+  }
+  sendSolved(item){
+    
   }
 }
