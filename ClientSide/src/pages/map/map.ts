@@ -4,6 +4,10 @@ import { filterMap } from '../filterMap/filterMap';
 import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
+import moment from 'moment';
+import { Geolocation } from '@ionic-native/geolocation';
+import { EventService } from './../../app/services/eventService';
+import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { EventsPage } from '../events/events';
 
@@ -27,12 +31,21 @@ export class MapPage {
   animateEventCard: string;
   mapEventInfo: any;
   colors: any;
-  obstacles: any;
+  obstacles: Observable<any>;
+  currentPosition: any;
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation,
+  constructor(
+    public navCtrl: NavController,
+    public geolocation: Geolocation,
     private socialSharing: SocialSharing,
+    private cdRef: ChangeDetectorRef,
+    private eventService: EventService,
+    private translate: TranslateService,
     private alertCtrl: AlertController,
-    private cdRef:ChangeDetectorRef) {
+    private cdRef:ChangeDetectorRef
+  ) {
+    moment.locale(this.translate.currentLang);
+
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
 
@@ -41,40 +54,16 @@ export class MapPage {
       'red': '#ff0000',
       'blue': '#0000ff'
     }
+  }
 
-    this.obstacles = [
-      {
-        type: 'line',
-        start: new google.maps.LatLng(59.407433, 17.947650),
-        end: new google.maps.LatLng(59.406676, 17.945710),
-        color: this.colors['orange'],
-        data: {
-          category: 'Obstacle',
-          location: 'Den Ökända Vägen 23',
-          color: 'red',
-          reported: '2012-07-02',
-          time: 37,
-          description: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
-        }
-      },
-      {
-        type: 'line',
-        start: new google.maps.LatLng(59.405539, 17.942470),
-        end: new google.maps.LatLng(59.406084, 17.943790),
-        color: this.colors['blue'],
-        data: {
-          category: 'Police Control',
-          location: 'Den Okända Vägen 23',
-          time: 17,
-          color: 'blue',
-          reported: '2018-04-02',
-          description: 'Yes, this is a lot of text that serve as a placeholder... More of the text'
-        }
-      },
-    ]
+  refreshEvents() {
+    this.obstacles = this.eventService.getEvents(); //Fetches from the database
+    console.log('Server responded with:')
+    console.log(this.obstacles)
   }
 
   ionViewDidLoad() {
+    this.refreshEvents();
     this.loadMap();
     this.renderObstacles();
   }
@@ -109,17 +98,24 @@ export class MapPage {
    * @memberof MapPage
    */
   renderObstacles() {
-    this.obstacles.forEach(obstacle => {
-      switch (obstacle.type) {
-        case 'icon':
-          this.drawIcon(obstacle.start, obstacle.color, obstacle.data);
-          break;
-          case 'line':
-          this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
-          break;
-        default:
-          break;
-      }
+    this.obstacles.subscribe(data => {
+      data.forEach(obstacle => {
+        let type = obstacle.type;
+
+        if(type === undefined) {
+          type = '';
+        }
+
+        switch (type) {
+            case 'line':
+              this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
+            break;
+            case 'icon':
+          default:
+              this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
+            break;
+        }
+      });
     });
   }
 
@@ -140,6 +136,10 @@ export class MapPage {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
+
+        // save current location to a class var
+        this.currentPosition = latLng;
+
         if(locationMarker == null) {
           locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
         }
@@ -273,9 +273,9 @@ drawPath(startPos, endPos, color, line) {
 
   /**
    * RenderDirection
-   * 
+   *
    * Responsible for rendering and hooking the polylines between the different events.
-   * 
+   *
    * @param {any} response The response from the directionService.route() call
    * @param {any} color The color of the road, e.g '#272E34'
    * @param {any} line The line object to draw
@@ -289,7 +289,7 @@ drawPath(startPos, endPos, color, line) {
     };
 
     let polylines = [];
-    for (let i = 0; i < polylines.length; i++) 
+    for (let i = 0; i < polylines.length; i++)
       polylines[i].setMap(null);
 
     let legs = response.routes[0].legs;
@@ -324,6 +324,37 @@ drawPath(startPos, endPos, color, line) {
    */
   drawIcon(pos, color, data) {
     this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
+  }
+
+  /**
+   * Used to display a prettified reported time.
+   */
+  parseTime(time) {
+    return moment(time).fromNow();
+  }
+  /**
+   * Calculate the distance to an event from current location.
+   */
+  distance(lat, long) {
+    let unit = 'km';
+    let currentLocation;
+    let currentdistance;
+    let poi = new google.maps.LatLng(lat, long);
+    if(this.currentPosition != undefined) {
+      currentLocation = this.currentPosition;
+
+      currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, poi);
+
+      if(currentdistance < 1000) {
+        unit = 'm';
+      } else {
+        currentdistance = currentdistance / 1000;
+      }
+
+      return currentdistance.toFixed(2) + ' ' + unit;
+    } else {
+      return "";
+    }
   }
 
   markAsFinished(item){
