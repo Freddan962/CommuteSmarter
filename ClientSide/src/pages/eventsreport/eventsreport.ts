@@ -96,10 +96,10 @@ export class EventsReportPage {
     // }else{
       const options: CameraOptions = {
         destinationType: this.camera.DestinationType.DATA_URL,
-        targetWidth: 1000,
-        targetHeight: 1000,
+        targetWidth: 500,
+        targetHeight: 500,
         correctOrientation: true,
-        sourceType: 0,
+        sourceType: 1,
         mediaType: 0       
     }
 
@@ -162,7 +162,6 @@ setImage(){
       description: this.reportDescription,
       image: this.eventImage,
     }
-
     console.log(report)
     this.EventsReportService.sendReportToServer(report)
     this.reportSent = true;
@@ -176,9 +175,8 @@ setImage(){
       closeButtonText: 'Ok'
     });
     toast.present();
-    toast.dismiss((data, role) => {
-      // this.modalCtrl.close(data);
-       
+    toast.onDidDismiss((data, role) => {
+      this.navCtrl.pop();
     });
   }
 }
