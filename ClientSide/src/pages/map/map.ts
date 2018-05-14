@@ -4,9 +4,10 @@ import { filterMap } from '../filterMap/filterMap';
 import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/questions/40759808/angular-2-ngif-not-refreshing-when-variable-update-from-oberservable-subscrib
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
-
+import moment from 'moment';
 import { Geolocation } from '@ionic-native/geolocation';
 import { EventService } from './../../app/services/eventService';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var google;
 var locationMarker;
@@ -34,8 +35,11 @@ export class MapPage {
     public geolocation: Geolocation,
     private socialSharing: SocialSharing,
     private cdRef: ChangeDetectorRef,
-    private eventService: EventService
+    private eventService: EventService,
+    private translate: TranslateService
   ) {
+    moment.locale(this.translate.currentLang);
+
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
 
@@ -310,5 +314,35 @@ drawPath(startPos, endPos, color, line) {
    */
   drawIcon(pos, color, data) {
     this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
+  }
+
+  /**
+   * Used to display a prettified reported time.
+   */
+  parseTime(time) {
+    return moment(time).fromNow();
+  }
+  /**
+   * Calculate the distance to a event from current location.
+   */
+  distance(lat, long) {
+    let unit = 'km';
+    let currentLocation;
+    let currentdistance;
+    let poi = new google.maps.LatLng(lat, long);
+    if(this.location != undefined) {
+      currentLocation = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+      currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, poi);
+
+      if(currentdistance < 1000) {
+        unit = 'm';
+      } else {
+        currentdistance = currentdistance / 1000;
+      }
+
+      return currentdistance.toFixed(2) + ' ' + unit;
+    } else {
+      return "";
+    }
   }
 }
