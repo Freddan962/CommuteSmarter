@@ -5,11 +5,9 @@ import { ChangeDetectorRef } from '@angular/core';  //https://stackoverflow.com/
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { WelcomePage } from './../welcome/welcome';
 import moment from 'moment';
-import { Geolocation } from '@ionic-native/geolocation';
 import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { EventsPage } from '../events/events';
 
 declare var google;
 var locationMarker;
@@ -42,7 +40,6 @@ export class MapPage {
     private eventService: EventService,
     private translate: TranslateService,
     private alertCtrl: AlertController,
-    private cdRef:ChangeDetectorRef
   ) {
     moment.locale(this.translate.currentLang);
 
@@ -380,14 +377,14 @@ drawPath(startPos, endPos, color, line) {
           }
         }
       ],
-      
+
     });
-    
+
     confirm.present();
 
-    
+
   }
   sendSolved(item){
-    
+
   }
 }
