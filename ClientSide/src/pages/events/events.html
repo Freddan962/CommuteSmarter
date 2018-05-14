@@ -28,7 +28,13 @@
     </div>
   </ion-list>
 
-  <ion-footer>
+
+  <ion-fab right bottom>
+    <button (click)="openReportPage()" ion-fab color="vibrant" mini>
+      <ion-icon name="add" ></ion-icon>
+    </button>
+  </ion-fab>
+  <!-- <ion-footer>
     <button padding class="report-event" ion-button block no-lines (click)="openReportPage()">{{'Events.reportIncident' | translate}}</button>
-  </ion-footer>
+  </ion-footer> -->
 </ion-content>

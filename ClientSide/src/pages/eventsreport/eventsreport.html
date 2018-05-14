@@ -37,8 +37,10 @@
     <img [src]="DomSanitizer.bypassSecurityTrustUrl(eventImage)" class="eventImage" *ngIf="eventImage" />
   </ion-grid>
 
-  <ion-footer>
+  <!-- <ion-footer> -->
       <button ion-button block no-lines  (click)='showConfirm()' [disabled]="!isenabled">{{'EventsReport.sendReport' | translate}}</button>
-  </ion-footer>
+  <!-- </ion-footer> -->
+    <!-- <button ion-button block (click)="">{{'EventsReport.sendReport' | translate}}</button> -->
+
 </ion-content>
 

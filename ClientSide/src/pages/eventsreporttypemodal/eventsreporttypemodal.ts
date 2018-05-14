@@ -51,17 +51,18 @@ export class EventsreporttypemodalPage {
     
   }
 
-  onSelectType(item, category, color) {
-    this.category = category
+  onSelectType(item, color) {
+    // this.category = category
     this.color = color;
-    console.log((this.category))
+    console.log(('COLOR' + color))
+    console.log(('Valt: ' + item))
+
     this.selectedType = item;
   }
 
   dismiss() {
     this.viewCtrl.dismiss({
       type: this.selectedType, 
-      category: this.category,
       color: this.color});
   }
 }
