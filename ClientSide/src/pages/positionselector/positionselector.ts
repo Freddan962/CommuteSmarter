@@ -23,6 +23,7 @@ export class PositionselectorPage {
   nearbyPlace: any;
   markers: any[];
   locationMarker: any;
+  positionOnMap: any;
 
   constructor(
     public navCtrl: NavController, 
@@ -57,8 +58,9 @@ export class PositionselectorPage {
       clickableIcons: false
     }
 
+
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.centerMapToLocation();
+    this.positionOnMap = this.centerMapToLocation();
 
     //Makes map clickable
     this.map.addListener('click', (e) => {
@@ -74,13 +76,15 @@ export class PositionselectorPage {
       position: latLng,
       map: this.map,
     });
+    console.log(latLng.lat() + latLng.lng()) 
+    console.log(this.markers)
     this.markers.push(marker); //add current marker to markers array (so you can remove previous marker when setting a new)
-        
+    this.getLocationOfMarker();
     this.map.panTo(latLng) //centers map to marked location
     return marker
   }
 
-
+  
   //removes previous marker when setting a new one
  removeMarkers() {
    for (let i = 0; i < this.markers.length; i++) {
@@ -99,7 +103,6 @@ export class PositionselectorPage {
     this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        
         this.map.setCenter(latLng);
         this.locationMarker = this.placeMarkerAndPanTo(latLng, this.map.getCenter())
         this.locationMarker.setPosition(latLng);
@@ -110,23 +113,24 @@ export class PositionselectorPage {
   }
 
   getLocationOfMarker(){
-    let geolocationRequest = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.markers[0].position.lat()},${this.markers[0].position.lng()}&key=${apiKey}`
+    let geolocationRequest = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.markers[this.markers.length - 1].position.lat()},${this.markers[this.markers.length - 1].position.lng()}&key=${apiKey}`
   //google geolocation api request
   this.httpService.getDataFromExternal(geolocationRequest).subscribe(
-    data => this.nearbyPlace = data,
+    data => this.nearbyPlace = data.results[0].formatted_address,
     error => this.viewCtrl.dismiss('could not locate your position')
      /*console.error('Error: ' + error)*/,
-    () =>  
-      this.viewCtrl.dismiss({
-        location: this.nearbyPlace.results[0].formatted_address, 
-        lat: this.markers[0].position.lat(),
-        lng: this.markers[0].position.lng()
-      })
-     
+    () => console.log('Found: ' + this.nearbyPlace)
   );
+
 }
 
    dismiss() {
-     this.getLocationOfMarker() //waits for response from map api before exiting modal - Not the best solution but it works
-  }
+    //  this.getLocationOfMarker() //waits for response from map api before exiting modal - Not the best solution but it works
+     this.viewCtrl.dismiss({
+       location: this.nearbyPlace,
+       lat: this.markers[this.markers.length - 1].position.lat(),
+       lng: this.markers[this.markers.length - 1].position.lng()
+     })
+
+    }
 }
