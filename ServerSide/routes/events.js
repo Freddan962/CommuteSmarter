@@ -25,14 +25,12 @@ module.exports = function(app, models) {
   });
 
   app.post('/api/events/:id/mark-as-solved', (req, res) => {
-    models.Event.find({where: {id: req.param.id}})
-    .on('success', function(event) {
+    models.Event.find({where: {id: req.param.id}}).then( event => {
       if(event) {
-        if (event.solvedCount < 5){
+        if (event.solvedCount < 5) {
           event.updateAttributes({
             solvedCount: event.solvedCount++
-          })
-          .success(function(){
+          }).then(() => {
             res.status(200).json({status: 200, message: 'Successfully voted to close the event!'});
           })
         } else {
