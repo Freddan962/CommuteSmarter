@@ -23,6 +23,18 @@ module.exports = function(app, models) {
     });
   });
 
+  app.post('/api/events/:id/marked-as-solved', (req, res) => {
+    models.Event.find({where: {id: req.param.id}})
+    .on('success', function(event) {
+      if(event) {
+        event.updateAttributes({
+          solvedCount: event.solvedCount++
+        }).success(function(){
+          res.status(200).json({status: 200, message: 'Successfully voted to close the event!'});
+      })
+    }
+  })
+
   app.get('/api/events/:id', (req, res) => {
     models.Event.findById(parseInt(req.params.id)).then(event => {
       if (event == null) {
