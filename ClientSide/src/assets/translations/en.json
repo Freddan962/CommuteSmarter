@@ -30,13 +30,15 @@
     "event": "Events",
     "reportIncident": "Report incident",
     "shareEvent": "Share this event",
-    "reportFinished": "Mark as solved"
+    "reportFinished": "Mark as solved",
+    "refresh": "Refresh"
   },
   "EventsReport": {
     "title": "Report Incident",
     "describe": "Describe the event",
     "addPhoto": "Add a photo or video",
-    "sendReport": "Send report"
+    "sendReport": "Send report",
+    "sentReport": "Your report was successfully sent!"
   },
   "EventNotifications": {
     "title": "Event notifications",

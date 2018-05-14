@@ -30,13 +30,15 @@
     "event": "Händelser",
     "reportIncident": "Rapportera händelse",
     "shareEvent": "Dela händelse",
-    "reportFinished": "Markera som  löst"
+    "reportFinished": "Markera som  löst",
+    "refresh": "Uppdatera"
   },
   "EventsReport": {
     "title": "Rapportera händelse",
     "describe": "Beskriv händelsen",
     "addPhoto": "Lägg till foto eller video",
-    "sendReport": "Skicka rapport"
+    "sendReport": "Skicka rapport",
+    "sentReport": "Din rapport har skickats!"
   },
   "EventNotifications": {
     "title": "Händelsenotiser",
