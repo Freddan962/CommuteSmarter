@@ -15,8 +15,8 @@
       <div id="toggle-handle">&nbsp;</div>
     </div>
     <button (click)="closeMapEventInfo()" id="close-map-event"><ion-icon name="close-circle"></ion-icon></button>
-    <h2>{{ ('Settings.' + item.category) | translate }} - {{ item.location }}</h2>
-    <p>{{'Map.reported' | translate}} {{mapEventInfo.reported}} {{'Map.minAgo' | translate}} | {{mapEventInfo.distance}} {{mapEventInfo.unit}}</p>
+    <h2>{{ ('Settings.' + mapEventInfo.category) | translate }} - {{ mapEventInfo.location }}</h2>
+    <p>{{ parseTime(mapEventInfo.reported) }}, {{ distance(mapEventInfo.lat, mapEventInfo.long) }}</p>
     <p>{{mapEventInfo.description}}</p>
     <button ion-button block (click)="shareEvent">{{'Events.shareEvent' | translate}}</button>
     <p>

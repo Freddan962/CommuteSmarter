@@ -29,6 +29,7 @@ export class MapPage {
   mapEventInfo: any;
   colors: any;
   obstacles: Observable<any>;
+  currentPosition: any;
 
   constructor(
     public navCtrl: NavController,
@@ -130,6 +131,10 @@ export class MapPage {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
         this.map.setCenter(latLng);
+
+        // save current location to a class var
+        this.currentPosition = latLng;
+
         if(locationMarker == null) {
           locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
         }
@@ -323,15 +328,16 @@ drawPath(startPos, endPos, color, line) {
     return moment(time).fromNow();
   }
   /**
-   * Calculate the distance to a event from current location.
+   * Calculate the distance to an event from current location.
    */
   distance(lat, long) {
     let unit = 'km';
     let currentLocation;
     let currentdistance;
     let poi = new google.maps.LatLng(lat, long);
-    if(this.location != undefined) {
-      currentLocation = new google.maps.LatLng(this.location.latitude, this.location.longitude);
+    if(this.currentPosition != undefined) {
+      currentLocation = this.currentPosition;
+
       currentdistance = google.maps.geometry.spherical.computeDistanceBetween(currentLocation, poi);
 
       if(currentdistance < 1000) {
