@@ -20,7 +20,7 @@
     <p>Yes, this is a lot of text that serve as a placeholder... More of the text.</p>
     <button ion-button block (click)="shareEvent">{{'Events.shareEvent' | translate}}</button>
     <p>
-    <button ion-button block (click)="markAsFinished">{{'Events.reportFinished' | translate}}</button></p>
+    <button ion-button block (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button></p>
   </div>
 
   <div #map id="map"></div>

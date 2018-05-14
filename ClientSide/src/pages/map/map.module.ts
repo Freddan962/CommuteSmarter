@@ -8,6 +8,8 @@ import { MapPage } from './map';
   ],
   imports: [
     IonicPageModule.forChild(MapPage),
+
   ],
+  
 })
 export class MapPageModule {}
