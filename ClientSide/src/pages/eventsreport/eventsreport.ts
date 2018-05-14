@@ -171,7 +171,7 @@ setImage(){
 
   showToastWithCloseButton() {
     const toast = this.toastCtrl.create({
-      message: 'Your report were successfully sent!',
+      message: "{{'EventsReport.sent' | translate}}",
       showCloseButton: true,
       closeButtonText: 'Ok'
     });
