@@ -7,7 +7,8 @@ module.exports = function(app, models) {
       long: req.body.long,
       category: req.body.category,
       reported: req.body.reported,
-      description: req.body.description
+      description: req.body.description,
+      imageString: req.body.imageString
     };
 
     models.Event.create(eventInfo).then(event => {
