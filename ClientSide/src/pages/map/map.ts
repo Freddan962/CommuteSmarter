@@ -105,15 +105,10 @@ export class MapPage {
           type = '';
         }
 
-        switch (type) {
-            case 'line':
-              this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
-            break;
-            case 'icon':
-          default:
-              this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
-            break;
-        }
+        if (obstacle.lat_end == -100 || obstacle.lng_end == -100) 
+          this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
+        else
+          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
       });
     });
   }
