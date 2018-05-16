@@ -164,12 +164,16 @@ export class MapPage {
   /**
   * shareEvent()
   *
-  * Callback function fopr the shareEvent button on the map.
+  * Callback function for the shareEvent button on the event
+  * details modal.
   *
   * @memberof MapPage
   */
   shareEvent() {
-    this.socialSharing.share(this.mapEventInfo.title, this.mapEventInfo.text, null, null);
+    this.socialSharing.share(
+      this.translate.instant('Settings.' + this.mapEventInfo.category) + ' ' +  this.mapEventInfo.location,
+      this.mapEventInfo.description
+    );
   }
 
   /**
@@ -289,7 +293,7 @@ drawPath(startPos, endPos, color, lineData) {
     let polylines = [];
     for (let i = 0; i < polylines.length; i++)
       polylines[i].setMap(null);
-      
+
     let legs = response.routes[0].legs;
     for (let i = 0; i < legs.length; i++) {
       let steps = legs[i].steps;

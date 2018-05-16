@@ -92,7 +92,10 @@ export class EventsPage {
 
   shareEvent(item) {
     console.log('called share event');
-    this.socialSharing.share(item.title, item.text, null, null);
+    this.socialSharing.share(
+      this.translate.instant('Settings.' + item.category) + ' ' + item.location,
+      item.description
+    );
   }
 
   private isLoggedIn() {
