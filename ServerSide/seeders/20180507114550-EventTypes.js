@@ -5,58 +5,58 @@ module.exports = {
     return queryInterface.bulkInsert('EventTypes', [
       {
         color: 'red',
-        type: 'Road Closed',
-        subtype: 'Obstacle on the road'
+        type: 'roadClosed',
+        subtype: 'obstacle'
       },
       {
         color: 'red',
-        type: 'Road Closed',
-        subtype: 'Closed for event'
+        type: 'roadClosed',
+        subtype: 'closedForEvent'
       },
       {
         color: 'red',
-        type: 'Road Closed',
-        subtype: 'Road work'
+        type: 'roadClosed',
+        subtype: 'roadWork'
       },
       {
         color: 'red',
-        type: 'Road Closed',
-        subtype: 'Other'
+        type: 'roadClosed',
+        subtype: 'otherClosed'
       },
       {
         color: 'orange',
-        type: 'Limited passability',
-        subtype: 'Obstacle on the road'
+        type: 'limitedPassability',
+        subtype: 'obstacle'
       },
       {
         color: 'orange',
-        type: 'Limited passability',
-        subtype: 'Traffic jam'
+        type: 'limitedPassability',
+        subtype: 'trafficJam'
       },
       {
         color: 'orange',
-        type: 'Limited passability',
-        subtype: 'Road work'
+        type: 'limitedPassability',
+        subtype: 'roadWork'
       },
       {
         color: 'orange',
-        type: 'Limited passability',
-        subtype: 'Other'
+        type: 'limitedPassability',
+        subtype: 'other'
       },
       {
         color: 'blue',
-        type: 'Emergency Vehicles',
-        subtype: 'Emergency vehicle passing'
+        type: 'emergencyVehicles',
+        subtype: 'emergencyVehicle'
       },
       {
         color: 'blue',
-        type: 'Emergency Vehicles',
-        subtype: 'Police control'
+        type: 'emergencyVehicles',
+        subtype: 'policeControl'
       },
       {
         color: 'blue',
-        type: 'Emergency Vehicles',
-        subtype: 'Other'
+        type: 'emergencyVehicles',
+        subtype: 'otherEmergency'
       }
     ], {});
   },
