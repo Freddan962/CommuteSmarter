@@ -283,13 +283,13 @@ drawPath(startPos, endPos, color, lineData) {
     };
 
     //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
-    if (response == null)
+    if (response == null || response == undefined)
       return;
 
     let polylines = [];
     for (let i = 0; i < polylines.length; i++)
       polylines[i].setMap(null);
-
+      
     let legs = response.routes[0].legs;
     for (let i = 0; i < legs.length; i++) {
       let steps = legs[i].steps;

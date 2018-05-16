@@ -1,3 +1,9 @@
+var google = require('@google/maps').createClient({
+  key: 'AIzaSyBAuhoPibIl4c0OlG_dmOiWKn-bY49X0Rs',
+  Promise: Promise
+
+});
+
 function getRandomSensor(models, perform) {
     findRandomId(models.ValidCoordinates, perform);
 }
@@ -48,25 +54,36 @@ function getRandomEvent(models, perform) {
     getRandomSensor(models, (sensor => {
 
         getRandomEventType(models, (type => {
-            let eventInfo = {
-                color: type.color,
-                location: '',
-                lat: sensor.latitude,
-                long: sensor.longitude,
-                category: type.subtype,
-                reported: new Date(),
-                description: ''
-            };
-
-            let rnd = Math.floor(Math.random() * 100) + 1;
-            if (rnd > 30) {
-              eventInfo['lat_end'] = sensor.latitude_end;
-              eventInfo['long_end'] = sensor.longitude_end;
-            }
-
-            models.Event.create(eventInfo).then(event => {
-                perform(event);
+            google.reverseGeocode( {
+                latlng: [sensor.latitude, sensor.longitude]
+            })
+            .asPromise()
+            .then((response) => {
+                console.log(response.json.results[0].formatted_address);
+                let eventInfo = {
+                    color: type.color,
+                    location: response.json.results[0].formatted_address,
+                    lat: sensor.latitude,
+                    long: sensor.longitude,
+                    category: type.subtype,
+                    reported: new Date(),
+                    description: ''
+                };
+    
+                let rnd = Math.floor(Math.random() * 100) + 1;
+                if (rnd > 30) {
+                  eventInfo['lat_end'] = sensor.latitude_end;
+                  eventInfo['long_end'] = sensor.longitude_end;
+                }
+    
+                models.Event.create(eventInfo).then(event => {
+                    perform(event);
+                });
+            })
+            .catch((err) => {
+                console.log(err)
             });
+
         }));
     }));
 }

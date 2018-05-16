@@ -41,7 +41,7 @@ module.exports = {
       {
         color: 'orange',
         type: 'limitedPassability',
-        subtype: 'other'
+        subtype: 'otherPassability'
       },
       {
         color: 'blue',
