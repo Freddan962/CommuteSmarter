@@ -15,6 +15,16 @@ module.exports = {
       longitude: {
         allowNull: false,
         type: Sequelize.FLOAT
+      },
+      latitude_end: {
+        allowNull: false,
+        defaultValue: -100,
+        type: Sequelize.FLOAT
+      },
+      longitude_end: {
+        allowNull: false,
+        defaultValue: -100,
+        type: Sequelize.FLOAT
       }
     });
   },

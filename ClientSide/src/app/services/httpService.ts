@@ -11,7 +11,10 @@ export class HttpService {
 
   getDataFromServer(route) {
 
-    return this.http.get('https://pvt73trafficinfo.herokuapp.com/api/' + route)
+    let remote = false;
+    let adress = remote ? 'https://pvt73trafficinfo.herokuapp.com/api/' : 'http://localhost:3000/api/';
+
+    return this.http.get(adress + route)
       .map(response => response.json());
 
     /*  return new Promise(resolve => {

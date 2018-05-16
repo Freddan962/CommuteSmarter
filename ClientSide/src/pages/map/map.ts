@@ -57,8 +57,6 @@ export class MapPage {
 
   refreshEvents() {
     this.obstacles = this.eventService.getEvents(); //Fetches from the database
-    console.log('Server responded with:')
-    console.log(this.obstacles)
   }
 
   ionViewDidLoad() {
@@ -105,10 +103,14 @@ export class MapPage {
           type = '';
         }
 
-        if (obstacle.lat_end == -100 || obstacle.lng_end == -100) 
-          this.drawPath(obstacle.start, obstacle.end, obstacle.color, obstacle);
-        else
+        if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
           this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
+        }
+        else {
+          let start = new google.maps.LatLng(obstacle.lat, obstacle.long);
+          let end = new google.maps.LatLng(obstacle.lat_end, obstacle.long_end)
+          this.drawPath(start, end, obstacle.color, obstacle);
+        }
       });
     });
   }
@@ -244,7 +246,7 @@ export class MapPage {
  * @param {any} color The color of the line.
  * @memberof MapPage
  */
-drawPath(startPos, endPos, color, line) {
+drawPath(startPos, endPos, color, lineData) {
     let request = {
       origin: startPos,
       destination: endPos,
@@ -258,7 +260,7 @@ drawPath(startPos, endPos, color, line) {
     directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true });
 
     directionService.route(request, (result, status) => {
-      this.renderDirection(result, color, line);
+      this.renderDirection(result, color, lineData);
     });
   }
 
@@ -272,12 +274,16 @@ drawPath(startPos, endPos, color, line) {
    * @param {any} line The line object to draw
    * @memberof MapPage
    */
-  renderDirection(response, color, line) {
+  renderDirection(response, color, lineData) {
     let polylineOptions = {
       strokeColor: color,
       strokeOpacity: 1,
       strokeWeight: 4
     };
+
+    //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
+    if (response == null)
+      return;
 
     let polylines = [];
     for (let i = 0; i < polylines.length; i++)
@@ -294,10 +300,10 @@ drawPath(startPos, endPos, color, line) {
         for (let k = 0; k < nextSegment.length; k++)
           stepPolyline.getPath().push(nextSegment[k]);
 
-          stepPolyline.setMap(this.map);
+        stepPolyline.setMap(this.map);
         polylines.push(stepPolyline);
         google.maps.event.addListener(stepPolyline, 'click', (evt) => {
-          this.openMapEventInfo(line.data);
+          this.openMapEventInfo(lineData);
         })
       }
     }

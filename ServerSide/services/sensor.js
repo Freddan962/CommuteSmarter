@@ -57,6 +57,13 @@ function getRandomEvent(models, perform) {
                 reported: new Date(),
                 description: ''
             };
+
+            let rnd = Math.floor(Math.random() * 100) + 1;
+            if (rnd > 30) {
+              eventInfo['lat_end'] = sensor.latitude_end;
+              eventInfo['long_end'] = sensor.longitude_end;
+            }
+
             models.Event.create(eventInfo).then(event => {
                 perform(event);
             });
