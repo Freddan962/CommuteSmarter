@@ -27,7 +27,7 @@ export class EventsReportPage {
   public eventImage: string;
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public modalCtrl: ModalController,
     private camera: Camera,
     public alertCtrl: AlertController,
@@ -38,17 +38,17 @@ export class EventsReportPage {
   ) {
     this.defaultSelected = 'selectType';
     this.defaultLocation = 'selectLocation'
-    this.selectedType = this.defaultSelected; 
+    this.selectedType = this.defaultSelected;
     this.selectedLocation = this.defaultLocation;
   }
 
-  // Resizes the height of report description when text gets too long. 
+  // Resizes the height of report description when text gets too long.
   @ViewChild('descriptionInput') descriptionInput: ElementRef;
   resize() {
     let element = this.descriptionInput['_elementRef'].nativeElement.getElementsByClassName("text-input")[0];
     let scrollHeight = element.scrollHeight;
     element.style.height = scrollHeight + 'px';
-   
+
     if ((scrollHeight + 30) > 100){
       this.descriptionInput['_elementRef'].nativeElement.style.height = (scrollHeight + 30) + 'px';
     }
@@ -64,7 +64,7 @@ export class EventsReportPage {
         this.selectedType = data.type;
         this.category = data.category;
         this.color = data.color;
-        
+
         this.activateSendButton()
       }
     });
@@ -89,7 +89,7 @@ export class EventsReportPage {
       this.activateSendButton()
     });
   }
-  
+
   //photo api for adding photos - this needs more tweaking later
   takePhoto(sourceType: number) {
     if (document.URL.startsWith('http')) {
@@ -101,7 +101,7 @@ export class EventsReportPage {
         targetHeight: 1000,
         correctOrientation: true,
         sourceType: 0,
-        mediaType: 0       
+        mediaType: 0
     }
 
     this.camera.getPicture(options).then((imageData) => {
@@ -114,7 +114,7 @@ export class EventsReportPage {
   }
   }
 
-  
+
   // imageAdded(){
   //   return this.eventImage == undefined
   // }
@@ -125,13 +125,17 @@ setImage(){
 
 // Alert modal to confirm report details
   showConfirm() {
+    let message = `<p> ${this.translate.instant('Settings.' + (this.selectedType))} ${this.translate.instant('EventReport.at')} ${this.selectedLocation}.<p>`;
+
+    if(this.reportDescription !== undefined && this.reportDescription !== '') {
+      message +=
+      `<p>${this.translate.instant('EventReport.description')}<\p>
+       <p>${ this.reportDescription }</p>`;
+    }
+
     let confirm = this.alertCtrl.create({
       title: this.translate.instant('EventReport.confirmReport'),
-      message:
-        `<p> ${this.translate.instant('Settings.' + (this.selectedType))} ${this.translate.instant('EventReport.at')} ${this.selectedLocation}.<p>
-        <p>${this.translate.instant('EventReport.description')}<\p>
-        <p>${ this.reportDescription}</p>
-      `,
+      message: message,
       buttons: [
         {
           text: this.translate.instant('EventReport.cancel'),
