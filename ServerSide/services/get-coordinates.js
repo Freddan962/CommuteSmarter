@@ -9,8 +9,19 @@ module.exports.populateCoordsTable = function(models, amount) {
         let coordinates = [];
         
         for(let i = 0; i < features.length; i++) {
-           let wrongWayAround =  features[i].geometry.coordinates[0];
-           coordinates.push({ latitude: wrongWayAround[1], longitude: wrongWayAround[0]});
+          let coordinateData = {};
+
+          let wrongWayAround =  features[i].geometry.coordinates[0];
+          coordinateData['latitude'] = wrongWayAround[1];
+          coordinateData['longitude'] = wrongWayAround[0];
+
+          if (features[i].geometry.coordinates[1] != undefined) {
+            wrongWayAround = features[i].geometry.coordinates[1];
+            coordinateData['latitude_end'] = wrongWayAround[1];
+            coordinateData['longitude_end'] = wrongWayAround[0];
+          }
+
+          coordinates.push(coordinateData);
         }        
 
        models.ValidCoordinates.bulkCreate(coordinates);

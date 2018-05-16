@@ -41,6 +41,16 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    lat_end: {
+      type: DataTypes.FLOAT,
+      defaultValue: -100, //-100 = Unused
+      allowNull: false 
+    },
+    long_end: {
+      type: DataTypes.FLOAT,
+      defaultValue: -100, //-100 = Unused
+      allowNull: false 
+    },
     category: {
       type: DataTypes.STRING,
       allowNull: false,
