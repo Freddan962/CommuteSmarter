@@ -41,7 +41,8 @@ module.exports = {
       },
       solvedCount: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
+        defaultValue: 0
       }
     });
   },
