@@ -9,6 +9,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
+import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
+import { EventsReportPage } from '../eventsreport/eventsreport';
 
 declare var google;
 var locationMarker;
@@ -41,7 +43,8 @@ export class MapPage {
     private eventService: EventService,
     private translate: TranslateService,
     private alertCtrl: AlertController,
-    private http: HttpService
+    private http: HttpService,
+    private twitter: LoginWithTwitterService
   ) {
     moment.locale(this.translate.currentLang);
 
@@ -391,5 +394,13 @@ drawPath(startPos, endPos, color, lineData) {
   sendSolved(item){
     let response = this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
     console.log(response.subscribe());
+  }
+
+  openReportPage() {
+    if (this.twitter.getIfSignedIn() || document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
+      this.navCtrl.push(EventsReportPage);
+    } else {
+      this.navCtrl.push(MorePage);
+    }
   }
 }

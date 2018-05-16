@@ -22,6 +22,10 @@
     <p>
     <button ion-button block (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button></p>
   </div>
-
+  <ion-fab right bottom>
+    <button (click)="openReportPage()" ion-fab color="vibrant" mini>
+      <ion-icon name="add" ></ion-icon>
+    </button>
+  </ion-fab>
   <div #map id="map"></div>
 </ion-content>
