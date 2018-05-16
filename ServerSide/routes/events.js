@@ -1,3 +1,5 @@
+const twitter = require('./twitter.js');
+
 module.exports = function(app, models) {
   app.post('/api/events', function (req, res) {
     let eventInfo = {
@@ -8,14 +10,23 @@ module.exports = function(app, models) {
       category: req.body.category,
       reported: req.body.reported,
       description: req.body.description,
-      imageString: req.body.imageString
+      imageString: req.body.imageString,
+      userId: req.body.userId
     };
 
-    models.Event.create(eventInfo).then(event => {
-      res.status(201).json(event);
-    }).catch(error => {
-      res.status(400).send({ error: 'Bad request: ' + error.message });
-    });
+    console.log(eventInfo);
+
+    twitter.getIfLoggedIn(eventInfo.userId, models, ( loggedIn => {
+      if(loggedIn) {
+        models.Event.create(eventInfo).then(event => {
+          res.status(201).json(event);
+        }).catch(error => {
+          res.status(400).send({ error: 'Bad request: ' + error.message });
+        });
+      } else {
+        res.status(401).send({ error: 'The user must be logged in!' });
+      }
+    }));
   });
 
   app.get('/api/events', (req, res) => {
