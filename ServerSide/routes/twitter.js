@@ -189,7 +189,7 @@ let getTwitterUser = function(userId, models, callback) {
  */
 let getIfLoggedIn = function(userId, models, callback) {
   models.Twitter.findOne({ where: { userId: userId } }).then(user => {
-      callback(user.token !== null);
+      callback(user !== undefined && user !== null && user.token !== null);
   });
 }
 
