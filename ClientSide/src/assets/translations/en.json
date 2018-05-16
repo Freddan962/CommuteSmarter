@@ -83,6 +83,13 @@
     "done": "Done",
     "chooseType": "Choose type of incident",
     "selectPosition": "Select position",
-    "chooseLocation": "Chosen location"
+    "chooseLocation": "Chosen location",
+    "confirmReport": "Confirm report",
+    "at": "at",
+    "description":  "Description:",
+    "reportAsSolved": "Report the following event as solved?",
+    "cancel": "Cancel",
+    "send": "Send"
+
   }
 }

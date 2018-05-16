@@ -126,21 +126,21 @@ setImage(){
 // Alert modal to confirm report details
   showConfirm() {
     let confirm = this.alertCtrl.create({
-      title: 'Confirm report',
+      title: this.translate.instant('EventReport.confirmReport'),
       message:
-        `<p>${this.selectedType} at ${this.selectedLocation}.<p>
-        <p>Description:<\p>
+        `<p> ${this.translate.instant('Settings.' + (this.selectedType))} ${this.translate.instant('EventReport.at')} ${this.selectedLocation}.<p>
+        <p>${this.translate.instant('EventReport.description')}<\p>
         <p>${ this.reportDescription}</p>
       `,
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('EventReport.cancel'),
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Send',
+          text: this.translate.instant('EventReport.send'),
           handler: () => {
             this.sendReport();
             console.log('Send clicked');
@@ -155,7 +155,6 @@ setImage(){
     this.showToastWithCloseButton()
     let report = {
       color: this.color,
-      // type: this.selectedType,
       location: this.selectedLocation,
       lat: this.selectedLocationLatLng[0],
       long: this.selectedLocationLatLng[1],
