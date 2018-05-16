@@ -143,6 +143,7 @@ export class MapPage {
           locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
         }
         locationMarker.setPosition(latLng);
+        locationMarker.setZIndex(100);
       }, (err) => {
         console.log(err);
       });
