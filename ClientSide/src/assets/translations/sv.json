@@ -84,7 +84,13 @@
     "done": "Klar",
     "chooseType": "Välj händelsetyp",
     "selectPosition": "Välj plats",
-    "chooseLocation": "Vald plats"
+    "chooseLocation": "Vald plats",
+    "confirmReport": "Bekräfta rapportering",
+    "at": "på",
+    "description": "Beskrivning:",
+    "reportAsSolved": "Rapportera följande händelse som löst?",
+    "cancel": "Avbryt",
+    "send": "Skicka"
   }
 
 }

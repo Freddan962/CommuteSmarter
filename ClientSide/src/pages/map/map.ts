@@ -358,20 +358,20 @@ drawPath(startPos, endPos, color, line) {
   markAsFinished(item){
     // Alert modal to confirm
     let confirm = this.alertCtrl.create({
-      title: 'Confirm',
+      title: this.translate.instant('EventReport.confirmReport'),
       message:
-        `<p>Report the following event as solved?<\p>
-        <p>${item.category} at ${item.location}.<p>
-      `,
+      `<p>${this.translate.instant('EventReport.reportAsSolved')}<\p>
+      <p>${this.translate.instant('Settings.'+item.category)} ${this.translate.instant('EventReport.at')} ${item.location}.<p>
+    `,
       buttons: [
         {
-          text: 'Cancel',
+          text: this.translate.instant('EventReport.cancel'),
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Send',
+          text: this.translate.instant('EventReport.send'),
           handler: () => {
             this.sendSolved(item);
             console.log('Send clicked');
