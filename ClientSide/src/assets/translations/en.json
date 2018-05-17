@@ -3,14 +3,14 @@
     "welcomeTitle": "Welcome to",
     "selectLanguageText": "Please select your preferred language",
     "nextSlide": "Next",
-    "appDescription": "A great tool for monitoring traffic and getting an overview of current events affecting your commute.",
-    "goToAppButton": "Take me to the app",
+    "appDescription": "A tool for monitoring traffic and getting an overview of current events affecting your commute.",
     "featureMapTitle": "Map overview",
     "featureMapDesc": "Scroll and press current events to get a more in-depth description.",
     "featureListTitle": "Event List",
     "featureListDesc": "Detailed list of all events within your range. Report an ongoing event.",
     "featureMoreTitle": "More",
-    "featureMoreDesc": "Adjust your notification preferences and register to unlock reporting feature."
+    "featureMoreDesc": "Adjust your notification preferences and register to unlock reporting feature.",
+    "goToAppButton": "Take me to the app"
   },
   "Tabs": {
     "map": "Map",

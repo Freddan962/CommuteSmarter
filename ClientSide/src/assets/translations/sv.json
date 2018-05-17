@@ -1,15 +1,15 @@
 {
   "Welcome": {
     "welcomeTitle": "Välkommen till",
-    "selectLanguageText": "Välj språk",
-    "nextSlide": "Fortsätt",
-    "appDescription": "Ett bra verktyg...",
-    "featureMapTitle": "Kartvy",
-    "featureMapDesc": "Skrolla och...",
-    "featureListTitle": "Händelselista",
-    "featureListDesc": "Detaljerad lista...",
+    "selectLanguageText": "Välj vilket språk du vill använda",
+    "nextSlide": "Nästa",
+    "appDescription": "Ett verktyg för att övervaka  trafik och få en översikt över aktuella händelser som kan påverka din resa.",
+    "featureMapTitle": "Karta",
+    "featureMapDesc": "Scrolla och tryck på aktuella händelser för att få en mer detaljerad beskrivning.",
+    "featureListTitle": "Händelser",
+    "featureListDesc": "En detaljerad lista över alla trafikhändelser i din närhet. Rapportera pågående trafikstörningar.",
     "featureMoreTitle": "Mer",
-    "featureMoreDesc": "Ändra dina notifikationer...",
+    "featureMoreDesc": "Ändra dina notispreferenser och logga in för att kunna rapportera händelser.",
     "goToAppButton": "Ta mig till appen"
   },
   "Tabs": {
