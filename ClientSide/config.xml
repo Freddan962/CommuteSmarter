@@ -105,6 +105,7 @@
         <variable name="TWITTER_SECRET" value="gsP1h3j8GghjX2HZRJzhe33Bs57pgvRPuYQPT9CR0wuxueZEGL" />
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
+    <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode.git" />
     <engine name="android" spec="7.0.0" />
-    <engine name="ios" spec="~4.5.4" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
