@@ -11,19 +11,35 @@ import { Storage } from '@ionic/storage';
 
 export class filterMap {
   settings: any;
-  states: any;  
+  states: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public storageService: Storage,
+    public settingService: SettingService
+  ){
     this.settings = settingService.getSettings('filter');
     this.states = settingService.getStates();
   }
 
-  onFilterSettingValueChange(storageName) { 
+  onFilterSettingValueChange(storageName, eventType) {
     let state = this.states[storageName];
+    console.log(storageName);
+    console.log(state);
+
+    // first store to db for ui usage
     this.settingService.setSetting(storageName, state);
-  }  
+
+    // then store to db in correct format for direct usage in api
+    if(state) {
+      this.settingService.setCurrentFilters(eventType);
+    } else {
+      this.settingService.removeFilter(eventType);
+    }
+  }
 
   formatName(name: string) {
     return this.settingService.formatName(name);
-  } 
+  }
 }

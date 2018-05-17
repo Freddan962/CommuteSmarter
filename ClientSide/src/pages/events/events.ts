@@ -22,7 +22,7 @@ declare const google;
 
 export class EventsPage {
   public items$: Observable<any>;
-  private enabledSettings: any;
+  private chosenCategories: any;
 
   constructor(
     public navCtrl: NavController,
@@ -47,13 +47,14 @@ export class EventsPage {
   };
 
   refreshEvents(){
-    this.enabledSettings = this.settingService.getEnabledSettings('filter');
-    console.log('Enabled settings:');
-    console.log(this.enabledSettings);
+    this.settingService.getCurrentFilters( filters => {
+      console.log(filters)
+      this.chosenCategories = filters;
 
-    this.items$ = this.eventService.getEvents(this.enabledSettings); //Fetches from the database
-    console.log('Server responded with:')
-    console.log(this.items$)
+      this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
+      console.log('Server responded with:')
+      console.log(this.items$)
+   });
   }
 
   parseTime(time) {

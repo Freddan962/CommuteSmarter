@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 
 @Injectable()
-export class SettingService {  
+export class SettingService {
 
   private settings: any;
   public static states: any = {};
 
-  constructor(public storage: Storage) { 
+  constructor(public storage: Storage) {
 
     this.settings = {
       categories: [ ]
@@ -24,15 +24,15 @@ export class SettingService {
         },
         {
           name: 'Roadwork',
-          eventType: 'roadWork',          
+          eventType: 'roadWork',
         },
         {
           name: 'Closed for event',
-          eventType: 'closedForEvent',          
+          eventType: 'closedForEvent',
         },
         {
           name: 'Other (road closed)',
-          eventType: 'otherClosed',          
+          eventType: 'otherClosed',
         }
       ]
     });
@@ -44,19 +44,19 @@ export class SettingService {
       settings: [
         {
           name: 'Obstacle on the road',
-          eventType: 'obstacle',          
+          eventType: 'obstacle',
         },
         {
           name: 'Roadwork',
-          eventType: 'roadWork',          
+          eventType: 'roadWork',
         },
         {
           name: 'Traffic Jam',
-          eventType: 'trafficJam',          
+          eventType: 'trafficJam',
         },
         {
           name: 'Other (limited passability)',
-          eventType: 'otherPassability',          
+          eventType: 'otherPassability',
         },
       ]
     });
@@ -68,15 +68,15 @@ export class SettingService {
       settings: [
         {
           name: 'Emergency Vehicle Passing',
-          eventType: 'emergencyVehicle',           
+          eventType: 'emergencyVehicle',
         },
         {
           name: 'Police Control',
-          eventType: 'policeControl',           
+          eventType: 'policeControl',
         },
         {
           name: 'Other (emergency vehicles)',
-          eventType: 'otherEmergency',          
+          eventType: 'otherEmergency',
         }
       ]
     });
@@ -84,20 +84,20 @@ export class SettingService {
 
   /**
    * prepareModels()
-   * 
+   *
    * Prepares the models for a specific pae (e.g filter) by generating appropriate
    * ngModels and holders for the setting states.
-   * 
+   *
    * @param {string} page
-   * @returns 
+   * @returns
    * @memberof SettingService
    */
   private prepareModels(page: string) {
     page = this.formatName(page);
-    
+
     this.settings.categories.forEach(category => {
       category.settings.forEach(setting => {
-          
+
         let formattedName = this.formatName(page + category.name + setting.eventType)
         SettingService.states[formattedName] = true;
       });
@@ -112,10 +112,10 @@ export class SettingService {
 
   /**
    * loadExistingData(settings)
-   * 
+   *
    * Loads existing locally stored states for the provided settings object
-   * 
-   * @param {any} settings 
+   *
+   * @param {any} settings
    * @memberof SettingService
    */
   private loadExistingData(page: string) : void {
@@ -140,9 +140,9 @@ export class SettingService {
 
   /**
    * formatName()
-   * 
+   *
    * Formats the provided name
-   * 
+   *
    * @private
    * @param {string} name E.g Filter Map
    * @returns {string} filtermap
@@ -154,9 +154,9 @@ export class SettingService {
 
   /**
    * getEnabledSettings()
-   * 
+   *
    * Returns all the enabled settings in a array for a page.
-   * 
+   *
    * @public
    * @param {string} page E.g 'filter'
    * @returns {string[]} ['otherclosed', 'roadWork', 'trafficJam']
@@ -177,12 +177,12 @@ export class SettingService {
 
   /**
    * isEnabled()
-   * 
+   *
    * Returns whether or not a setting for a page is enabled
-   * 
+   *
    * @param {string} page The page, e.g 'filter'
    * @param {string} setting The setting e.g 'trafficJam'
-   * @returns {boolean} 
+   * @returns {boolean}
    * @memberof SettingService
    */
   public isEnabled(formattedName: string) : boolean {
@@ -195,6 +195,42 @@ export class SettingService {
   public setSetting(setting: string, value: any = false) : void {
     setting = this.formatName(setting);
     this.storage.set(setting, value);
+  }
+
+  public setCurrentFilters(filter: string) : void {
+     this.storage.get('currentEventFilters').then( filters => {
+      if(filters === undefined || filters === null) {
+        let temp = [];
+        temp.push(filter);
+        this.storage.set('currentEventFilters', temp);
+      } else  {
+        let temp = filters;
+        temp.push(filter);
+
+        this.storage.set('currentEventFilters', temp);
+      }
+    });
+  }
+
+  public removeFilter(filter: string) : void {
+     this.storage.get('currentEventFilters').then( filters => {
+      if(filters !== undefined && filters !== null && filters.length > 0) {
+
+        let temp = filters;
+        let index = temp.indexOf(filter);
+        if (index > -1) {
+          temp.splice(index, 1);
+        }
+
+        this.storage.set('currentEventFilters', temp);
+      }
+    });
+  }
+
+  public getCurrentFilters(perform) {
+    this.storage.get('currentEventFilters').then( filters => {
+      perform(filters);
+   });
   }
 
   public setSettingFormat(page: string, setting: string, category: string = '', value: any = false) : void {
