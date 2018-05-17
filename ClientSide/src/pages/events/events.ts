@@ -10,6 +10,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
+import { SettingService } from '../../app/services/settingService';
 
 declare const google;
 
@@ -21,6 +22,7 @@ declare const google;
 
 export class EventsPage {
   public items$: Observable<any>;
+  private enabledSettings: any;
 
   constructor(
     public navCtrl: NavController,
@@ -31,11 +33,13 @@ export class EventsPage {
     private loginWithTwitterService:LoginWithTwitterService,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
-    private http: HttpService
+    private http: HttpService,
+    private settingService: SettingService
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
       this.refreshEvents();
+      this.settingService.getSettings('filter');
   }
 
   location: {
@@ -47,6 +51,11 @@ export class EventsPage {
     this.items$ = this.eventService.getEvents(); //Fetches from the database
     console.log('Server responded with:')
     console.log(this.items$)
+
+    this.enabledSettings = this.settingService.getEnabledSettings('filter');
+    console.log('Enabled settings:'); 
+    console.log(this.enabledSettings);
+
   }
 
   parseTime(time) {
