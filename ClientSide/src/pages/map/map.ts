@@ -1,3 +1,4 @@
+import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { filterMap } from '../filterMap/filterMap';
