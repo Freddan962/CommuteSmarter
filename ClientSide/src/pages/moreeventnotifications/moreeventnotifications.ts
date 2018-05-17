@@ -22,12 +22,13 @@ export class MoreeventnotificationsPage {
   notifications: any;
   notificationDistance: any;
   settings: any;
+  states: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
     this.storage = storageService;
     this.settings = settingService.getSettings('notifications');
-    settingService.loadExistingData(this.settings);
-
+    this.states = settingService.getStates();
+    
     //Loads the slider's notification distance
     this.storage.get('notificationDistance').then((distance) => {
       if (distance == undefined)

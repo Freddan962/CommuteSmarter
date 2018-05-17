@@ -10,17 +10,20 @@ import { Storage } from '@ionic/storage';
 })
 
 export class filterMap {
-  storage: any;
-  settings: any;  
+  settings: any;
+  states: any;  
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
-    this.storage = storageService;
     this.settings = settingService.getSettings('filter');
-
-    settingService.loadExistingData(this.settings);
+    this.states = settingService.getStates();
   }
 
-  onFilterSettingValueChange(storageName, state) {  
-    this.storage.set(storageName, state);
+  onFilterSettingValueChange(storageName) { 
+    let state = this.states[storageName];
+    this.settingService.setSetting(storageName, state);
   }  
+
+  formatName(name: string) {
+    return this.settingService.formatName(name);
+  } 
 }

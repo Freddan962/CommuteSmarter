@@ -5,36 +5,34 @@ import { Storage } from '@ionic/storage';
 export class SettingService {  
 
   private settings: any;
-  private storage: any;
+  public static states: any = {};
 
-  constructor(public storageService: Storage) { 
-    this.storage = storageService;
+  constructor(public storage: Storage) { 
 
     this.settings = {
-      states: { },
       categories: [ ]
     };
 
     this.settings.categories.push({
       name: 'Road Closed',
       color: 'red',
-      translateName: 'roadClosed',
+      eventType: 'roadClosed',
       settings: [
         {
           name: 'Obstacle on the road',
-          translateName: 'obstacle',
+          eventType: 'obstacle',
         },
         {
           name: 'Roadwork',
-          translateName: 'roadWork',          
+          eventType: 'roadWork',          
         },
         {
           name: 'Closed for event',
-          translateName: 'closedForEvent',          
+          eventType: 'closedForEvent',          
         },
         {
           name: 'Other (road closed)',
-          translateName: 'otherClosed',          
+          eventType: 'otherClosed',          
         }
       ]
     });
@@ -42,23 +40,23 @@ export class SettingService {
     this.settings.categories.push({
       name: 'Limited passability',
       color: 'orange',
-      translateName: 'limitedPassability',
+      eventType: 'limitedPassability',
       settings: [
         {
           name: 'Obstacle on the road',
-          translateName: 'obstacle',          
+          eventType: 'obstacle',          
         },
         {
           name: 'Roadwork',
-          translateName: 'roadWork',          
+          eventType: 'roadWork',          
         },
         {
           name: 'Traffic Jam',
-          translateName: 'trafficJam',          
+          eventType: 'trafficJam',          
         },
         {
           name: 'Other (limited passability)',
-          translateName: 'otherPassability',          
+          eventType: 'otherPassability',          
         },
       ]
     });
@@ -66,19 +64,19 @@ export class SettingService {
     this.settings.categories.push({
       name: 'Emergency Vehicles',
       color: 'blue',
-      translateName: 'emergencyVehicles',
+      eventType: 'emergencyVehicles',
       settings: [
         {
           name: 'Emergency Vehicle Passing',
-          translateName: 'emergencyVehicle',           
+          eventType: 'emergencyVehicle',           
         },
         {
           name: 'Police Control',
-          translateName: 'policeControl',           
+          eventType: 'policeControl',           
         },
         {
           name: 'Other (emergency vehicles)',
-          translateName: 'otherEmergency',          
+          eventType: 'otherEmergency',          
         }
       ]
     });
@@ -87,39 +85,29 @@ export class SettingService {
   /**
    * prepareModels()
    * 
-   * Prepares the models for a specific setting (e.g filter) by generating appropriate
+   * Prepares the models for a specific pae (e.g filter) by generating appropriate
    * ngModels and holders for the setting states.
    * 
-   * @param {any} settings 
-   * @param {any} name 
+   * @param {string} page
    * @returns 
    * @memberof SettingService
    */
-  private prepareModels(settings, name) {
-    settings.categories.forEach(category => {
-      category.formattedName = (category.name).replace(/\s+/g, '').toLowerCase();
+  private prepareModels(page: string) {
+    page = this.formatName(page);
+    
+    this.settings.categories.forEach(category => {
       category.settings.forEach(setting => {
-        setting.formattedName = (setting.name + name).replace(/\s+/g, '').toLowerCase() + category.formattedName;
-        settings.states[setting.formattedName] = true;
+          
+        let formattedName = this.formatName(page + category.name + setting.eventType)
+        SettingService.states[formattedName] = true;
       });
     });
-
-    return settings;
   }
 
-  /**
-   * getSettings()
-   * 
-   * Creates a deep data-copy of the defined settings to be used in a specific
-   * setting environment.
-   * 
-   * @param {any} name 
-   * @returns 
-   * @memberof SettingService
-   */
-  getSettings(name) {
-    let settingCopy = JSON.parse(JSON.stringify(this.settings));
-    return this.prepareModels(settingCopy, name);
+  getSettings(page: string) : JSON {
+    this.prepareModels(page);
+    this.loadExistingData(page);
+    return this.settings;
   }
 
   /**
@@ -130,14 +118,91 @@ export class SettingService {
    * @param {any} settings 
    * @memberof SettingService
    */
-  loadExistingData(settings) {
-    settings.categories.forEach(category => {
+  loadExistingData(page: string) : void {
+    this.settings.categories.forEach(category => {
       category.settings.forEach(setting => {
-        this.storage.get(setting.formattedName).then((state) => {
+        let formattedName = this.formatName(page + category.name + setting.eventType);
+        SettingService.states[formattedName] = false;
+      })
+    });
+
+    this.settings.categories.forEach(category => {
+      category.settings.forEach(setting => {
+        let formattedName = this.formatName(page + category.name + setting.eventType);
+
+        this.storage.get(formattedName).then((state) => {
           if (state == undefined) return;
-          settings.states[setting.formattedName] = state;
+          SettingService.states[formattedName] = state;
         });
       });
     });
   }
+
+  /**
+   * formatName()
+   * 
+   * Formats the provided name
+   * 
+   * @private
+   * @param {string} name E.g Filter Map
+   * @returns {string} filtermap
+   * @memberof SettingService
+   */
+  public formatName(name: string) : string {
+    return name.replace(/\s+/g, '').toLowerCase();
+  }
+
+  /**
+   * getEnabledSettings()
+   * 
+   * Returns all the enabled settings in a array for a page.
+   * 
+   * @public
+   * @param {string} page E.g 'filter'
+   * @returns {string[]} ['otherclosed', 'roadWork', 'trafficJam']
+   * @memberof SettingService
+   */
+  public getEnabledSettings(page: string) : string[] {
+    let enabledSettings = [];
+
+    for (let key in SettingService.states) {
+      if (key.indexOf(page) != 0) continue;
+
+      if (this.isEnabled(page, key))
+        enabledSettings.push(key);
+    }
+
+    return enabledSettings;
+  }
+
+  /**
+   * isEnabled()
+   * 
+   * Returns whether or not a setting for a page is enabled
+   * 
+   * @param {string} page The page, e.g 'filter'
+   * @param {string} setting The setting e.g 'trafficJam'
+   * @returns {boolean} 
+   * @memberof SettingService
+   */
+  public isEnabled(page: string, setting: string, category: string = '') : boolean {
+    let formattedName = this.formatName(page + category + setting);
+    
+    if (SettingService.states[formattedName] == undefined)
+      return false;
+
+    return SettingService.states[formattedName];
+  }
+
+  public setSetting(setting: string, value: any = false) : void {
+    setting = this.formatName(setting);
+    this.storage.set(setting, value);
+  }
+
+  public setSettingFormat(page: string, setting: string, category: string = '', value: any = false) : void {
+    let formattedName = this.formatName(page + category + setting);
+    this.setSetting(formattedName, value);
+  }
+
+  public getStates() { return SettingService.states; }
 }
