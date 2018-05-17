@@ -51,7 +51,7 @@ export class EventsPage {
     console.log('Enabled settings:');
     console.log(this.enabledSettings);
 
-    this.items$ = this.eventService.getEvents(); //Fetches from the database
+    this.items$ = this.eventService.getEvents(this.enabledSettings); //Fetches from the database
     console.log('Server responded with:')
     console.log(this.items$)
   }
