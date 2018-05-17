@@ -28,7 +28,7 @@ export class MoreeventnotificationsPage {
     this.storage = storageService;
     this.settings = settingService.getSettings('notifications');
     this.states = settingService.getStates();
-    
+
     //Loads the slider's notification distance
     this.storage.get('notificationDistance').then((distance) => {
       if (distance == undefined)
@@ -50,9 +50,10 @@ export class MoreeventnotificationsPage {
    * @param {any} state The new state for the setting.
    * @memberof MoreeventnotificationsPage
    */
-  onNotificationSettingValueChange(name, state) {
+  onNotificationSettingValueChange(name) {
+    let state = this.states[name];
     this.updateNotificationState();
-    this.storage.set(name, state);
+    this.settingService.setSetting(name, state);
   }
 
   /**
@@ -119,5 +120,9 @@ export class MoreeventnotificationsPage {
         this.settings.states[property] = state;
       }
     }
+  }
+
+  public formatName(name: string) : string {
+    return this.settingService.formatName(name);
   }
 }
