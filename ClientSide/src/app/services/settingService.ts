@@ -118,7 +118,7 @@ export class SettingService {
    * @param {any} settings 
    * @memberof SettingService
    */
-  loadExistingData(page: string) : void {
+  private loadExistingData(page: string) : void {
     this.settings.categories.forEach(category => {
       category.settings.forEach(setting => {
         let formattedName = this.formatName(page + category.name + setting.eventType);
@@ -166,10 +166,10 @@ export class SettingService {
     let enabledSettings = [];
 
     for (let key in SettingService.states) {
-      if (key.indexOf(page) != 0) continue;
+      if (key.indexOf(page) != 0) return;
 
-      if (this.isEnabled(page, key))
-        enabledSettings.push(key);
+      if (this.isEnabled(key))
+        enabledSettings.push(key.replace(page, ''));
     }
 
     return enabledSettings;
@@ -185,9 +185,7 @@ export class SettingService {
    * @returns {boolean} 
    * @memberof SettingService
    */
-  public isEnabled(page: string, setting: string, category: string = '') : boolean {
-    let formattedName = this.formatName(page + category + setting);
-    
+  public isEnabled(formattedName: string) : boolean {
     if (SettingService.states[formattedName] == undefined)
       return false;
 

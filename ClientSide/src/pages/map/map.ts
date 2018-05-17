@@ -1,3 +1,4 @@
+import { SettingService } from './../../app/services/settingService';
 import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
@@ -35,6 +36,7 @@ export class MapPage {
   colors: any;
   obstacles: Observable<any>;
   currentPosition: any;
+  enabledSettings: any;
 
   constructor(
     public navCtrl: NavController,
@@ -45,12 +47,17 @@ export class MapPage {
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private http: HttpService,
-    private twitter: LoginWithTwitterService
+    private twitter: LoginWithTwitterService,
+    private settingService: SettingService
   ) {
     moment.locale(this.translate.currentLang);
 
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
+    settingService.getSettings('filter');
+    let enabledSettings = this.settingService.getEnabledSettings('filter');
+    console.log("Got enabled settings: " + enabledSettings);
+    console.log(enabledSettings);
 
     this.colors = {
       'orange': '#ffa500',
