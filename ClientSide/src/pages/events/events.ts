@@ -11,6 +11,7 @@ import { SocialSharing } from '@ionic-native/social-sharing';
 import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { SettingService } from '../../app/services/settingService';
+import { filterMap } from '../filterMap/filterMap';
 
 declare const google;
 
@@ -149,5 +150,9 @@ export class EventsPage {
 
   sendSolved(item){
     this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
+  }
+
+  openFilterPage(){
+    this.navCtrl.push(filterMap);
   }
 }
