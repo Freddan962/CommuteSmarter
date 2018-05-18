@@ -30,7 +30,7 @@ module.exports = function(app, models) {
   });
 
   app.get('/api/events', (req, res) => {
-    let categories = req.query.category;
+    let categories = req.query.categories.split(',');
     let query = { order: [['reported', 'DESC']] };
 
     if(categories!== undefined && categories.length > 0) {
