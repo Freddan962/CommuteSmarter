@@ -1,3 +1,4 @@
+import { SettingService } from './../../app/services/settingService';
 import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
@@ -35,6 +36,7 @@ export class MapPage {
   colors: any;
   obstacles: Observable<any>;
   currentPosition: any;
+  chosenCategories: any;
 
   constructor(
     public navCtrl: NavController,
@@ -45,7 +47,8 @@ export class MapPage {
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private http: HttpService,
-    private twitter: LoginWithTwitterService
+    private twitter: LoginWithTwitterService,
+    private settingService: SettingService
   ) {
     moment.locale(this.translate.currentLang);
 
@@ -59,14 +62,23 @@ export class MapPage {
     }
   }
 
-  refreshEvents() {
-    this.obstacles = this.eventService.getEvents(); //Fetches from the database
+  refreshEvents(perform) {
+    this.settingService.getCurrentFilters( filters => {
+      console.log(filters)
+      this.chosenCategories = filters;
+
+      this.obstacles = this.eventService.getEvents(this.chosenCategories); //Fetches from the database      console.log('Server responded with:')
+      console.log(this.obstacles)
+
+      perform();
+   });
   }
 
   ionViewDidLoad() {
-    this.refreshEvents();
-    this.loadMap();
-    this.renderObstacles();
+    this.refreshEvents(() => {
+      this.loadMap();
+      this.renderObstacles();
+    });
   }
 
   /**

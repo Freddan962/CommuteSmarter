@@ -22,11 +22,12 @@ export class MoreeventnotificationsPage {
   notifications: any;
   notificationDistance: any;
   settings: any;
+  states: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
     this.storage = storageService;
     this.settings = settingService.getSettings('notifications');
-    settingService.loadExistingData(this.settings);
+    this.states = settingService.getStates();
 
     //Loads the slider's notification distance
     this.storage.get('notificationDistance').then((distance) => {
@@ -49,9 +50,10 @@ export class MoreeventnotificationsPage {
    * @param {any} state The new state for the setting.
    * @memberof MoreeventnotificationsPage
    */
-  onNotificationSettingValueChange(name, state) {
+  onNotificationSettingValueChange(name) {
+    let state = this.states[name];
     this.updateNotificationState();
-    this.storage.set(name, state);
+    this.settingService.setSetting(name, state);
   }
 
   /**
@@ -118,5 +120,9 @@ export class MoreeventnotificationsPage {
         this.settings.states[property] = state;
       }
     }
+  }
+
+  public formatName(name: string) : string {
+    return this.settingService.formatName(name);
   }
 }

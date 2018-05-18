@@ -10,6 +10,8 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
+import { SettingService } from '../../app/services/settingService';
+import { filterMap } from '../filterMap/filterMap';
 
 declare const google;
 
@@ -21,6 +23,7 @@ declare const google;
 
 export class EventsPage {
   public items$: Observable<any>;
+  private chosenCategories: any;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +34,8 @@ export class EventsPage {
     private loginWithTwitterService:LoginWithTwitterService,
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
-    private http: HttpService
+    private http: HttpService,
+    private settingService: SettingService
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
@@ -44,9 +48,14 @@ export class EventsPage {
   };
 
   refreshEvents(){
-    this.items$ = this.eventService.getEvents(); //Fetches from the database
-    console.log('Server responded with:')
-    console.log(this.items$)
+    this.settingService.getCurrentFilters( filters => {
+      console.log(filters)
+      this.chosenCategories = filters;
+
+      this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
+      console.log('Server responded with:')
+      console.log(this.items$)
+   });
   }
 
   parseTime(time) {
@@ -141,5 +150,9 @@ export class EventsPage {
 
   sendSolved(item){
     this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
+  }
+
+  openFilterPage(){
+    this.navCtrl.push(filterMap);
   }
 }

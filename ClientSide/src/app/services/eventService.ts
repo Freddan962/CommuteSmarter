@@ -7,7 +7,7 @@ export class EventService {
   constructor(private httpService:HttpService)
   {}
 
-  getEvents() {
-    return this.httpService.getDataFromServer('events');
+  getEvents(categories) {
+    return this.httpService.getDataFromServer('events?categories='+categories);
   }
 }

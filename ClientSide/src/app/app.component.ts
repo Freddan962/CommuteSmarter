@@ -1,3 +1,4 @@
+import { SettingService } from './services/settingService';
 import { LanguageService } from './services/LanguageService';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -17,7 +18,12 @@ export class MyApp {
   rootPage:any = TabsPage;
   alwaysShowWelcomePage: any;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public Storage: Storage, translate: TranslateService, language: LanguageService) {
+  constructor(platform: Platform, 
+    statusBar: StatusBar, splashScreen: SplashScreen,
+    public Storage: Storage, 
+    translate: TranslateService, 
+    language: LanguageService,
+   ) {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = false;
     
