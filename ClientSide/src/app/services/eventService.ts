@@ -8,6 +8,6 @@ export class EventService {
   {}
 
   getEvents(categories) {
-    return this.httpService.getDataFromServer('events');
+    return this.httpService.getDataFromServer('events?categories='+categories);
   }
 }
