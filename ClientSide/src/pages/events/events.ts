@@ -22,7 +22,7 @@ declare const google;
 })
 
 export class EventsPage {
-  public items$: Observable<any>;
+  public items$: any;
   private chosenCategories: any;
 
   constructor(
@@ -39,7 +39,6 @@ export class EventsPage {
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-      this.refreshEvents();
   }
 
   location: {
@@ -47,14 +46,20 @@ export class EventsPage {
     longitude: number
   };
 
+  ionViewWillEnter() {
+    this.refreshEvents();
+  }
+
   refreshEvents(){
     this.settingService.getCurrentFilters( filters => {
       console.log(filters)
       this.chosenCategories = filters;
 
-      this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
-      console.log('Server responded with:')
-      console.log(this.items$)
+      this.eventService.getEvents(this.chosenCategories, data => {
+        this.items$ = data;
+        console.log('Server responded with:')
+        console.log(this.items$)
+      }); //Fetches from the database
    });
   }
 

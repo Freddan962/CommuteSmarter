@@ -74,7 +74,7 @@ export class MapPage {
    });
   }
 
-  ionViewDidLoad() {
+  ionViewWillEnter() {
     this.refreshEvents(() => {
       this.loadMap();
       this.renderObstacles();

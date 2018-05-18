@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list class="accordion-list" *ngIf="(items$ | async)">
-    <div ion-item *ngFor="let item of items$ | async">
+  <ion-list class="accordion-list">
+    <div ion-item *ngFor="let item of items$">
       <ion-avatar item-start>
         <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>
