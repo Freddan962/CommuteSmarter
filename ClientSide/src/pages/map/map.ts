@@ -34,7 +34,7 @@ export class MapPage {
   animateEventCard: string;
   mapEventInfo: any;
   colors: any;
-  obstacles: Observable<any>;
+  obstacles: any;
   currentPosition: any;
   chosenCategories: any;
 
@@ -64,13 +64,15 @@ export class MapPage {
 
   refreshEvents(perform) {
     this.settingService.getCurrentFilters( filters => {
-      console.log(filters)
-      this.chosenCategories = filters;
+      this.eventService.getEvents(filters, data => {
+        console.log(filters)
+        this.chosenCategories = filters;
 
-      this.obstacles = this.eventService.getEvents(this.chosenCategories); //Fetches from the database      console.log('Server responded with:')
-      console.log(this.obstacles)
+        this.obstacles = data;
+        console.log(this.obstacles)
 
-      perform();
+        perform();
+      }); //Fetches from the database
    });
   }
 
@@ -111,8 +113,7 @@ export class MapPage {
    * @memberof MapPage
    */
   renderObstacles() {
-    this.obstacles.subscribe(data => {
-      data.forEach(obstacle => {
+    this.obstacles.forEach(obstacle => {
         let type = obstacle.type;
 
         if(type === undefined) {
@@ -128,7 +129,6 @@ export class MapPage {
           this.drawPath(start, end, obstacle.color, obstacle);
         }
       });
-    });
   }
 
   onClicked(){
