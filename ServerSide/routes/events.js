@@ -31,6 +31,7 @@ module.exports = function(app, models) {
 
   app.get('/api/events', (req, res) => {
     const $gt = models.Sequelize.Op.gt;
+    const $and = models.Sequelize.Op.and;
 
     let categories = req.query.categories;
     let query = { order: [['reported', 'DESC']] };
@@ -42,12 +43,25 @@ module.exports = function(app, models) {
     }
 
     let time = req.query.newerThan;
-    
+
     if(time !== undefined && time.length > 0) {
       if(query.where === undefined) {
         query['where'] = { 'reported': { [$gt]: time } };
       } else {
         query.where['reported'] = { [$gt]: time };
+      }
+    }
+
+    let latitude = req.query.lat;
+    let longitude = req.query.long;
+
+    if(latitude !== undefined && latitude.length > 0 &&
+      longitude !== undefined && longitude.length > 0) {
+      if(query.where === undefined) {
+        query['where'] = { 'long': parseFloat(longitude), 'lat': parseFloat(latitude) };
+      } else {
+        query.where['long'] = parseFloat(longitude);
+        query.where['lat'] = parseFloat(latitude);
       }
     }
 
