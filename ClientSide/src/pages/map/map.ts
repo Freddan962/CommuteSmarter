@@ -76,9 +76,19 @@ export class MapPage {
    });
   }
 
+  // Runs only once and is cached
+  ionViewDidLoad() {
+    this.loadMap();
+  }
+
+  // Runs on every view enter
   ionViewWillEnter() {
+    this.doRefreshEvents();
+  }
+
+  // Refresh the events and render events
+  doRefreshEvents() {
     this.refreshEvents(() => {
-      this.loadMap();
       this.renderObstacles();
     });
   }
