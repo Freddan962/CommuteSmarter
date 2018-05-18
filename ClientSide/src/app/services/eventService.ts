@@ -15,7 +15,7 @@ export class EventService {
   {}
 
   getEvents(categories, perform) {
-    return this.httpService.getDataFromServer('events?categories='+categories).subscribe(data => {
+    this.httpService.getDataFromServer('events?categories='+categories).subscribe(data => {
       console.log(data);
       this.events = data;
 
