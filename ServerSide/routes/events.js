@@ -42,7 +42,7 @@ module.exports = function(app, models) {
     }
 
     let time = req.query.newerThan;
-        console.log(models);
+    
     if(time !== undefined && time.length > 0) {
       if(query.where === undefined) {
         query['where'] = { 'reported': { [$gt]: time } };
