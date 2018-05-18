@@ -18,9 +18,9 @@
     <h2>{{ ('Settings.' + mapEventInfo.category) | translate }} - {{ mapEventInfo.location }}</h2>
     <p>{{ parseTime(mapEventInfo.reported) }}, {{ distance(mapEventInfo.lat, mapEventInfo.long) }}</p>
     <p>{{mapEventInfo.description}}</p>
-    <button ion-button block (click)="shareEvent()">{{'Events.shareEvent' | translate}}</button>
+    <button ion-button (click)="shareEvent()">{{'Events.shareEvent' | translate}}</button>
     <p>
-    <button ion-button block (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button></p>
+    <button ion-button (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button></p>
   </div>
   <ion-fab right bottom>
     <button (click)="openReportPage()" ion-fab color="vibrant" mini>

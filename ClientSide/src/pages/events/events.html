@@ -22,8 +22,21 @@
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-        <button ion-button color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
-        <button ion-button color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
+
+        <ion-row>
+          <ion-col col-6>
+            <div>
+              <button ion-button color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
+            </div>
+          </ion-col>
+          <ion-col col-6>
+            <div>
+              <button ion-button color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
+        
+            </div>
+          </ion-col>
+        </ion-row>
+
       </div>
     </div>
   </ion-list>
