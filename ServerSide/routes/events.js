@@ -30,6 +30,8 @@ module.exports = function(app, models) {
   });
 
   app.get('/api/events', (req, res) => {
+    const $gt = models.Sequelize.Op.gt;
+
     let categories = req.query.categories;
     let query = { order: [['reported', 'DESC']] };
 
@@ -37,6 +39,16 @@ module.exports = function(app, models) {
       categories = categories.split(',');
       console.log(categories);
       query['where'] = { 'category': categories };
+    }
+
+    let time = req.query.newerThan;
+        console.log(models);
+    if(time !== undefined && time.length > 0) {
+      if(query.where === undefined) {
+        query['where'] = { 'reported': { [$gt]: time } };
+      } else {
+        query.where['reported'] = { [$gt]: time };
+      }
     }
 
     models.Event.findAll(query).then(events => {
