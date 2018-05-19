@@ -39,6 +39,10 @@ export class EventsPage {
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
+
+      setInterval(()=> {
+           this.refreshEvents();
+      }, 30000);
   }
 
   location: {
