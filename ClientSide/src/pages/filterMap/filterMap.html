@@ -30,7 +30,7 @@
                   </ion-col>
                   <ion-col col-4>
                     <ion-toggle [(ngModel)]="states[formatName('filter' + settingCategory.name + setting.eventType)]"
-                    (ionChange)="onFilterSettingValueChange(formatName('filter' + settingCategory.name + setting.eventType), setting.eventType)" (ngModelChange)="onFilterSettingValueChange(formatName('filter' + settingCategory.name + setting.eventType, settingCategory.name), setting.eventType)" color="secondary"></ion-toggle>
+                    (ionChange)="onFilterSettingValueChange(formatName('filter' + settingCategory.name + setting.eventType), setting.eventType, settingCategory.color)" (ngModelChange)="onFilterSettingValueChange(formatName('filter' + settingCategory.name + setting.eventType, settingCategory.name), setting.eventType, settingCategory.color)" color="secondary"></ion-toggle>
                   </ion-col>
                 </ion-row>
               </div>

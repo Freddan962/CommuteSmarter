@@ -197,27 +197,27 @@ export class SettingService {
     this.storage.set(setting, value);
   }
 
-  public setCurrentFilters(filter: string) : void {
+  public setCurrentFilters(filter: string, color: string) : void {
      this.storage.get('currentEventFilters').then( filters => {
       if(filters === undefined || filters === null) {
         let temp = [];
-        temp.push(filter);
+        temp.push(filter + '_' + color);
         this.storage.set('currentEventFilters', temp);
       } else  {
         let temp = filters;
-        temp.push(filter);
+        temp.push(filter  + '_' + color);
 
         this.storage.set('currentEventFilters', temp);
       }
     });
   }
 
-  public removeFilter(filter: string) : void {
+  public removeFilter(filter: string, color: string) : void {
      this.storage.get('currentEventFilters').then( filters => {
       if(filters !== undefined && filters !== null && filters.length > 0) {
 
         let temp = filters;
-        let index = temp.indexOf(filter);
+        let index = temp.indexOf(filter  + '_' + color);
         if (index > -1) {
           temp.splice(index, 1);
         }

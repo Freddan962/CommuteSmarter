@@ -32,6 +32,7 @@ module.exports = function(app, models) {
   app.get('/api/events', (req, res) => {
     const $gt = models.Sequelize.Op.gt;
     const $and = models.Sequelize.Op.and;
+    const $or = models.Sequelize.Op.or;
 
     let categories = req.query.categories;
     let query = { order: [['reported', 'DESC']] };
@@ -39,7 +40,28 @@ module.exports = function(app, models) {
     if(categories!== undefined && categories.length > 0) {
       categories = categories.split(',');
       console.log(categories);
-      query['where'] = { 'category': categories };
+
+      let filter = [];
+      let colors = [];
+
+      query['where'] = { [$or]: [] };
+
+      for(let i = 0; i < categories.length; i++) {
+        let current = categories[i];
+        let seperator = current.indexOf('_');
+
+        let category = current.slice(0, seperator);
+        console.log(category);
+        filter.push(category);
+
+
+        let color = current.slice(seperator+1, current.length);
+        console.log(color);
+        colors.push(color);
+
+        let obj = { [$and]: { 'category': category, 'color': color } };
+        query['where'][$or].push(obj);
+      }
     }
 
     let time = req.query.newerThan;
