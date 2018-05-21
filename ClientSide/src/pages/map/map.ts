@@ -460,9 +460,25 @@ drawPath(startPos, endPos, color, lineData) {
     confirm.present();
   }
 
+  /**
+   * Fetches the latest events by checking the date of the current latest
+   * event. The current latest event should reside on position zero of the array,
+   * since it is sorted with latest event first. To loop the new events were the
+   * fastest way of inserting them to the front of the obstacles array.
+   */
   fetchLatest() {
     this.latestFetch = new Date();
-    this.eventService.getLatest();
+
+    if(this.obstacles.length > 0 && this.obstacles[0] !== undefined) {
+      this.eventService.getLatest(
+        this.chosenCategories,
+        this.obstacles[0].reported,
+        latest => {
+          latest.forEach( event => {
+          this.obstacles.unshift(event);
+        });
+      });
+    }
   }
 
   sendSolved(item){
