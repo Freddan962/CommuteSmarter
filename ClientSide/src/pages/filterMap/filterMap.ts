@@ -25,10 +25,6 @@ export class filterMap {
 
   onFilterSettingValueChange(storageName, eventType, eventColor) {
     let state = this.states[storageName];
-    console.log(storageName);
-    console.log(state);
-    console.log(eventType);
-    console.log(eventColor);
 
     // first store to db for ui usage
     this.settingService.setSetting(storageName, state);
@@ -47,13 +43,13 @@ export class filterMap {
 
   getIconCategory(category, group){
     if(group == "Road Closed"){
-      return '../assets/imgs/' + category + '_red.png';
+      return './assets/imgs/' + category + '_red.png';
     }
     else if(group == "Limited passability"){
-      return '../assets/imgs/' + category + '_orange.png';
+      return './assets/imgs/' + category + '_orange.png';
     }
     else if(group == "Emergency Vehicles"){
-      return '../assets/imgs/' + category + '_blue.png';
+      return './assets/imgs/' + category + '_blue.png';
     }
   }
 }

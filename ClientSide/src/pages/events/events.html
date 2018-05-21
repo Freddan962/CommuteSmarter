@@ -17,9 +17,9 @@
   <ion-refresher (ionRefresh)="getDataFromServer($event)" (ionPull)="doPulling($event)">
     <ion-refresher-content
        pullingIcon="arrow-dropdown" 
-       pullingText="Pull to refresh" 
+       pullingText="{{'Events.pullRefresh' | translate}}">
        refreshingSpinner="circles" 
-       refreshingText="Hämtar nya events...">
+       refreshingText="{{'Events.fetching' | translate}}">
 
 </ion-refresher-content>
 </ion-refresher>
@@ -41,14 +41,14 @@
         <p>{{item.description}}</p>
         <ion-grid align-items-center>
           <ion-row>
-            <ion-col col-5>
+            <ion-col align-self-center>
               <div>
                 <button ion-button outline small class="event-buttons" color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
               </div>
             </ion-col>
-            <ion-col col-5>
+            <ion-col align-self-center>
               <div>
-                <button ion-button outline small round class="event-buttons" color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
+                <button ion-button outline small class="event-buttons" color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
               </div>
             </ion-col>
           </ion-row>
