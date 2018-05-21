@@ -175,7 +175,8 @@ export class EventsPage {
   }
 
   sendSolved(item){
-    this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
+    let response = this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
+    response.subscribe();
   }
 
   openFilterPage(){
