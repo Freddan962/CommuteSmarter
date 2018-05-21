@@ -67,10 +67,13 @@ export class MapPage {
   refreshEvents(perform) {
     this.settingService.getCurrentFilters( filters => {
       this.eventService.getEvents(filters, data => {
-        if (filters.length == 0)
-          return;
-
         this.chosenCategories = filters;
+        
+        if (this.chosenCategories.length == 0) {
+          this.clearFromMapsWithFilter();
+          return;
+        }
+
         this.obstacles = data;
         this.clearFromMapsWithFilter();
         
