@@ -68,14 +68,14 @@ export class MapPage {
     this.settingService.getCurrentFilters( filters => {
       this.eventService.getEvents(filters, data => {
         this.chosenCategories = filters;
-        
+
         if (this.chosenCategories.length == 0) {
-          this.clearFromMapsWithFilter();
+          this.filterOnMap();
           return;
         }
 
         this.obstacles = data;
-        this.clearFromMapsWithFilter();
+        this.filterOnMap();
         
         perform();
       });
@@ -94,26 +94,42 @@ export class MapPage {
 
   // Refresh the events and render events
   doRefreshEvents() {
-
-
     this.refreshEvents(() => {
       this.renderObstacles();
     });
   }
 
-  clearFromMapsWithFilter() : void {    
-    if (this.chosenCategories == undefined)
-      return;
+  filterOnMap() {
+    this.clearDrawablesFromMap(this.markerStore);
+    this.clearDrawablesFromMap(this.lineStore);
+  }
 
-    Object.keys(this.markerStore).forEach(category => {
-      if (this.chosenCategories.includes(category))
+  clearDrawablesFromMap(drawables) {
+    let categories = this.getCategoriesToRemove();
+
+    categories.forEach(category => {
+      if (drawables[category] == undefined)
         return;
 
-      for (let i = 0; i < this.markerStore[category].length; i++) {
-        this.markerStore[category][i].setMap(null);
-        this.markerStore[category].splice(i, 0);
+      for (let i = 0; i < drawables[category].length; i++) {
+        drawables[category][i].setMap(null);
+        drawables[category].splice(i, 0);
       }
-    });
+    })
+  }
+
+  getCategoriesToRemove() : string[] {
+    if (this.chosenCategories == undefined)
+      return null;
+
+    let categories = [];
+    Object.keys(this.markerStore).forEach(category => {
+      if (!this.chosenCategories.includes(category)) {
+        categories.push(category);
+      }
+    })
+
+    return categories;
   }
 
   /**
@@ -371,7 +387,7 @@ drawPath(startPos, endPos, color, lineData) {
         if (!this.lineStore.hasOwnProperty(storeKey))
           this.lineStore[storeKey] = [];    
 
-        this.lineStore[storeKey].push(polylines);
+        this.lineStore[storeKey].push(stepPolyline);
       }
     }
   }

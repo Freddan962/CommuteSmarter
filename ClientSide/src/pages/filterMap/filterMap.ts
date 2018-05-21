@@ -25,10 +25,6 @@ export class filterMap {
 
   onFilterSettingValueChange(storageName, eventType, eventColor) {
     let state = this.states[storageName];
-    console.log(storageName);
-    console.log(state);
-    console.log(eventType);
-    console.log(eventColor);
 
     // first store to db for ui usage
     this.settingService.setSetting(storageName, state);
