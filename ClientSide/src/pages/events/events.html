@@ -9,7 +9,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+  <ion-refresher (ionRefresh)="refreshEvents($event)" (ionPull)="doPulling($event)">
+    <ion-refresher-content>
+      
+    </ion-refresher-content>
+  </ion-refresher>
+
   <ion-list class="accordion-list" *ngIf="(items$ | async)">
     <div ion-item *ngFor="let item of items$ | async">
       <ion-avatar item-start>
@@ -24,20 +30,21 @@
 
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-
+        <ion-grid justify-content-center>
         <ion-row>
           <ion-col col-6>
             <div>
-              <button ion-button color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
+              <button ion-button outline small color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
             </div>
           </ion-col>
           <ion-col col-6>
             <div>
-              <button ion-button color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
+              <button ion-button outline small round color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
         
             </div>
           </ion-col>
         </ion-row>
+        </ion-grid>
 
       </div>
     </div>

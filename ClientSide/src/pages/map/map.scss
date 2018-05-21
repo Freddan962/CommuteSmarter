@@ -30,6 +30,18 @@ page-map {
     -webkit-animation: fadeOutDown 1s;
     animation: fadeOutDown 1s;
   }
+
+  #fadeAway{
+     -webkit-animation: fadeOutDown 1s;
+     animation: fadeOutDown 1s;
+  }
+  #reveal {
+    -webkit-animation: fadeInUp 1s;
+    animation: fadeInUp 1s;
+  }
+
+
+
   #handle-wrapper {
     position: absolute;
     left: 50%;
@@ -51,4 +63,12 @@ page-map {
     right: 10px;
     top: 10px;
   }
+
+
+  .eventImage {
+    width: 3em;
+    height: 3em;
+  }
+
 }
+

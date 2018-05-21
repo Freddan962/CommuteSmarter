@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Refresher } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
 import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
@@ -39,7 +39,10 @@ export class EventsPage {
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-      this.refreshEvents();
+
+    this.settingService.getCurrentFilters(filters => {
+      this.items$ = this.eventService.getEvents(this.chosenCategories);
+    });
   }
 
   location: {
@@ -47,7 +50,11 @@ export class EventsPage {
     longitude: number
   };
 
-  refreshEvents(){
+  doPulling(refresher: Refresher) {
+    console.log('DOPULLING', refresher.progress);
+  }
+
+  refreshEvents(refresher: Refresher){
     this.settingService.getCurrentFilters( filters => {
       console.log(filters)
       this.chosenCategories = filters;
@@ -55,6 +62,8 @@ export class EventsPage {
       this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
       console.log('Server responded with:')
       console.log(this.items$)
+      // return this.items$
+      refresher.complete();
    });
   }
 
