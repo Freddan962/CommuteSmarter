@@ -40,7 +40,7 @@ export class MapPage {
   latestFetch: Date;
   markerStore: any = [];
   lineStore: any = [];
- 
+
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -226,6 +226,7 @@ export class MapPage {
     this.cdRef.detectChanges();
   }
 
+  /**
   * shareEvent()
   *
   * Callback function for the shareEvent button on the event
@@ -384,7 +385,7 @@ drawPath(startPos, endPos, color, lineData) {
 
         let storeKey = lineData.category + "_" + lineData.color;
         if (!this.lineStore.hasOwnProperty(storeKey))
-          this.lineStore[storeKey] = [];    
+          this.lineStore[storeKey] = [];
 
         this.lineStore[storeKey].push(stepPolyline);
       }
