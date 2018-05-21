@@ -5,21 +5,24 @@
         <button ion-button icon-only (click)="openFilterPage()">
           <ion-icon name="reorder"></ion-icon>
         </button>
-        <button ion-button icon-only (click)="refreshEvents()">
-          <ion-icon name="refresh"></ion-icon>
-        </button>
+        <!-- <button ion-button icon-only (click)="refreshEvents()"> -->
+          <!-- <ion-icon name="refresh"></ion-icon> -->
+        <!-- </button> -->
       </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content>
-  <ion-refresher (ionRefresh)="refreshEvents($event)" (ionPull)="doPulling($event)">
-    <ion-refresher-content>
-      
-    </ion-refresher-content>
-  </ion-refresher>
+  <ion-refresher (ionRefresh)="getDataFromServer($event)" (ionPull)="doPulling($event)">
+    <ion-refresher-content
+       pullingIcon="arrow-dropdown" 
+       pullingText="Pull to refresh" 
+       refreshingSpinner="circles" 
+       refreshingText="Refreshing...">
 
+</ion-refresher-content>
+</ion-refresher>
   <ion-list class="accordion-list">
     <div ion-item *ngFor="let item of items$">
       <ion-avatar item-start>
@@ -31,28 +34,34 @@
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-up" item-start *ngIf="item.accordionOpen"></ion-icon>
       </div>
-
+  
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
         <ion-grid justify-content-center>
-        <ion-row>
-          <ion-col col-6>
-            <div>
-              <button ion-button outline small color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
-            </div>
-          </ion-col>
-          <ion-col col-6>
-            <div>
-              <button ion-button outline small round color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
-        
-            </div>
-          </ion-col>
-        </ion-row>
+          <ion-row>
+            <ion-col col-6>
+              <div>
+                <button ion-button outline small color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
+              </div>
+            </ion-col>
+            <ion-col col-6>
+              <div>
+                <button ion-button outline small round color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
+  
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-grid>
-
+  
       </div>
     </div>
   </ion-list>
+
+
+
+    
+
+
 
 
   <ion-fab right bottom>

@@ -24,7 +24,7 @@ declare const google;
 export class EventsPage {
   public items$: any;
   private chosenCategories: any;
-
+  private refresher: Refresher
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -43,8 +43,9 @@ export class EventsPage {
 
 
     setInterval(()=> {
-        this.getDataFromServer()
-    }, 30000);
+      this.refreshEvents(this.refresher)
+      // console.log("Refreshed!")
+    }, 10000);
   }
 
   location: {
@@ -54,34 +55,30 @@ export class EventsPage {
 
   doPulling(refresher: Refresher) {
     console.log('DOPULLING', refresher.progress);
+
   }
 
-  // refreshEvents(refresher: Refresher){
+  //triggered when page open
   ionViewWillEnter() {
-    this.getDataFromServer() 
+    this.refreshEvents(this.refresher)
    }
 
+
   refreshEvents(refresher: Refresher){
-    
-      this.getDataFromServer()
-      
-      refresher.complete();
+      this.getDataFromServer(refresher)    
   }
 
-  getDataFromServer(){
+  getDataFromServer(refresher){
     this.settingService.getCurrentFilters(filters => {
       console.log(filters)
       this.chosenCategories = filters;
-
-      // this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
-      // console.log('Server responded with:')
-      // console.log(this.items$)
-      // return this.items$
-      // refresher.complete();
+      
       this.eventService.getEvents(this.chosenCategories, data => {
         this.items$ = data;
         console.log('Server responded with:')
         console.log(this.items$)
+        if (refresher != 0 && refresher != undefined)
+          refresher.complete();
       }); //Fetches from the database
     });
   }
