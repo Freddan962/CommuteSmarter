@@ -42,6 +42,8 @@ export class MapPage {
   public eventImage: string;
 
 
+  markerStore: any = [];
+ 
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -77,10 +79,10 @@ export class MapPage {
         this.chosenCategories = filters;
 
         this.obstacles = data;
-        console.log(this.obstacles)
-
+        this.clearMarkersByCategory();
+        
         perform();
-      }); //Fetches from the database
+      });
    });
   }
 
@@ -98,6 +100,21 @@ export class MapPage {
   doRefreshEvents() {
     this.refreshEvents(() => {
       this.renderObstacles();
+    });
+  }
+
+  clearMarkersByCategory() : void {    
+    if (this.chosenCategories == undefined)
+      return;
+
+    Object.keys(this.markerStore).forEach(category => {
+      if (this.chosenCategories.includes(category))
+        return;
+
+      for (let i = 0; i < this.markerStore[category].length; i++) {
+        this.markerStore[category][i].setMap(null);
+        this.markerStore[category].splice(i, 0);
+      }
     });
   }
 
@@ -139,7 +156,7 @@ export class MapPage {
         }
 
         if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
-          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
+          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), (obstacle.category + '_' + obstacle.color), obstacle);
         }
         else {
           let start = new google.maps.LatLng(obstacle.lat, obstacle.long);
@@ -281,12 +298,19 @@ export class MapPage {
   * @memberof MapPage
   */
   addInfoMarker(markerImage, position, data) {
+    let storeKey = data.category + "_" + data.color;
+    if (!this.markerStore.hasOwnProperty(storeKey))
+      this.markerStore[storeKey] = [];    
+
     let marker = this.addMarker(markerImage, position);
+    this.markerStore.push(marker);
     marker.data = data;
 
     marker.addListener('click', () => {
       this.openMapEventInfo(marker.data);
     });
+
+    this.markerStore[storeKey].push(marker);    
   }
 
 /**
