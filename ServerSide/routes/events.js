@@ -30,13 +30,61 @@ module.exports = function(app, models) {
   });
 
   app.get('/api/events', (req, res) => {
+    const $gt = models.Sequelize.Op.gt;
+    const $and = models.Sequelize.Op.and;
+    const $or = models.Sequelize.Op.or;
+
     let categories = req.query.categories;
     let query = { order: [['reported', 'DESC']] };
 
     if(categories!== undefined && categories.length > 0) {
       categories = categories.split(',');
       console.log(categories);
-      query['where'] = { 'category': categories };
+
+      let filter = [];
+      let colors = [];
+
+      query['where'] = { [$or]: [] };
+
+      for(let i = 0; i < categories.length; i++) {
+        let current = categories[i];
+        let seperator = current.indexOf('_');
+
+        let category = current.slice(0, seperator);
+        console.log(category);
+        filter.push(category);
+
+
+        let color = current.slice(seperator+1, current.length);
+        console.log(color);
+        colors.push(color);
+
+        let obj = { [$and]: { 'category': category, 'color': color } };
+        query['where'][$or].push(obj);
+      }
+    }
+
+    let time = req.query.newerThan;
+
+    if(time !== undefined && time.length > 0) {
+      if(query.where === undefined) {
+        query['where'] = { 'reported': { [$gt]: time } };
+      } else {
+        query.where['reported'] = { [$gt]: time };
+      }
+    }
+
+    let latitude = req.query.lat;
+    let longitude = req.query.long;
+
+    if(latitude !== undefined && latitude.length > 0 &&
+      longitude !== undefined && longitude.length > 0) {
+      if(query.where === undefined) {
+        query['where'] = { 'long': parseFloat(longitude), 'lat': parseFloat(latitude) };
+      } else {
+        query.where['long'] = parseFloat(longitude);
+        query.where['lat'] = parseFloat(latitude);
+      }
     }
 
     models.Event.findAll(query).then(events => {

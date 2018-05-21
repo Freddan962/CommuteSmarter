@@ -1,13 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './httpService';
+import { SettingService } from './settingService';
 
 @Injectable()
 export class EventService {
 
-  constructor(private httpService:HttpService)
+  private events: any;
+  private currentFilter: any;
+
+  constructor(
+    private httpService:HttpService,
+    private settings:SettingService
+  )
   {}
 
-  getEvents(categories) {
-    return this.httpService.getDataFromServer('events?categories='+categories);
+  getEvents(categories, perform) {
+    this.httpService.getDataFromServer('events?categories='+categories).subscribe(data => {
+      console.log(data);
+      this.events = data;
+
+      perform(data);
+    });
   }
 }
