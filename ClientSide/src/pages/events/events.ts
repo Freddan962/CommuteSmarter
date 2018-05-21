@@ -164,4 +164,9 @@ export class EventsPage {
   openFilterPage(){
     this.navCtrl.push(filterMap);
   }
+
+  getIconCategory(item){
+    console.log('../assets/imgs/' + item.category + '_' + item.color + '.png');
+    return '../assets/imgs/' + item.category + '_' + item.color + '.png';
+  }
 }
