@@ -1,3 +1,5 @@
+import { MapCategoryHelper } from './../../classes/MapCategoryHelper';
+import { DrawableFactory } from './../../classes/DrawableFactory';
 import { SettingService } from './../../app/services/settingService';
 import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -13,6 +15,7 @@ import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import { MapProcessor } from '../../classes/MapProcessor';
 
 declare var google;
 var locationMarker;
@@ -37,8 +40,9 @@ export class MapPage {
   obstacles: any;
   currentPosition: any;
   chosenCategories: any;
-  markerStore: any = [];
-  lineStore: any = [];
+
+  processor: MapProcessor = new MapProcessor();
+  drawableFactory: DrawableFactory = new DrawableFactory(this);
  
   constructor(
     public navCtrl: NavController,
@@ -75,6 +79,7 @@ export class MapPage {
         }
 
         this.obstacles = data;
+        this.processor.loadEventsIntoQueue(data);
         this.filterOnMap();
         
         perform();
@@ -100,12 +105,13 @@ export class MapPage {
   }
 
   filterOnMap() {
-    this.clearDrawablesFromMap(this.markerStore);
-    this.clearDrawablesFromMap(this.lineStore);
+    //this.clearDrawablesFromMap(this.markerStore);
+    //this.clearDrawablesFromMap(this.lineStore);
   }
 
   clearDrawablesFromMap(drawables) {
-    let categories = this.getCategoriesToRemove();
+    let helper = new MapCategoryHelper();
+    let categories = helper.getCategoriesToRemove(this.chosenCategories, this.drawableFactory.getMarkerStore());
 
     categories.forEach(category => {
       if (drawables[category] == undefined)
@@ -116,20 +122,6 @@ export class MapPage {
         drawables[category].splice(i, 0);
       }
     })
-  }
-
-  getCategoriesToRemove() : string[] {
-    if (this.chosenCategories == undefined)
-      return null;
-
-    let categories = [];
-    Object.keys(this.markerStore).forEach(category => {
-      if (!this.chosenCategories.includes(category)) {
-        categories.push(category);
-      }
-    })
-
-    return categories;
   }
 
   /**
@@ -157,17 +149,13 @@ export class MapPage {
   /**
    * renderObstacles()
    *
-   * Handles and renders obstacles on the map.
+   * Renders obstacles on the map.
    *
    * @memberof MapPage
    */
   renderObstacles() {
     this.obstacles.forEach(obstacle => {
         let type = obstacle.type;
-
-        if(type === undefined) {
-          type = '';
-        }
 
         if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
           this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), (obstacle.category + '_' + obstacle.color), obstacle);
@@ -202,7 +190,7 @@ export class MapPage {
         this.currentPosition = latLng;
 
         if(locationMarker == null) {
-          locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+          //locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
         }
         locationMarker.setPosition(latLng);
         locationMarker.setZIndex(100);
@@ -260,58 +248,7 @@ export class MapPage {
     }, 1000);
   }
 
-  /**
-   * addMarker()
-   *
-   * Adds a marker to the map.
-   *
-   * @param {any} markerImage The image of the marker.
-   * @param {any} position The position of the marker.
-   * @returns
-   * @memberof MapPage
-   */
-  addMarker(markerImage, position) {
-    let marker = new google.maps.Marker({
-      map: this.map,
-      icon:
-      new google.maps.MarkerImage(
-        markerImage,
-        null, /* size is determined at runtime */
-        null, /* origin is 0,0 */
-        null, /* anchor is bottom center of the scaled image */
-        new google.maps.Size(25, 25) /* marker size */
-      ),
-      position: position
-    });
 
-    return marker;
-  }
-
-  /**
-  * addInfoMarker()
-  *
-  * Adds a info markeron the map.
-  *
-  * @param {any} markerImage The image to be displayed.
-  * @param {any} position The position of the marker.
-  * @param {any} data
-  * @memberof MapPage
-  */
-  addInfoMarker(markerImage, position, data) {
-    let storeKey = data.category + "_" + data.color;
-    if (!this.markerStore.hasOwnProperty(storeKey))
-      this.markerStore[storeKey] = [];    
-
-    let marker = this.addMarker(markerImage, position);
-    this.markerStore.push(marker);
-    marker.data = data;
-
-    marker.addListener('click', () => {
-      this.openMapEventInfo(marker.data);
-    });
-
-    this.markerStore[storeKey].push(marker);    
-  }
 
 /**
  * drawPath()
@@ -384,10 +321,10 @@ drawPath(startPos, endPos, color, lineData) {
         })
 
         let storeKey = lineData.category + "_" + lineData.color;
-        if (!this.lineStore.hasOwnProperty(storeKey))
+       /* if (!this.lineStore.hasOwnProperty(storeKey))
           this.lineStore[storeKey] = [];    
 
-        this.lineStore[storeKey].push(stepPolyline);
+        this.lineStore[storeKey].push(stepPolyline);*/
       }
     }
   }
@@ -403,8 +340,8 @@ drawPath(startPos, endPos, color, lineData) {
    * @memberof MapPage
    */
   drawIcon(pos, color, data) {
-    this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
-  1}
+    //this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
+  }
 
   /**
    * Used to display a prettified reported time.
