@@ -182,7 +182,10 @@ export class EventsPage {
   }
 
   getIconCategory(item){
+<<<<<<< HEAD
     // console.log('../assets/imgs/' + item.category + '_' + item.color + '.png');
+=======
+>>>>>>> a0b557b305b0c11787dfdb0e28a16fdff998eaa2
     return '../assets/imgs/' + item.category + '_' + item.color + '.png';
   }
 }
