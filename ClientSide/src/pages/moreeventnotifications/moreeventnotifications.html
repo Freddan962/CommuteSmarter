@@ -57,7 +57,7 @@
                     <ion-toggle [(ngModel)]="states[formatName('notifications' + category.eventType + setting.eventType)]"
                      (ionChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType))" 
                      (ngModelChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType))" 
-                     [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary"></ion-toggle>
+                     [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary" class="ios-toggle"></ion-toggle>
                   </ion-col>
                 </ion-row>
               </div>

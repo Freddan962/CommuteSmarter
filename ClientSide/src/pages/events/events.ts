@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Refresher } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
 import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
@@ -8,7 +8,7 @@ import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Observable } from "rxjs/Rx"
+// import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { SettingService } from '../../app/services/settingService';
 import { filterMap } from '../filterMap/filterMap';
@@ -24,7 +24,7 @@ declare const google;
 export class EventsPage {
   public items$: any;
   private chosenCategories: any;
-
+  private refresher: Refresher
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -40,9 +40,12 @@ export class EventsPage {
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
 
-      setInterval(()=> {
-           this.refreshEvents();
-      }, 30000);
+
+
+    // setInterval(()=> {
+    //   this.refreshEvents(this.refresher)
+    //   // console.log("Refreshed!")
+    // }, 10000);
   }
 
   location: {
@@ -50,25 +53,39 @@ export class EventsPage {
     longitude: number
   };
 
-  ionViewWillEnter() {
-    this.refreshEvents();
+  doPulling(refresher: Refresher) {
+    console.log('DOPULLING', refresher.progress);
+
   }
 
-  refreshEvents(){
-    this.settingService.getCurrentFilters( filters => {
+  //triggered when page open
+  ionViewWillEnter() {
+    this.refreshEvents(this.refresher)
+   }
+
+
+  refreshEvents(refresher: Refresher){
+      this.getDataFromServer(refresher)    
+  }
+
+  getDataFromServer(refresher){
+    this.settingService.getCurrentFilters(filters => {
       console.log(filters)
       this.chosenCategories = filters;
-
+      
       this.eventService.getEvents(this.chosenCategories, data => {
         this.items$ = data;
         console.log('Server responded with:')
         console.log(this.items$)
+        if (refresher != 0 && refresher != undefined)
+          refresher.complete();
       }); //Fetches from the database
-   });
+    });
   }
 
+  //Attempt to catch ExpressionChangedAfterItHasBeenChecked
   parseTime(time) {
-    return moment(time).fromNow();
+    return moment(time).fromNow() != null ? moment(time).fromNow() : ".. ago"
   }
 
   findUserLocation(){
