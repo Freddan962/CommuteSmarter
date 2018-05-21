@@ -26,21 +26,21 @@
     <img [src]="DomSanitizer.bypassSecurityTrustUrl(mapEventInfo.image)" class="eventImage" *ngIf="mapEventInfo.image" />
     <ion-grid>
     <ion-row justify-content-center>
-      <ion-col class="event-buttons">
-        <span>
-          <button ion-button outline  small (click)="shareEvent()">{{'Events.shareEvent' | translate}}</button>
-        </span>
+      <ion-col align-self-center>
+        <div>
+          <button ion-button outline small (click)="shareEvent()">{{'Events.shareEvent' | translate}}</button>
+        </div>
       </ion-col>
-      <ion-col >
-        <span>
-          <button ion-button outline small round (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button>
-        </span>
+      <ion-col align-self-center>
+        <div>
+          <button ion-button outline small (click)="markAsFinished(mapEventInfo)">{{'Events.reportFinished' | translate}}</button>
+        </div>
       </ion-col>
     </ion-row>
     </ion-grid>
   </div>
   <ion-fab right bottom >
-    <button *ngIf="!displayMapEventCard" id="{{FABdisabled()}}" (click)="openReportPage()" ion-fab color="vibrant" mini>
+    <button *ngIf="!displayMapEventCard"  (click)="openReportPage()" ion-fab color="vibrant" mini>
       <ion-icon name="add"></ion-icon>
     </button>
   </ion-fab>
