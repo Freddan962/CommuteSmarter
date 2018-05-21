@@ -462,7 +462,7 @@ drawPath(startPos, endPos, color, lineData) {
 
   sendSolved(item){
     let response = this.http.sendDataToServer('events/' + item.id + '/mark-as-solved', {});
-    console.log(response.subscribe());
+    response.subscribe();
   }
 
   openReportPage() {
