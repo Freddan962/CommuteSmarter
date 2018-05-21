@@ -5,9 +5,6 @@ import { SettingService } from './settingService';
 @Injectable()
 export class EventService {
 
-  private events: any;
-  private currentFilter: any;
-
   constructor(
     private httpService:HttpService,
     private settings:SettingService
@@ -16,9 +13,6 @@ export class EventService {
 
   getEvents(categories, perform) {
     this.httpService.getDataFromServer('events?categories='+categories).subscribe(data => {
-      console.log(data);
-      this.events = data;
-
       perform(data);
     });
   }

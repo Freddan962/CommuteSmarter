@@ -13,8 +13,6 @@ import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { EventsReportPage } from '../eventsreport/eventsreport';
-import { DomSanitizer } from '@angular/platform-browser';
-
 
 declare var google;
 var locationMarker;
@@ -30,7 +28,7 @@ export class MapPage {
   // Target the dom element
   @ViewChild('map') mapElement: ElementRef;
   navController: NavController;
-  private hideFAB: boolean;
+
   map: any;
   displayMapEventCard: boolean;
   animateEventCard: string;
@@ -39,10 +37,8 @@ export class MapPage {
   obstacles: any;
   currentPosition: any;
   chosenCategories: any;
-  public eventImage: string;
-
-
   markerStore: any = [];
+  lineStore: any = [];
  
   constructor(
     public navCtrl: NavController,
@@ -54,16 +50,12 @@ export class MapPage {
     private alertCtrl: AlertController,
     private http: HttpService,
     private twitter: LoginWithTwitterService,
-    private settingService: SettingService,
-    private DomSanitizer: DomSanitizer
+    private settingService: SettingService
   ) {
     moment.locale(this.translate.currentLang);
 
     this.displayMapEventCard = false;
     this.animateEventCard = 'reveal';
-    this.hideFAB = false;
-
-    this.eventImage = 'data:image/gif;base64,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'
 
     this.colors = {
       'orange': '#ffa500',
@@ -75,11 +67,15 @@ export class MapPage {
   refreshEvents(perform) {
     this.settingService.getCurrentFilters( filters => {
       this.eventService.getEvents(filters, data => {
-        console.log(filters)
         this.chosenCategories = filters;
 
+        if (this.chosenCategories.length == 0) {
+          this.filterOnMap();
+          return;
+        }
+
         this.obstacles = data;
-        this.clearMarkersByCategory();
+        this.filterOnMap();
         
         perform();
       });
@@ -103,19 +99,37 @@ export class MapPage {
     });
   }
 
-  clearMarkersByCategory() : void {    
-    if (this.chosenCategories == undefined)
-      return;
+  filterOnMap() {
+    this.clearDrawablesFromMap(this.markerStore);
+    this.clearDrawablesFromMap(this.lineStore);
+  }
 
-    Object.keys(this.markerStore).forEach(category => {
-      if (this.chosenCategories.includes(category))
+  clearDrawablesFromMap(drawables) {
+    let categories = this.getCategoriesToRemove();
+
+    categories.forEach(category => {
+      if (drawables[category] == undefined)
         return;
 
-      for (let i = 0; i < this.markerStore[category].length; i++) {
-        this.markerStore[category][i].setMap(null);
-        this.markerStore[category].splice(i, 0);
+      for (let i = 0; i < drawables[category].length; i++) {
+        drawables[category][i].setMap(null);
+        drawables[category].splice(i, 0);
       }
-    });
+    })
+  }
+
+  getCategoriesToRemove() : string[] {
+    if (this.chosenCategories == undefined)
+      return null;
+
+    let categories = [];
+    Object.keys(this.markerStore).forEach(category => {
+      if (!this.chosenCategories.includes(category)) {
+        categories.push(category);
+      }
+    })
+
+    return categories;
   }
 
   /**
@@ -206,25 +220,12 @@ export class MapPage {
    * @memberof MapPage
    */
   openMapEventInfo(data) {
-    // this.FABdisabled()
-    this.hideFAB = !this.hideFAB
     this.mapEventInfo = data;
     this.displayMapEventCard = true;
     this.cdRef.detectChanges();
   }
 
 
-  /**
-  * FABdisabled()
-  *
-  * Changes animation of report-page Floating Action Button when it enables/disables 
-  *
-  * @memberof MapPage
-  * @returns String
-  */
-  FABdisabled(){
-    return (this.hideFAB == false) ? 'reveal' : 'fadeAway'
-  }
   /**
   * shareEvent()
   *
@@ -248,7 +249,6 @@ export class MapPage {
    * @memberof MapPage
    */
   closeMapEventInfo() {
-    this.hideFAB = !this.hideFAB
     this.animateEventCard = 'fadeAway';
     this.cdRef.detectChanges();
 
@@ -382,6 +382,12 @@ drawPath(startPos, endPos, color, lineData) {
         google.maps.event.addListener(stepPolyline, 'click', (evt) => {
           this.openMapEventInfo(lineData);
         })
+
+        let storeKey = lineData.category + "_" + lineData.color;
+        if (!this.lineStore.hasOwnProperty(storeKey))
+          this.lineStore[storeKey] = [];    
+
+        this.lineStore[storeKey].push(stepPolyline);
       }
     }
   }
@@ -398,7 +404,7 @@ drawPath(startPos, endPos, color, lineData) {
    */
   drawIcon(pos, color, data) {
     this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
-  }
+  1}
 
   /**
    * Used to display a prettified reported time.
