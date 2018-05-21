@@ -23,19 +23,21 @@ export class filterMap {
     this.states = settingService.getStates();
   }
 
-  onFilterSettingValueChange(storageName, eventType) {
+  onFilterSettingValueChange(storageName, eventType, eventColor) {
     let state = this.states[storageName];
     console.log(storageName);
     console.log(state);
+    console.log(eventType);
+    console.log(eventColor);
 
     // first store to db for ui usage
     this.settingService.setSetting(storageName, state);
 
     // then store to db in correct format for direct usage in api
     if(state) {
-      this.settingService.setCurrentFilters(eventType);
+      this.settingService.setCurrentFilters(eventType, eventColor);
     } else {
-      this.settingService.removeFilter(eventType);
+      this.settingService.removeFilter(eventType, eventColor);
     }
   }
 

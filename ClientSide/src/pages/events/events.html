@@ -5,9 +5,13 @@
         <button ion-button icon-only (click)="openFilterPage()">
           <ion-icon name="reorder"></ion-icon>
         </button>
+        <button ion-button icon-only (click)="refreshEvents()">
+          <ion-icon name="refresh"></ion-icon>
+        </button>
       </ion-buttons>
   </ion-navbar>
 </ion-header>
+
 
 <ion-content>
   <ion-refresher (ionRefresh)="refreshEvents($event)" (ionPull)="doPulling($event)">
@@ -16,8 +20,8 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-list class="accordion-list" *ngIf="(items$ | async)">
-    <div ion-item *ngFor="let item of items$ | async">
+  <ion-list class="accordion-list">
+    <div ion-item *ngFor="let item of items$">
       <ion-avatar item-start>
         <span [ngClass]="'dot-' + item.color"></span>
       </ion-avatar>

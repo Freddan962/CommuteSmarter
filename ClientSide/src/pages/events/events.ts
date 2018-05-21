@@ -8,7 +8,7 @@ import moment from 'moment';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { SocialSharing } from '@ionic-native/social-sharing';
-import { Observable } from "rxjs/Rx"
+// import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { SettingService } from '../../app/services/settingService';
 import { filterMap } from '../filterMap/filterMap';
@@ -22,7 +22,7 @@ declare const google;
 })
 
 export class EventsPage {
-  public items$: Observable<any>;
+  public items$: any;
   private chosenCategories: any;
 
   constructor(
@@ -40,9 +40,11 @@ export class EventsPage {
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
 
-    this.settingService.getCurrentFilters(filters => {
-      this.items$ = this.eventService.getEvents(this.chosenCategories);
-    });
+
+
+    setInterval(()=> {
+        this.getDataFromServer()
+    }, 30000);
   }
 
   location: {
@@ -54,17 +56,34 @@ export class EventsPage {
     console.log('DOPULLING', refresher.progress);
   }
 
+  // refreshEvents(refresher: Refresher){
+  ionViewWillEnter() {
+    this.getDataFromServer() 
+   }
+
   refreshEvents(refresher: Refresher){
-    this.settingService.getCurrentFilters( filters => {
+    
+      this.getDataFromServer()
+      
+      refresher.complete();
+  }
+
+  getDataFromServer(){
+    this.settingService.getCurrentFilters(filters => {
       console.log(filters)
       this.chosenCategories = filters;
 
-      this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
-      console.log('Server responded with:')
-      console.log(this.items$)
+      // this.items$ = this.eventService.getEvents(this.chosenCategories); //Fetches from the database
+      // console.log('Server responded with:')
+      // console.log(this.items$)
       // return this.items$
-      refresher.complete();
-   });
+      // refresher.complete();
+      this.eventService.getEvents(this.chosenCategories, data => {
+        this.items$ = data;
+        console.log('Server responded with:')
+        console.log(this.items$)
+      }); //Fetches from the database
+    });
   }
 
   parseTime(time) {
