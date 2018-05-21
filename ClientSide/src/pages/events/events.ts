@@ -183,6 +183,6 @@ export class EventsPage {
   }
 
   getIconCategory(item){
-    return '../assets/imgs/' + item.category + '_' + item.color + '.png';
+    return './assets/imgs/' + item.category + '_' + item.color + '.png';
   }
 }
