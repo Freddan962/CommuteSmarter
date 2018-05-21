@@ -42,10 +42,10 @@ export class EventsPage {
 
 
 
-    setInterval(()=> {
-      this.refreshEvents(this.refresher)
-      // console.log("Refreshed!")
-    }, 10000);
+    // setInterval(()=> {
+    //   this.refreshEvents(this.refresher)
+    //   // console.log("Refreshed!")
+    // }, 10000);
   }
 
   location: {
@@ -84,7 +84,7 @@ export class EventsPage {
   }
 
   parseTime(time) {
-    return moment(time).fromNow();
+    return moment(time).fromNow() != null ? moment(time).fromNow() : ".. ago"
   }
 
   findUserLocation(){
@@ -182,7 +182,7 @@ export class EventsPage {
   }
 
   getIconCategory(item){
-    console.log('../assets/imgs/' + item.category + '_' + item.color + '.png');
+    // console.log('../assets/imgs/' + item.category + '_' + item.color + '.png');
     return '../assets/imgs/' + item.category + '_' + item.color + '.png';
   }
 }

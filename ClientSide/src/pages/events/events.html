@@ -19,7 +19,7 @@
        pullingIcon="arrow-dropdown" 
        pullingText="Pull to refresh" 
        refreshingSpinner="circles" 
-       refreshingText="Refreshing...">
+       refreshingText="Hämtar nya events...">
 
 </ion-refresher-content>
 </ion-refresher>
@@ -31,7 +31,7 @@
 
         </span>
       </ion-avatar>
-      <div (click)="itemSelected(item)">
+      <div (click)="itemSelected(item)" class="event-item">
         {{ ('Settings.' + item.category) | translate }} - {{ item.location }}
         <p>{{ parseTime(item.reported) }}, {{ distance(item.lat, item.long) }}</p>
         <ion-icon class="right-accordion-arrow" name="ios-arrow-down" item-start *ngIf="!item.accordionOpen"></ion-icon>
@@ -40,17 +40,16 @@
   
       <div class="accordion-content" *ngIf="item.accordionOpen">
         <p>{{item.description}}</p>
-        <ion-grid justify-content-center>
+        <ion-grid align-items-center>
           <ion-row>
-            <ion-col col-6>
+            <ion-col col-5>
               <div>
-                <button ion-button outline small color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
+                <button ion-button outline small class="event-buttons" color=default (click)="shareEvent(item)">{{'Events.shareEvent' | translate}}</button>
               </div>
             </ion-col>
-            <ion-col col-6>
+            <ion-col col-5>
               <div>
-                <button ion-button outline small round color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
-  
+                <button ion-button outline small round class="event-buttons" color=default (click)="markAsFinished(item)">{{'Events.reportFinished' | translate}}</button>
               </div>
             </ion-col>
           </ion-row>

@@ -22,7 +22,22 @@ page-events {
     .dot-blue {
         background-color: blue;
     }
-}
+
 .alert-message {
     overflow-y: auto;
+}
+
+.event-item{
+    overflow: scroll;
+    margin-right: 10%
+}
+
+
+.event-buttons{
+    width: 100%;
+    margin-right: 1em;
+}
+
+
+
 }
