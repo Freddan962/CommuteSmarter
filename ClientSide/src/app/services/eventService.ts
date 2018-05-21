@@ -22,4 +22,13 @@ export class EventService {
       perform(data);
     });
   }
+
+  getLatest(previous, latest) {
+    this.httpService.getDataFromServer('events?categories='+categories).subscribe(data => {
+      console.log(data);
+      this.events = data;
+
+      perform(data);
+    });
+  }
 }

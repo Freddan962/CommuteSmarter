@@ -40,10 +40,10 @@ export class MapPage {
   currentPosition: any;
   chosenCategories: any;
   public eventImage: string;
-
+  latestFetch: Date;
 
   markerStore: any = [];
- 
+
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -80,7 +80,7 @@ export class MapPage {
 
         this.obstacles = data;
         this.clearMarkersByCategory();
-        
+
         perform();
       });
    });
@@ -103,7 +103,7 @@ export class MapPage {
     });
   }
 
-  clearMarkersByCategory() : void {    
+  clearMarkersByCategory() : void {
     if (this.chosenCategories == undefined)
       return;
 
@@ -217,7 +217,7 @@ export class MapPage {
   /**
   * FABdisabled()
   *
-  * Changes animation of report-page Floating Action Button when it enables/disables 
+  * Changes animation of report-page Floating Action Button when it enables/disables
   *
   * @memberof MapPage
   * @returns String
@@ -300,7 +300,7 @@ export class MapPage {
   addInfoMarker(markerImage, position, data) {
     let storeKey = data.category + "_" + data.color;
     if (!this.markerStore.hasOwnProperty(storeKey))
-      this.markerStore[storeKey] = [];    
+      this.markerStore[storeKey] = [];
 
     let marker = this.addMarker(markerImage, position);
     this.markerStore.push(marker);
@@ -310,7 +310,7 @@ export class MapPage {
       this.openMapEventInfo(marker.data);
     });
 
-    this.markerStore[storeKey].push(marker);    
+    this.markerStore[storeKey].push(marker);
   }
 
 /**
@@ -458,6 +458,11 @@ drawPath(startPos, endPos, color, lineData) {
     });
 
     confirm.present();
+  }
+
+  fetchLatest() {
+    this.latestFetch = new Date();
+    this.eventService.getLatest();
   }
 
   sendSolved(item){
