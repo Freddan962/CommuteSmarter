@@ -31,4 +31,13 @@ export class EventService {
       perform(data);
     });
   }
+
+  getEventById(id, perform) {
+    this.httpService.getDataFromServer('events/' + id).subscribe(data => {
+      console.log(data);
+      this.events = data;
+
+      perform(data);
+    });
+  }
 }
