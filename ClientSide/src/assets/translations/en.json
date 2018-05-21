@@ -31,7 +31,8 @@
     "reportIncident": "Report incident",
     "shareEvent": "Share this event",
     "reportFinished": "Mark as solved",
-    "refresh": "Refresh"
+    "refresh": "Refresh",
+    "fetching": "Updating events..."
   },
   "EventsReport": {
     "title": "Report Incident",

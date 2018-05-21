@@ -31,7 +31,8 @@
     "reportIncident": "Rapportera händelse",
     "shareEvent": "Dela händelse",
     "reportFinished": "Markera som  löst",
-    "refresh": "Uppdatera"
+    "refresh": "Uppdatera",
+    "fetching": "Uppdaterar händelser..."
   },
   "EventsReport": {
     "title": "Rapportera händelse",
