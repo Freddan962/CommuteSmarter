@@ -131,7 +131,7 @@ export class MapPage {
         }
 
         if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
-          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), obstacle.color, obstacle);
+          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), (obstacle.category + '_' + obstacle.color), obstacle);
         }
         else {
           let start = new google.maps.LatLng(obstacle.lat, obstacle.long);
