@@ -125,4 +125,16 @@ export class MoreeventnotificationsPage {
   public formatName(name: string) : string {
     return this.settingService.formatName(name);
   }
+
+  getIconCategory(category, group){
+    if(group == "Road Closed"){
+      return '../assets/imgs/' + category + '_red.png';
+    }
+    else if(group == "Limited passability"){
+      return '../assets/imgs/' + category + '_orange.png';
+    }
+    else if(group == "Emergency Vehicles"){
+      return '../assets/imgs/' + category + '_blue.png';
+    }
+  }
 }
