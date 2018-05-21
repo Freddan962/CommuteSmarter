@@ -16,7 +16,10 @@
   <ion-list class="accordion-list">
     <div ion-item *ngFor="let item of items$">
       <ion-avatar item-start>
-        <span [ngClass]="'dot-' + item.color"></span>
+        <span>
+            <img [src]="getIconCategory(item)" class="event-icon" />
+
+        </span>
       </ion-avatar>
       <div (click)="itemSelected(item)">
         {{ ('Settings.' + item.category) | translate }} - {{ item.location }}
