@@ -157,23 +157,20 @@ export class MapPage {
    * @memberof MapPage
    */
   centerMapToLocation() {
-    /*this.geolocation.getCurrentPosition().then
+    this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
-        this.map.setCenter(latLng);
 
-        // save current location to a class var
         this.currentPosition = latLng;
 
         if(locationMarker == null) {
-          //locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+          locationMarker = this.processor.drawableFactory.createMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.currentPosition);
         }
-        locationMarker.setPosition(latLng);
         locationMarker.setZIndex(100);
       }, (err) => {
         console.log(err);
-      });*/
+      });
 	}
 
   /**

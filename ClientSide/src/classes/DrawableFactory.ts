@@ -9,8 +9,8 @@ export class DrawableFactory {
 
   constructor(public mapPage: MapPage) { }
 
-  public createMarker(position: any, color: any, data: any) : void {
-    this.createInfoMarker('./assets/imgs/' + color + '.png', position, data);
+  public createMarker(image: any, position: any) : void {
+    return this.addMarker(image, position);
   }
 
   public createEventInfoMarker(event: any) : void {
@@ -86,7 +86,7 @@ export class DrawableFactory {
    * @returns
    * @memberof MapPage
    */
-  private addMarker(markerImage, position) {
+  private addMarker(markerImage, position) : any {
     let marker = new google.maps.Marker({
       map: this.mapPage.map,
       icon:

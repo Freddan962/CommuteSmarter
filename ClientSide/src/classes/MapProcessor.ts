@@ -9,8 +9,8 @@ export class MapProcessor {
 
 
   //CONFIGURATION OPTIONS
-  private tickInterval: number = 1000;
-  private eventsPerTick: number = 10;
+  private tickInterval: number = 100;
+  private eventsPerTick: number = 1;
 
   public constructor(private mapPage: MapPage) {
     this.start();
@@ -53,8 +53,8 @@ export class MapProcessor {
   private prepareDrawable(event: any) : void {
     if (this.isMarker(event)) 
       this.drawableFactory.createEventInfoMarker(event);
-    //else
-      //this.drawableFactory.createPath(event);
+    else
+      this.drawableFactory.createPath(event);
   }
 
   private isMarker(event: any) : boolean {
