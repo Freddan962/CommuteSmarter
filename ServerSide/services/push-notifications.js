@@ -35,3 +35,5 @@ let pushMethods = {
     });
   }
 }
+
+module.exports = pushMethods;
