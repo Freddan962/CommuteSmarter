@@ -1,3 +1,5 @@
+import { MapCategoryHelper } from './../../classes/MapCategoryHelper';
+import { DrawableFactory } from './../../classes/DrawableFactory';
 import { SettingService } from './../../app/services/settingService';
 import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -13,6 +15,7 @@ import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { EventsReportPage } from '../eventsreport/eventsreport';
+import { MapProcessor } from '../../classes/MapProcessor';
 
 declare var google;
 var locationMarker;
@@ -37,9 +40,9 @@ export class MapPage {
   obstacles: any;
   currentPosition: any;
   chosenCategories: any;
+
+  processor: MapProcessor = new MapProcessor(this);
   latestFetch: Date;
-  markerStore: any = [];
-  lineStore: any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -65,7 +68,7 @@ export class MapPage {
     }
   }
 
-  refreshEvents(perform) {
+  refreshEvents() {
     this.settingService.getCurrentFilters( filters => {
       this.eventService.getEvents(filters, data => {
         this.chosenCategories = filters;
@@ -76,9 +79,8 @@ export class MapPage {
         }
 
         this.obstacles = data;
+        this.processor.loadEventsIntoQueue(data);
         this.filterOnMap();
-
-        perform();
       });
    });
   }
@@ -86,51 +88,41 @@ export class MapPage {
   // Runs only once and is cached
   ionViewDidLoad() {
     this.loadMap();
+    this.refreshEvents();
   }
 
-  // Runs on every view enter
   ionViewWillEnter() {
-    this.doRefreshEvents();
-  }
-
-  // Refresh the events and render events
-  doRefreshEvents() {
-    this.refreshEvents(() => {
-      this.renderObstacles();
+    this.settingService.getCurrentFilters(filters => {
+      this.chosenCategories = filters;
+      this.filterOnMap();
     });
   }
 
   filterOnMap() {
-    this.clearDrawablesFromMap(this.markerStore);
-    this.clearDrawablesFromMap(this.lineStore);
+    let helper = new MapCategoryHelper();
+    let categories = helper.getCategoriesToRemove(this.chosenCategories, this.processor.drawableFactory.getMarkerStore());
+
+    this.processor.clearEventQueueByFilter(this.chosenCategories);  
+    this.clearDrawablesByFilter(this.processor.drawableFactory.getMarkerStore(), categories);
+    this.clearDrawablesByFilter(this.processor.drawableFactory.getLineStore(), categories);
   }
 
-  clearDrawablesFromMap(drawables) {
-    let categories = this.getCategoriesToRemove();
+  clearDrawablesByFilter(drawables, categories) {
+    if (drawables == null || drawables == undefined)
+      return;
+
+    if (categories == null || categories == undefined)
+      return;
 
     categories.forEach(category => {
-      if (drawables[category] == undefined)
+      if (drawables[category] == undefined || drawables[category].length == 0)
         return;
 
       for (let i = 0; i < drawables[category].length; i++) {
-        drawables[category][i].setMap(null);
+        drawables[category][i].drawable.setMap(null);
         drawables[category].splice(i, 0);
       }
     })
-  }
-
-  getCategoriesToRemove() : string[] {
-    if (this.chosenCategories == undefined)
-      return null;
-
-    let categories = [];
-    Object.keys(this.markerStore).forEach(category => {
-      if (!this.chosenCategories.includes(category)) {
-        categories.push(category);
-      }
-    })
-
-    return categories;
   }
 
   /**
@@ -155,32 +147,6 @@ export class MapPage {
     this.centerMapToLocation();
   }
 
-  /**
-   * renderObstacles()
-   *
-   * Handles and renders obstacles on the map.
-   *
-   * @memberof MapPage
-   */
-  renderObstacles() {
-    this.obstacles.forEach(obstacle => {
-        let type = obstacle.type;
-
-        if(type === undefined) {
-          type = '';
-        }
-
-        if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
-          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), (obstacle.category + '_' + obstacle.color), obstacle);
-        }
-        else {
-          let start = new google.maps.LatLng(obstacle.lat, obstacle.long);
-          let end = new google.maps.LatLng(obstacle.lat_end, obstacle.long_end)
-          this.drawPath(start, end, obstacle.color, obstacle);
-        }
-      });
-  }
-
   onClicked(){
     this.navCtrl.push(filterMap);
   }
@@ -197,15 +163,12 @@ export class MapPage {
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
-        this.map.setCenter(latLng);
 
-        // save current location to a class var
         this.currentPosition = latLng;
 
         if(locationMarker == null) {
-          locationMarker = this.addMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.map.getCenter());
+          locationMarker = this.processor.drawableFactory.createMarker('https://cdn2.iconfinder.com/data/icons/map-location-geo-points/154/border-dot-point-128.png', this.currentPosition);
         }
-        locationMarker.setPosition(latLng);
         locationMarker.setZIndex(100);
       }, (err) => {
         console.log(err);
@@ -261,137 +224,6 @@ export class MapPage {
   }
 
   /**
-   * addMarker()
-   *
-   * Adds a marker to the map.
-   *
-   * @param {any} markerImage The image of the marker.
-   * @param {any} position The position of the marker.
-   * @returns
-   * @memberof MapPage
-   */
-  addMarker(markerImage, position) {
-    let marker = new google.maps.Marker({
-      map: this.map,
-      icon:
-      new google.maps.MarkerImage(
-        markerImage,
-        null, /* size is determined at runtime */
-        null, /* origin is 0,0 */
-        null, /* anchor is bottom center of the scaled image */
-        new google.maps.Size(25, 25) /* marker size */
-      ),
-      position: position
-    });
-
-    return marker;
-  }
-
-  /**
-  * addInfoMarker()
-  *
-  * Adds a info markeron the map.
-  *
-  * @param {any} markerImage The image to be displayed.
-  * @param {any} position The position of the marker.
-  * @param {any} data
-  * @memberof MapPage
-  */
-  addInfoMarker(markerImage, position, data) {
-    let storeKey = data.category + "_" + data.color;
-    if (!this.markerStore.hasOwnProperty(storeKey))
-      this.markerStore[storeKey] = [];
-
-    let marker = this.addMarker(markerImage, position);
-    this.markerStore.push(marker);
-    marker.data = data;
-
-    marker.addListener('click', () => {
-      this.openMapEventInfo(marker.data);
-    });
-
-    this.markerStore[storeKey].push(marker);
-  }
-
-/**
- * drawPath()
- *
- * Draws a line on the map from the startPos to the endPos with the desired color.
- *
- * @param {any} startPos The position to start routing from.
- * @param {any} endPos The position to route to.
- * @param {any} color The color of the line.
- * @memberof MapPage
- */
-drawPath(startPos, endPos, color, lineData) {
-    let request = {
-      origin: startPos,
-      destination: endPos,
-      travelMode: 'DRIVING'
-    }
-
-    let directionService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer;
-
-    directionsDisplay.setMap(this.map);
-    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true });
-
-    directionService.route(request, (result, status) => {
-      this.renderDirection(result, color, lineData);
-    });
-  }
-
-  /**
-   * RenderDirection
-   *
-   * Responsible for rendering and hooking the polylines between the different events.
-   *
-   * @param {any} response The response from the directionService.route() call
-   * @param {any} color The color of the road, e.g '#272E34'
-   * @param {any} line The line object to draw
-   * @memberof MapPage
-   */
-  renderDirection(response, color, lineData) {
-    let polylineOptions = {
-      strokeColor: color,
-      strokeOpacity: 1,
-      strokeWeight: 4
-    };
-
-    //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
-    if (response == null || response == undefined)
-      return;
-
-    let polylines = [];
-    for (let i = 0; i < polylines.length; i++)
-      polylines[i].setMap(null);
-
-    let legs = response.routes[0].legs;
-    for (let i = 0; i < legs.length; i++) {
-      let steps = legs[i].steps;
-
-      for (let j = 0; j < steps.length; j++) {
-        let nextSegment = steps[j].path;
-        let stepPolyline = new google.maps.Polyline(polylineOptions);
-
-        for (let k = 0; k < nextSegment.length; k++)
-          stepPolyline.getPath().push(nextSegment[k]);
-
-        stepPolyline.setMap(this.map);
-        polylines.push(stepPolyline);
-        google.maps.event.addListener(stepPolyline, 'click', (evt) => {
-          this.openMapEventInfo(lineData);
-        })
-
-        let storeKey = lineData.category + "_" + lineData.color;
-        if (!this.lineStore.hasOwnProperty(storeKey))
-          this.lineStore[storeKey] = [];
-
-        this.lineStore[storeKey].push(stepPolyline);
-      }
-    }
-  }
-  /**
    * drawIcon()
    *
    * Renders a icon at the specified position using the provided color and
@@ -403,8 +235,8 @@ drawPath(startPos, endPos, color, lineData) {
    * @memberof MapPage
    */
   drawIcon(pos, color, data) {
-    this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
-  1}
+    //this.addInfoMarker('./assets/imgs/' + color + '.png', pos, data);
+  }
 
   /**
    * Used to display a prettified reported time.
