@@ -12,7 +12,7 @@ module.exports = function(app, models) {
       if(userExists) {
         res.status(200).json({status: 200, message: "The push user already exists"});
       } else {
-        models.PushUsers.create({request.body.userId}).then( pushUser => {
+        models.PushUsers.create({userId: request.body.userId}).then( pushUser => {
           if(pushUser) {
             res.status(200).json({status: 200, message: "Created the Push User Successfully"});
           } else {

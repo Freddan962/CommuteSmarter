@@ -1,4 +1,4 @@
-const http = require('node-pushnotifications');
+const PushNotifications = require('node-pushnotifications');
 
 const settings = {
     gcm: {

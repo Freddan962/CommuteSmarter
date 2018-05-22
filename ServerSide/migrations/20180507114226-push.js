@@ -4,7 +4,6 @@ module.exports = {
     return queryInterface.createTable('PushUsers', {
       userId: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.STRING
       }

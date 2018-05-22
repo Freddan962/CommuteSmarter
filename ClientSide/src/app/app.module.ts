@@ -36,6 +36,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { TwitterConnect } from '@ionic-native/twitter-connect';
 
+import { Push } from '@ionic-native/push';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/translations/", ".json");
 }
@@ -94,6 +96,7 @@ export function createTranslateLoader(http: HttpClient) {
     TwitterConnect,
     EventsReportService,
     Camera,
+    Push,
     LanguageService,
     SettingService,
     HTTP,
