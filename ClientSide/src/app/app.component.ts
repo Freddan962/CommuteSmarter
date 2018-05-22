@@ -12,6 +12,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { AlertController } from 'ionic-angular';
 import { HttpService } from './services/httpService';
+import { SettingService } from './services/settingService';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,8 @@ export class MyApp {
     language: LanguageService,
     private alertCtrl: AlertController,
     private http: HttpService,
-    private push: Push
+    private push: Push,
+    private settings: SettingService
    ) {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = false;
@@ -54,21 +56,6 @@ export class MyApp {
   }
 
   handlePushNotifications() {
-    this.push.hasPermission()
-    .then((res: any) => {
-
-      if (res.isEnabled) {
-        console.log('We have permission to send push notifications');
-      } else {
-        console.log('We do not have permission to send push notifications');
-      }
-
-    }).catch(error=> {
-      console.log("-----");
-      console.log(error);
-      console.log("-----");
-    });
-
     const options: PushOptions = {
       android: {
         senderID: '962564067117'
@@ -76,7 +63,6 @@ export class MyApp {
     };
 
     const pushObject: PushObject = this.push.init(options);
-    console.log("RUN PUSH");
 
     pushObject.on('registration').subscribe( data => {
       let response = this.http.sendDataToServer('push/user', { userId: data.registrationId });
@@ -85,9 +71,11 @@ export class MyApp {
         console.log("response:");
         console.log(data);
       });
-      
+
       console.log('pushid:');
       console.log(data);
+
+      this.settings.setCurrentPushId(data.registrationId);
     });
 
     pushObject.on('notification').subscribe(data => {

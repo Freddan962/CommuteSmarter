@@ -53,15 +53,17 @@ export class MoreeventnotificationsPage {
     console.log(name);
     this.settingService.setSetting(name, state);
 
-    let response = this.http.sendDataToServer(
-      'push/user/category/',
-      {
-        userId: '',
-        category: eventType + '_' + eventColor,
-        status: state
-      }
-    );
-    response.subscribe();
+    this.settingService.getCurrentPushId(pushId => {
+      let response = this.http.sendDataToServer(
+        'push/user/category/',
+        {
+          userId: pushId,
+          category: eventType + '_' + eventColor,
+          status: state
+        }
+      );
+      response.subscribe();
+    });
   }
 
   /**
