@@ -41,8 +41,7 @@ export class MapPage {
   currentPosition: any;
   chosenCategories: any;
 
-  processor: MapProcessor = new MapProcessor();
-  drawableFactory: DrawableFactory = new DrawableFactory(this);
+  processor: MapProcessor = new MapProcessor(this);
  
   constructor(
     public navCtrl: NavController,
@@ -100,7 +99,7 @@ export class MapPage {
   // Refresh the events and render events
   doRefreshEvents() {
     this.refreshEvents(() => {
-      this.renderObstacles();
+      
     });
   }
 
@@ -109,9 +108,9 @@ export class MapPage {
     //this.clearDrawablesFromMap(this.lineStore);
   }
 
-  clearDrawablesFromMap(drawables) {
+  /*clearDrawablesFromMap(drawables) {
     let helper = new MapCategoryHelper();
-    let categories = helper.getCategoriesToRemove(this.chosenCategories, this.drawableFactory.getMarkerStore());
+    let categories = helper.getCategoriesToRemove(this.chosenCategories, this.processor.drawableFactory.getMarkerStore());
 
     categories.forEach(category => {
       if (drawables[category] == undefined)
@@ -122,7 +121,7 @@ export class MapPage {
         drawables[category].splice(i, 0);
       }
     })
-  }
+  }*/
 
   /**
    * loadMap()
@@ -146,28 +145,6 @@ export class MapPage {
     this.centerMapToLocation();
   }
 
-  /**
-   * renderObstacles()
-   *
-   * Renders obstacles on the map.
-   *
-   * @memberof MapPage
-   */
-  renderObstacles() {
-    this.obstacles.forEach(obstacle => {
-        let type = obstacle.type;
-
-        if (obstacle.lat_end == -100 || obstacle.lng_end == -100) {
-          this.drawIcon(new google.maps.LatLng(obstacle.lat, obstacle.long), (obstacle.category + '_' + obstacle.color), obstacle);
-        }
-        else {
-          let start = new google.maps.LatLng(obstacle.lat, obstacle.long);
-          let end = new google.maps.LatLng(obstacle.lat_end, obstacle.long_end)
-          this.drawPath(start, end, obstacle.color, obstacle);
-        }
-      });
-  }
-
   onClicked(){
     this.navCtrl.push(filterMap);
   }
@@ -180,7 +157,7 @@ export class MapPage {
    * @memberof MapPage
    */
   centerMapToLocation() {
-    this.geolocation.getCurrentPosition().then
+    /*this.geolocation.getCurrentPosition().then
       ((position) => {
         let latLng = new google.maps.LatLng
           (position.coords.latitude, position.coords.longitude);
@@ -196,7 +173,7 @@ export class MapPage {
         locationMarker.setZIndex(100);
       }, (err) => {
         console.log(err);
-      });
+      });*/
 	}
 
   /**
@@ -212,7 +189,6 @@ export class MapPage {
     this.displayMapEventCard = true;
     this.cdRef.detectChanges();
   }
-
 
   /**
   * shareEvent()
@@ -248,86 +224,7 @@ export class MapPage {
     }, 1000);
   }
 
-
-
-/**
- * drawPath()
- *
- * Draws a line on the map from the startPos to the endPos with the desired color.
- *
- * @param {any} startPos The position to start routing from.
- * @param {any} endPos The position to route to.
- * @param {any} color The color of the line.
- * @memberof MapPage
- */
-drawPath(startPos, endPos, color, lineData) {
-    let request = {
-      origin: startPos,
-      destination: endPos,
-      travelMode: 'DRIVING'
-    }
-
-    let directionService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer;
-
-    directionsDisplay.setMap(this.map);
-    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true });
-
-    directionService.route(request, (result, status) => {
-      this.renderDirection(result, color, lineData);
-    });
-  }
-
-  /**
-   * RenderDirection
-   *
-   * Responsible for rendering and hooking the polylines between the different events.
-   *
-   * @param {any} response The response from the directionService.route() call
-   * @param {any} color The color of the road, e.g '#272E34'
-   * @param {any} line The line object to draw
-   * @memberof MapPage
-   */
-  renderDirection(response, color, lineData) {
-    let polylineOptions = {
-      strokeColor: color,
-      strokeOpacity: 1,
-      strokeWeight: 4
-    };
-
-    //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
-    if (response == null || response == undefined)
-      return;
-
-    let polylines = [];
-    for (let i = 0; i < polylines.length; i++)
-      polylines[i].setMap(null);
-
-    let legs = response.routes[0].legs;
-    for (let i = 0; i < legs.length; i++) {
-      let steps = legs[i].steps;
-
-      for (let j = 0; j < steps.length; j++) {
-        let nextSegment = steps[j].path;
-        let stepPolyline = new google.maps.Polyline(polylineOptions);
-
-        for (let k = 0; k < nextSegment.length; k++)
-          stepPolyline.getPath().push(nextSegment[k]);
-
-        stepPolyline.setMap(this.map);
-        polylines.push(stepPolyline);
-        google.maps.event.addListener(stepPolyline, 'click', (evt) => {
-          this.openMapEventInfo(lineData);
-        })
-
-        let storeKey = lineData.category + "_" + lineData.color;
-       /* if (!this.lineStore.hasOwnProperty(storeKey))
-          this.lineStore[storeKey] = [];    
-
-        this.lineStore[storeKey].push(stepPolyline);*/
-      }
-    }
-  }
+  
   /**
    * drawIcon()
    *

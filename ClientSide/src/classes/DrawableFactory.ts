@@ -8,6 +8,47 @@ export class DrawableFactory {
   private lineStore: any = [];
 
   constructor(public mapPage: MapPage) { }
+
+  public createMarker(position: any, color: any, data: any) : void {
+    this.createInfoMarker('./assets/imgs/' + color + '.png', position, data);
+  }
+
+  public createEventInfoMarker(event: any) : void {
+    let image = './assets/imgs/' + event.category + '_' + event.color + '.png';
+    let position = new google.maps.LatLng(event.lat, event.long);
+    this.createInfoMarker(image, position, event);
+  }
+
+  /**
+   * createPath()
+   *
+   * Draws a line on the map from the startPos to the endPos with the desired color.
+   *
+   * @param {any} startPos The position to start routing from.
+   * @param {any} endPos The position to route to.
+   * @param {any} color The color of the line.
+   * @memberof MapPage
+   */
+  public createPath(event: any) : void {
+    let startPos = new google.maps.LatLng(event.lat, event.long);
+    let endPos = new google.maps.LatLng(event.lat_end, event.long_end);
+
+    let request = {
+      origin: startPos,
+      destination: endPos,
+      travelMode: 'DRIVING'
+    }
+
+    let directionService = new google.maps.DirectionsService;
+    let directionsDisplay = new google.maps.DirectionsRenderer;
+
+    directionsDisplay.setMap(this.mapPage.map);
+    directionsDisplay.setOptions({ suppressMarkers: true, preserveViewport: true });
+
+    directionService.route(request, (result, status) => {
+      this.renderDirection(result, event.color, event);
+    });
+  }
   
   /**
   * createInfoMarker()
@@ -19,7 +60,7 @@ export class DrawableFactory {
   * @param {any} event 
   * @memberof MapPage
   */
-  public createInfoMarker(markerImage: any, position: any, event: any) : void {
+  private createInfoMarker(markerImage: any, position: any, event: any) : void {
     let storeKey = event.category + "_" + event.color;
     if (!this.markerStore.hasOwnProperty(storeKey))
       this.markerStore[storeKey] = [];    
@@ -62,6 +103,58 @@ export class DrawableFactory {
     return marker;
   }
 
+  /**
+   * RenderDirection
+   *
+   * Responsible for rendering and hooking the polylines between the different events.
+   *
+   * @param {any} response The response from the directionService.route() call
+   * @param {any} color The color of the road, e.g '#272E34'
+   * @param {any} line The line object to draw
+   * @memberof MapPage
+   */
+  private renderDirection(response: any, color: any, event: any) : void {
+    let polylineOptions = {
+      strokeColor: color,
+      strokeOpacity: 1,
+      strokeWeight: 4
+    };
+
+    //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
+    if (response == null || response == undefined)
+      return;
+
+    let polylines = [];
+    for (let i = 0; i < polylines.length; i++)
+      polylines[i].setMap(null);
+
+    let legs = response.routes[0].legs;
+    for (let i = 0; i < legs.length; i++) {
+      let steps = legs[i].steps;
+
+      for (let j = 0; j < steps.length; j++) {
+        let nextSegment = steps[j].path;
+        let stepPolyline = new google.maps.Polyline(polylineOptions);
+
+        for (let k = 0; k < nextSegment.length; k++)
+          stepPolyline.getPath().push(nextSegment[k]);
+
+        stepPolyline.setMap(this.mapPage.map);
+        polylines.push(stepPolyline);
+
+        google.maps.event.addListener(stepPolyline, 'click', (evt) => {
+          this.mapPage.openMapEventInfo(event);
+        })
+
+        let storeKey = event.category + "_" + event.color;
+        if (!this.lineStore.hasOwnProperty(storeKey))
+          this.lineStore[storeKey] = [];    
+
+        this.lineStore[storeKey].push(stepPolyline);
+        event.drawable = stepPolyline;
+      }
+    }
+  }
   
   /* ############################# */
   /* ##    GETTERS & SETTERS    ## */

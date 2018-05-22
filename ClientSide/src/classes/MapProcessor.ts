@@ -1,13 +1,20 @@
+import { DrawableFactory } from "./DrawableFactory";
+import { MapPage } from "../pages/map/map";
+
 export class MapProcessor {
 
+  public drawableFactory: DrawableFactory;
+  
   private eventsQueue: any[] = [];
+
 
   //CONFIGURATION OPTIONS
   private tickInterval: number = 1000;
   private eventsPerTick: number = 10;
 
-  public constructor() {
+  public constructor(private mapPage: MapPage) {
     this.start();
+    this.drawableFactory = new DrawableFactory(this.mapPage);
   }
 
   /**
@@ -40,18 +47,28 @@ export class MapProcessor {
     if (event.drawable == undefined)
       this.prepareDrawable(event);
 
-
+    console.log("Processed event");
   }
 
   private prepareDrawable(event: any) : void {
+    if (this.isMarker(event)) 
+      this.drawableFactory.createEventInfoMarker(event);
+    //else
+      //this.drawableFactory.createPath(event);
+  }
 
+  private isMarker(event: any) : boolean {
+    if (event.lat_end != -100 && event.lng_end != -100)
+      return false;
+
+    return true;
   }
 
   /* ############################# */
   /* ##    GETTERS & SETTERS    ## */
   /* ############################# */
 
-  public getEventsQueue() : JSON[] {
+  public getEventsQueue() : any[] {
     return this.eventsQueue;
   }
 }
