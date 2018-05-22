@@ -40,7 +40,8 @@ export class MapPage {
   chosenCategories: any;
 
   processor: MapProcessor = new MapProcessor(this);
-  latestFetch: Date;
+  latestFetch: Date = new Date();
+  fetchLatestInterval: number = 15000;
 
   constructor(
     public navCtrl: NavController,
@@ -76,7 +77,6 @@ export class MapPage {
           return;
         }
 
-        this.obstacles = data;
         this.processor.loadEventsIntoQueue(data);
         this.filterOnMap();
       });
@@ -87,6 +87,7 @@ export class MapPage {
   ionViewDidLoad() {
     this.loadMap();
     this.refreshEvents();
+    setInterval(() => this.fetchLatest(), this.fetchLatestInterval);
   }
 
   ionViewWillEnter() {
@@ -303,18 +304,14 @@ export class MapPage {
    * fastest way of inserting them to the front of the obstacles array.
    */
   fetchLatest() {
-    this.latestFetch = new Date();
+    this.eventService.getLatest(this.chosenCategories, this.latestFetch, latest => {
+      console.log('chosen categories:' + this.chosenCategories);
+      //TODO: Never gets a response  
+        this.processor.loadEventsIntoQueue(latest);
+      }
+    );
 
-    if(this.obstacles.length > 0 && this.obstacles[0] !== undefined) {
-      this.eventService.getLatest(
-        this.chosenCategories,
-        this.obstacles[0].reported,
-        latest => {
-          latest.forEach( event => {
-          this.obstacles.unshift(event);
-        });
-      });
-    }
+    this.latestFetch = new Date();
   }
 
   sendSolved(item){
