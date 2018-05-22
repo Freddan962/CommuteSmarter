@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "962564067117",
+    "firebase_url": "https://pvt73trafficinfo.firebaseio.com",
+    "project_id": "pvt73trafficinfo",
+    "storage_bucket": "pvt73trafficinfo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:962564067117:android:c05921a3b922db5d",
+        "android_client_info": {
+          "package_name": "io.ionic.starter.pvt73"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "962564067117-jonrk4dm2a1fuch8cgejaoi7670u9sls.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMSXOfFcv6ebou3ThcXd6OyMEHBpPLwCI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

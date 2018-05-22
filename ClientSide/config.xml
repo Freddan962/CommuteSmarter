@@ -106,6 +106,6 @@
     </plugin>
     <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
     <plugin name="cordova-plugin-background-mode" spec="https://github.com/katzer/cordova-plugin-background-mode.git" />
-    <engine name="android" spec="7.0.0" />
+    <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="4.5.4" />
 </widget>

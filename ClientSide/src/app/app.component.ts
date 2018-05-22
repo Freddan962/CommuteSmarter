@@ -26,9 +26,9 @@ export class MyApp {
     public Storage: Storage,
     translate: TranslateService,
     language: LanguageService,
-    private pushNotifications: Push,
     private alertCtrl: AlertController,
-    private http: HttpService
+    private http: HttpService,
+    private push: Push
    ) {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = false;
@@ -54,18 +54,43 @@ export class MyApp {
   }
 
   handlePushNotifications() {
-    const push = this.pushNotifications.init({
+    this.push.hasPermission()
+    .then((res: any) => {
+
+      if (res.isEnabled) {
+        console.log('We have permission to send push notifications');
+      } else {
+        console.log('We do not have permission to send push notifications');
+      }
+
+    }).catch(error=> {
+      console.log("-----");
+      console.log(error);
+      console.log("-----");
+    });
+
+    const options: PushOptions = {
       android: {
         senderID: '962564067117'
       }
+    };
+
+    const pushObject: PushObject = this.push.init(options);
+    console.log("RUN PUSH");
+
+    pushObject.on('registration').subscribe( data => {
+      let response = this.http.sendDataToServer('push/user', { userId: data.registrationId });
+      response.subscribe(data => {
+
+        console.log("response:");
+        console.log(data);
+      });
+      
+      console.log('pushid:');
+      console.log(data);
     });
 
-    push.on('registration', (data) => {
-      let response = http.sendDataToServer('push/user', { userId: data.registrationId });
-      response.subscribe();
-    });
-
-    push.on('notification', (data) => {
+    pushObject.on('notification').subscribe(data => {
        console.log(data);
 
        let alert = this.alertCtrl.create({
@@ -76,7 +101,7 @@ export class MyApp {
        alert.present();
      });
 
-     push.on('error', (error) => {
+     pushObject.on('error').subscribe(error => {
         console.log(error);
      });
   }
