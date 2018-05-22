@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Refresher, InfiniteScroll } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Refresher, InfiniteScroll, LoadingController } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
 import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
@@ -26,6 +26,8 @@ export class EventsPage {
   private chosenCategories: any;
   private refresher: Refresher
   private eventCount: number;
+  private loading: any;
+
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -36,12 +38,12 @@ export class EventsPage {
     public alertCtrl: AlertController,
     private socialSharing: SocialSharing,
     private http: HttpService,
-    private settingService: SettingService
-    // private infiniteScroll: InfiniteScroll
+    private settingService: SettingService,
+    public loadingCtrl: LoadingController
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-      this.items$  = []
+      this.items$ = []
       this.eventCount = 0;
 
 
@@ -63,33 +65,52 @@ export class EventsPage {
 
   //triggered when page open
   ionViewWillEnter() {
-    this.refreshEvents(this.refresher)
+    console.log(this.items$)
+    if(this.items$.length < 1){
+      this.presentLoading()
+    }
+    this.refreshEvents(this.refresher, null)
    }
 
 
-  refreshEvents(refresher: Refresher, ){
-      this.getDataFromServer(refresher)    
+  refreshEvents(refresher: Refresher, infiniteScroll: InfiniteScroll ){
+    this.getDataFromServer(refresher, infiniteScroll)    
   }
 
-  getDataFromServer(refresher){
-    
+  getDataFromServer(refresher, infiniteScroll){
+    const EVENT_AMOUNT = 7
+    //get current filter settings
     this.settingService.getCurrentFilters(filters => {
       console.log(filters)
       this.chosenCategories = filters;
       
+      //get events from database
       this.eventService.getEvents(this.chosenCategories, data => {
-        for (var i = this.eventCount; i < this.eventCount+12; i++) {
+        this.dismissLoading()
+        for (var i = this.eventCount; i < this.eventCount + EVENT_AMOUNT; i++) {
 
-          if (data.hasOwnProperty(i) && this.eventCount <= this.items$.length) {
-              this.items$.push(data[i]);
-              console.log('object nr'+ i)
+          if (this.items$.length > 50){
+            this.items$.shift()
+            // this.eventCount == this.eventCount-1
           }
-          refresher.complete();
-          if (this.items$.length > 90) {
-            refresher.enable(false);
+          console.log(this.items$.length)
+          console.log(this.eventCount)
+          if (data.hasOwnProperty(i) /*&& this.eventCount <= this.items$.length */) {
+
+              this.items$.push(data[i]);
+          }
+          else{
+            console.log('All events displayed!')
+          }
+          if (infiniteScroll != null){
+            infiniteScroll.complete();
+            if (this.items$.length > 500) 
+              infiniteScroll.enable(false);
+            
           }
         }
-        this.eventCount = this.eventCount+12
+        this.eventCount = this.eventCount + EVENT_AMOUNT
+
         console.log('Server responded with:')
         console.log(this.items$)
         if (refresher != 0 && refresher != undefined)
@@ -98,35 +119,37 @@ export class EventsPage {
     });
   }
 
-  doInfinite(infiniteScroll: InfiniteScroll) {
+  // doInfinite(infiniteScroll: InfiniteScroll) {
 
-    this.getDataFromServer(this.refresher)
+  //   // this.getDataFromServer(this.refresher)
 
-    this.settingService.getCurrentFilters(filters => {
-      console.log(filters)
-      this.chosenCategories = filters;
+  //   this.settingService.getCurrentFilters(filters => {
+  //     console.log(filters)
+  //     this.chosenCategories = filters;
 
-      this.eventService.getEvents(this.chosenCategories, data => {
-        for (var i = 0; i < 12; i++) {
-          this.items$.push(data[i]);
-        }
-        infiniteScroll.complete();
-        if (this.items$.length > 90) {
-          infiniteScroll.enable(false);
-        }
-      }); //Fetches from the database
+  //     this.eventService.getEvents(this.chosenCategories, data => {
+  //       for (var i = 0; i < 12; i++) {
+  //         this.items$.push(data[i]);
+  //       }
+  //       infiniteScroll.complete();
+  //       if (this.items$.length > 90) {
+  //         infiniteScroll.enable(false);
+  //       }
+  //     }); //Fetches from the database
+  //   });
+  // }
+
+  presentLoading() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Getting events...'
     });
-    // this.mockProvider.getAsyncData().then((newData) => {
-    //   for (var i = 0; i < 12; i++) {
-    //     this.items.push(newData[i]);
-    //   }
-
-      
-
-    //   if (this.items.length > 90) {
-    //     infiniteScroll.enable(false);
-    //   }
-    // });
+    this.loading.present();
+  }
+  dismissLoading() {
+    if (this.loading) {
+      this.loading.dismiss();
+      this.loading = null;
+    }
   }
 
 
