@@ -27,7 +27,7 @@ module.exports = function(app, models) {
 
   app.get('/api/push/send/:badPassJustForTest/:id', (request, result) => {
     if(request.params.badPassJustForTest === 'juxandepåstörrenivåer') {
-      pushMethods.sendPushNotification({title: 'En push', 'Texten i pushen'}, request.params.id);
+      pushMethods.sendPushNotification({title: 'En push', body: 'Texten i pushen'}, request.params.id);
     }
   });
 }
