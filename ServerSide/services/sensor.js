@@ -52,8 +52,9 @@ function getRandomEventFromDb(models, perform) {
 
 function getRandomEvent(models, perform) {
     getRandomSensor(models, (sensor => {
-
+        
         getRandomEventType(models, (type => {
+            
             google.reverseGeocode( {
                 latlng: [sensor.latitude, sensor.longitude]
             })
@@ -75,17 +76,33 @@ function getRandomEvent(models, perform) {
                   eventInfo['lat_end'] = sensor.latitude_end;
                   eventInfo['long_end'] = sensor.longitude_end;
                 }
-    
-                models.Event.create(eventInfo).then(event => {
+                
+                inDatabase(sensor.latitude, sensor.longitude, models, () => {
+                    models.Event.create(eventInfo).then(event => {
                     perform(event);
+                    });
                 });
             })
             .catch((err) => {
                 console.log(err)
             });
-
+        
         }));
     }));
+    
+}
+
+function inDatabase(latitude, longitude, models, perform){
+
+    models.Event.findOne(
+        { where: {lat: latitude, long: longitude}
+        }
+        ).then(ev => {
+        if(ev == null || ev.length < 1){
+            perform();
+        }
+
+      })
 }
 
 function deleteRandomEvent(models) {

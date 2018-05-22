@@ -140,8 +140,8 @@ export class PositionselectorPage {
      /*console.error('Error: ' + error)*/,
       () => (console.log('Found: ' + this.nearbyPlace),
          this.isenabled = true,
-         console.log(this.isenabled),
           this.dismissLoading()
+
           )
   );
 

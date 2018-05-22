@@ -17,8 +17,8 @@ module.exports = {
       {
         color:'orange',
         location: 'Kungsgatan',
-        lat: 54.566456,
-        long: 56.77998,
+        lat: 55.566456,
+        long: 57.77998,
         lat_end: -100,
         long_end: -100,
         category:'trafficJam',
@@ -28,8 +28,8 @@ module.exports = {
       {
         color:'blue',
         location: 'Odengatan',
-        lat: 54.566456,
-        long: 56.77998,
+        lat: 56.566456,
+        long: 58.77998,
         lat_end: -100,
         long_end: -100,
         category:'policeControl', 

@@ -1,4 +1,3 @@
-import { SettingService } from './services/settingService';
 import { LanguageService } from './services/LanguageService';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
@@ -7,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Storage } from '@ionic/storage';
 import {TranslateService} from '@ngx-translate/core';
 import { TabsPage } from '../pages/tabs/tabs';
-import { MapPage } from '../pages/map/map';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import { AlertController } from 'ionic-angular';

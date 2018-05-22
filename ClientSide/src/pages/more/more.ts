@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { MoreeventnotificationsPage } from '../moreeventnotifications/moreeventnotifications';
 import { MorelanguagePage } from '../morelanguage/morelanguage';
-import { NavController, ModalController, NavParams} from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -11,8 +11,6 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: 'more.html'
 })
 export class MorePage {
-
-  private signedIn: boolean;
 
   constructor(public toastCtrl: ToastController,
     public navCtrl: NavController,
