@@ -22,8 +22,7 @@ let pushMethods = {
       dryRun: false, // gcm for android
       icon: '', // gcm for android
       tag: '', // gcm for android
-      color: '', // gcm for android
-      clickAction: '', // gcm for android. In ios, category will be used if not supplied
+      color: 'blue', // gcm for android
     };
 
     // You can use it in node callback style
