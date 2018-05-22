@@ -239,4 +239,20 @@ export class SettingService {
   }
 
   public getStates() { return SettingService.states; }
+
+  public getCurrentPushId(perform) {
+    this.storage.get('currentPushId').then( pushId => {
+     if(pushId !== undefined && pushId !== null && pushId.length > 0) {
+       perform(pushId);
+     }
+   });
+  }
+
+  public setCurrentPushId(newPushId) {
+    this.getCurrentPushId(pushId => {
+      if(pushId === undefined || pushId === null || pushId.length <= 0) {
+        this.storage.set('currentPushId', newPushId);
+      }
+    });
+  }
 }

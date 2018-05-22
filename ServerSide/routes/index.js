@@ -8,8 +8,10 @@
  */
 const twitterAccounts = require('./twitter');
 const events = require('./events');
+const push = require('./push-notifications');
 
 module.exports = function(app, modules) {
   twitterAccounts(app, modules);
   events(app, modules);
+  push(app, modules);
 };
