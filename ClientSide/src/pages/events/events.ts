@@ -28,7 +28,8 @@ export class EventsPage {
   private eventCount: number;
   private loading: any;
   private previous: any;
-  private EVENT_AMOUNT = 7
+  private FETCH_EVENT_AMOUNT = 10
+  private MAX_EVENT_AMOUNT = 50
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -47,11 +48,11 @@ export class EventsPage {
       this.items$ = new Array()
       this.eventCount = 0;
       
-
-    setInterval(()=> {
-      this.refreshEvents(this.refresher )
-      console.log("Refreshed eventss!")
-    }, 10000);
+    /* Auto-fetch event every 10 second */
+    // setInterval(()=> {
+    //   this.refreshEvents(this.refresher )
+    //   console.log("Refreshed eventss !")
+    // }, 10000);
   }
 
   location: {
@@ -77,11 +78,11 @@ export class EventsPage {
       //get events from database
       this.eventService.getLatest(this.chosenCategories, this.items$[0].reported, data => {
         if(data.length > 0){
-          console.log('found new events!')
+          console.log('found '+ data.length+ ' new events!')
           for (let i = data.length-1; i >= 0; i--) {
           this.items$.unshift(data[i])
-            if (this.items$.length > (this.EVENT_AMOUNT * 5)) {
-              this.items$.shift()
+            if (this.items$.length > (this.MAX_EVENT_AMOUNT)) {
+              this.items$.pop(data[data.length - 1])
               this.previous = this.items$[0].reported
             }
         }
@@ -107,7 +108,7 @@ export class EventsPage {
       //get events from database
       this.eventService.getEvents(this.chosenCategories, data => {
         this.dismissLoading()
-        for (let i = this.eventCount; i < this.eventCount + this.EVENT_AMOUNT; i++) {
+        for (let i = this.eventCount; i < this.eventCount + this.FETCH_EVENT_AMOUNT; i++) {
           
           /* This could be used to remove events if the list gets too long */
         
@@ -119,27 +120,23 @@ export class EventsPage {
             console.log('All events displayed!')
           }
         }
-        this.eventCount = this.eventCount + this.EVENT_AMOUNT
-       
-        
+        this.eventCount = this.eventCount + this.FETCH_EVENT_AMOUNT
       }); //Fetches from the database
     });
   }
 
   doInfinite(infiniteScroll: InfiniteScroll) {
-    const EVENT_AMOUNT = 7
-
     //get current filter settings
     this.settingService.getCurrentFilters(filters => {
       this.chosenCategories = filters;
 
       //get events from database
       this.eventService.getEvents(this.chosenCategories, data => {
-        for (let i = this.eventCount; i < this.eventCount + EVENT_AMOUNT; i++) {
+        for (let i = this.eventCount; i < this.eventCount + this.FETCH_EVENT_AMOUNT; i++) {
           if (data.hasOwnProperty(i)) {
-            this.items$.push(data[i]);
+            this.items$.push(data[i])
 
-            if (this.items$.length > (this.EVENT_AMOUNT * 5)) {
+            if (this.items$.length > this.MAX_EVENT_AMOUNT) {
               this.items$.shift()
               this.previous = this.items$[0].reported
             }
@@ -148,13 +145,13 @@ export class EventsPage {
             console.log('All events displayed!')
           }
           if (infiniteScroll != null) {
-            infiniteScroll.complete();
+            infiniteScroll.complete()
             if (this.items$.length > 500)
-              infiniteScroll.enable(false);
+              infiniteScroll.enable(false)
           }
         }
         console.log('removing items from start of event list')
-        this.eventCount = this.eventCount + EVENT_AMOUNT
+        this.eventCount = this.eventCount + this.FETCH_EVENT_AMOUNT
       }); //Fetches from the database
     });
 
