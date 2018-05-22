@@ -115,7 +115,7 @@ module.exports = function(app, models) {
   app.get('/api/events/:id', (req, res) => {
     models.Event.findById(parseInt(req.params.id)).then(event => {
       if (event == null) {
-        res.status(404).send('The event with the ID' + req.params.id + 'was not found');
+        res.status(404).send({ status: 404, message: 'The event with the ID' + req.params.id + 'was not found'});
         return;
       }
 

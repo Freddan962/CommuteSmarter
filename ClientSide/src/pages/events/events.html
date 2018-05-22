@@ -17,9 +17,9 @@
   <ion-refresher (ionRefresh)="getDataFromServer($event)" (ionPull)="doPulling($event)">
     <ion-refresher-content
        pullingIcon="arrow-dropdown" 
-       pullingText="Pull to refresh" 
+       pullingText="{{'Events.pullRefresh' | translate}}">
        refreshingSpinner="circles" 
-       refreshingText="Hämtar nya events...">
+       refreshingText="{{'Events.fetching' | translate}}">
 
 </ion-refresher-content>
 </ion-refresher>

@@ -128,13 +128,13 @@ export class MoreeventnotificationsPage {
 
   getIconCategory(category, group){
     if(group == "Road Closed"){
-      return '../assets/imgs/' + category + '_red.png';
+      return './assets/imgs/' + category + '_red.png';
     }
     else if(group == "Limited passability"){
-      return '../assets/imgs/' + category + '_orange.png';
+      return './assets/imgs/' + category + '_orange.png';
     }
     else if(group == "Emergency Vehicles"){
-      return '../assets/imgs/' + category + '_blue.png';
+      return './assets/imgs/' + category + '_blue.png';
     }
   }
 }
