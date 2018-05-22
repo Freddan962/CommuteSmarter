@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from './httpService';
-import { SettingService } from './settingService';
 
 @Injectable()
 export class EventService {
 
   constructor(
     private httpService:HttpService,
-    private settings:SettingService
   )
   {}
 

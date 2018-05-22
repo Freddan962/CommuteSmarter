@@ -4,7 +4,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { PositionselectorPage } from '../positionselector/positionselector';
 import { EventsreporttypemodalPage } from '../eventsreporttypemodal/eventsreporttypemodal';
 import { TranslateService } from '@ngx-translate/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { EventsReportService } from './../../app/services/eventsreportService';
 
 
@@ -31,7 +30,6 @@ export class EventsReportPage {
     public modalCtrl: ModalController,
     private camera: Camera,
     public alertCtrl: AlertController,
-    private DomSanitizer: DomSanitizer,
     private EventsReportService: EventsReportService,
     public toastCtrl: ToastController,
     private translate: TranslateService

@@ -2,7 +2,6 @@ import { SettingService } from './../../app/services/settingService';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * Generated class for the MoreeventnotificationsPage page.
