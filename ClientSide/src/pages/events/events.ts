@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Refresher, InfiniteScroll } from 'ionic-angular';
 import { EventsReportPage } from '../eventsreport/eventsreport';
 import { MorePage } from '../more/more';
 import { EventService } from './../../app/services/eventService';
@@ -22,9 +22,10 @@ declare const google;
 })
 
 export class EventsPage {
-  public items$: any;
+  public items$: any[];
   private chosenCategories: any;
   private refresher: Refresher
+  private eventCount: number;
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -36,10 +37,12 @@ export class EventsPage {
     private socialSharing: SocialSharing,
     private http: HttpService,
     private settingService: SettingService
+    // private infiniteScroll: InfiniteScroll
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-
+      this.items$  = []
+      this.eventCount = 0;
 
 
     // setInterval(()=> {
@@ -64,17 +67,29 @@ export class EventsPage {
    }
 
 
-  refreshEvents(refresher: Refresher){
+  refreshEvents(refresher: Refresher, ){
       this.getDataFromServer(refresher)    
   }
 
   getDataFromServer(refresher){
+    
     this.settingService.getCurrentFilters(filters => {
       console.log(filters)
       this.chosenCategories = filters;
       
       this.eventService.getEvents(this.chosenCategories, data => {
-        this.items$ = data;
+        for (var i = this.eventCount; i < this.eventCount+12; i++) {
+
+          if (data.hasOwnProperty(i) && this.eventCount <= this.items$.length) {
+              this.items$.push(data[i]);
+              console.log('object nr'+ i)
+          }
+          refresher.complete();
+          if (this.items$.length > 90) {
+            refresher.enable(false);
+          }
+        }
+        this.eventCount = this.eventCount+12
         console.log('Server responded with:')
         console.log(this.items$)
         if (refresher != 0 && refresher != undefined)
@@ -82,6 +97,40 @@ export class EventsPage {
       }); //Fetches from the database
     });
   }
+
+  doInfinite(infiniteScroll: InfiniteScroll) {
+
+    this.getDataFromServer(this.refresher)
+
+    this.settingService.getCurrentFilters(filters => {
+      console.log(filters)
+      this.chosenCategories = filters;
+
+      this.eventService.getEvents(this.chosenCategories, data => {
+        for (var i = 0; i < 12; i++) {
+          this.items$.push(data[i]);
+        }
+        infiniteScroll.complete();
+        if (this.items$.length > 90) {
+          infiniteScroll.enable(false);
+        }
+      }); //Fetches from the database
+    });
+    // this.mockProvider.getAsyncData().then((newData) => {
+    //   for (var i = 0; i < 12; i++) {
+    //     this.items.push(newData[i]);
+    //   }
+
+      
+
+    //   if (this.items.length > 90) {
+    //     infiniteScroll.enable(false);
+    //   }
+    // });
+  }
+
+
+
 
   //Attempt to catch ExpressionChangedAfterItHasBeenChecked
   parseTime(time) {
@@ -138,7 +187,7 @@ export class EventsPage {
   }
 
   openReportPage() {
-    if (this.isLoggedIn() || document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
+    if (/*this.isLoggedIn() || */document.URL.startsWith('http')) { //skip login on non-mobile since cordova doesnt work when not using mobile
       this.navCtrl.push(EventsReportPage);
     } else {
       this.navCtrl.push(MorePage);
