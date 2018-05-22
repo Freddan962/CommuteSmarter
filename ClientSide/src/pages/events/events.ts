@@ -22,12 +22,13 @@ declare const google;
 })
 
 export class EventsPage {
-  public items$: any[];
+  public items$: any;
   private chosenCategories: any;
   private refresher: Refresher
   private eventCount: number;
   private loading: any;
-
+  private previous: any;
+  private EVENT_AMOUNT = 7
   constructor(
     public navCtrl: NavController,
     public geolocation: Geolocation,
@@ -43,14 +44,14 @@ export class EventsPage {
   ){
       moment.locale(this.translate.currentLang);
       this.findUserLocation();
-      this.items$ = []
+      this.items$ = new Array()
       this.eventCount = 0;
+      
 
-
-    // setInterval(()=> {
-    //   this.refreshEvents(this.refresher)
-    //   // console.log("Refreshed!")
-    // }, 10000);
+    setInterval(()=> {
+      this.refreshEvents(this.refresher )
+      console.log("Refreshed eventss!")
+    }, 10000);
   }
 
   location: {
@@ -58,86 +59,106 @@ export class EventsPage {
     longitude: number
   };
 
-  doPulling(refresher: Refresher) {
-    console.log('DOPULLING', refresher.progress);
-
-  }
 
   //triggered when page open
   ionViewWillEnter() {
-    console.log(this.items$)
     if(this.items$.length < 1){
       this.presentLoading()
     }
-    this.refreshEvents(this.refresher, null)
+    this.getDataFromServer()
    }
 
 
-  refreshEvents(refresher: Refresher, infiniteScroll: InfiniteScroll ){
-    this.getDataFromServer(refresher, infiniteScroll)    
+  refreshEvents(refresher){
+    this.settingService.getCurrentFilters(filters => {
+      
+      this.chosenCategories = filters;
+      
+      //get events from database
+      this.eventService.getLatest(this.chosenCategories, this.items$[0].reported, data => {
+        if(data.length > 0){
+          console.log('found new events!')
+          for (let i = data.length-1; i >= 0; i--) {
+          this.items$.unshift(data[i])
+            if (this.items$.length > (this.EVENT_AMOUNT * 5)) {
+              this.items$.shift()
+              this.previous = this.items$[0].reported
+            }
+        }
+      }else{
+        console.log('already up-to-date')
+      }
+      this.previous = this.items$[0].reported
+      if (refresher != 0 && refresher != undefined)
+          refresher.complete();
+
+    }); //Fetches from the database
+  });
   }
 
-  getDataFromServer(refresher, infiniteScroll){
-    const EVENT_AMOUNT = 7
+  getDataFromServer(){
+   
+    this.items$ = []
+    this.eventCount = 0
     //get current filter settings
     this.settingService.getCurrentFilters(filters => {
-      console.log(filters)
       this.chosenCategories = filters;
       
       //get events from database
       this.eventService.getEvents(this.chosenCategories, data => {
         this.dismissLoading()
-        for (var i = this.eventCount; i < this.eventCount + EVENT_AMOUNT; i++) {
+        for (let i = this.eventCount; i < this.eventCount + this.EVENT_AMOUNT; i++) {
+          
+          /* This could be used to remove events if the list gets too long */
+        
 
-          if (this.items$.length > 50){
-            this.items$.shift()
-            // this.eventCount == this.eventCount-1
-          }
-          console.log(this.items$.length)
-          console.log(this.eventCount)
-          if (data.hasOwnProperty(i) /*&& this.eventCount <= this.items$.length */) {
-
+          if (data.hasOwnProperty(i)) {
               this.items$.push(data[i]);
           }
           else{
             console.log('All events displayed!')
           }
-          if (infiniteScroll != null){
-            infiniteScroll.complete();
-            if (this.items$.length > 500) 
-              infiniteScroll.enable(false);
-            
-          }
         }
-        this.eventCount = this.eventCount + EVENT_AMOUNT
-
-        console.log('Server responded with:')
-        console.log(this.items$)
-        if (refresher != 0 && refresher != undefined)
-          refresher.complete();
+        this.eventCount = this.eventCount + this.EVENT_AMOUNT
+       
+        
       }); //Fetches from the database
     });
   }
 
-  // doInfinite(infiniteScroll: InfiniteScroll) {
+  doInfinite(infiniteScroll: InfiniteScroll) {
+    const EVENT_AMOUNT = 7
 
-  //   // this.getDataFromServer(this.refresher)
+    //get current filter settings
+    this.settingService.getCurrentFilters(filters => {
+      this.chosenCategories = filters;
 
-  //   this.settingService.getCurrentFilters(filters => {
-  //     console.log(filters)
-  //     this.chosenCategories = filters;
+      //get events from database
+      this.eventService.getEvents(this.chosenCategories, data => {
+        for (let i = this.eventCount; i < this.eventCount + EVENT_AMOUNT; i++) {
+          if (data.hasOwnProperty(i)) {
+            this.items$.push(data[i]);
 
-  //     this.eventService.getEvents(this.chosenCategories, data => {
-  //       for (var i = 0; i < 12; i++) {
-  //         this.items$.push(data[i]);
-  //       }
-  //       infiniteScroll.complete();
-  //       if (this.items$.length > 90) {
-  //         infiniteScroll.enable(false);
-  //       }
-  //     }); //Fetches from the database
-  //   });
-  // }
+            if (this.items$.length > (this.EVENT_AMOUNT * 5)) {
+              this.items$.shift()
+              this.previous = this.items$[0].reported
+            }
+          }
+          else {
+            console.log('All events displayed!')
+          }
+          if (infiniteScroll != null) {
+            infiniteScroll.complete();
+            if (this.items$.length > 500)
+              infiniteScroll.enable(false);
+          }
+        }
+        console.log('removing items from start of event list')
+        this.eventCount = this.eventCount + EVENT_AMOUNT
+      }); //Fetches from the database
+    });
+
+  }
 
   presentLoading() {
     this.loading = this.loadingCtrl.create({
