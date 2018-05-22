@@ -6,6 +6,7 @@ export class MapProcessor {
   public drawableFactory: DrawableFactory;
   
   private eventsQueue: any[] = [];
+  private eventDeletionQueue: any[] = [];
 
   private initialRun: boolean = true;
   private initialInterval: any;
@@ -68,10 +69,14 @@ export class MapProcessor {
       if (this.shouldProcessEvent(event))
         this.processEvent(event);
 
-      this.eventsQueue.push(event);
+      if (this.eventDeletionQueue.indexOf(event.id) > -1) {
+        this.handleEventDeletion(event);
+        this.eventDeletionQueue.splice(this.eventDeletionQueue.indexOf(event.id), 1);
+      } else 
+        this.eventsQueue.push(event);
     }
 
-    if (this.initialRun && processedLastInIteration) {
+    if (this.initialRun && processedLastInIteration) {  
       this.initialRun = false;
       clearInterval(this.initialInterval);
       let eventsToTick = this.eventsQueue.length > this.eventsPerTick ? this.eventsPerTick : this.eventsQueue.length;    
@@ -105,9 +110,19 @@ export class MapProcessor {
 
   private checkIfAlive(event: any) : void {
     this.mapPage.eventService.getEventById(event.id, data => {
-      if (data.status != undefined && data.status == '404')
-        console.log("GOT DELETED EVENT: " + event.category);
+      if (data.status != undefined && data.status == '404') {
+        this.queueEventDeletion(event.id);
+      }
     })
+  }
+
+  private queueEventDeletion(id: any) : void {
+    this.eventDeletionQueue.push(id);
+  }
+
+  private handleEventDeletion(event: any) : void {
+    event.drawable.setMap(null);
+    this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
   }
 
   /* ############################# */
