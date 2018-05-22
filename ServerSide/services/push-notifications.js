@@ -3,7 +3,8 @@ const PushNotifications = require('node-pushnotifications');
 const settings = {
     gcm: {
       id: '962564067117',
-      phonegap: true
+      phonegap: true,
+      sender: 'AAAA4B1KDy0:APA91bGKIaWHL0bD9LxRyU3pnzs6d3E-9AOWgdpTCPb1ZkOhijK5RqUx8-YswJ8W5vrYIyY_C31K7cHG9vYjZ-E-j5nF4R1Jn_4RZDU1Fs2wRDiDLkYXdGtHVoUPztoj4BZNpIUHeGWJ'
     }
 };
 
