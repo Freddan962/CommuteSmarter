@@ -10,8 +10,8 @@ const settings = {
 const push = new PushNotifications(settings);
 
 let pushMethods = {
-  sendPushNotification: function(data, registrationIds) {
-    const push = {
+  sendPushNotification: function(data, registrationIds, perform) {
+    const message = {
       title: data.title, // REQUIRED for Android
       body: data.body,
       custom: {
@@ -26,11 +26,13 @@ let pushMethods = {
     };
 
     // You can use it in node callback style
-    push.send(registrationIds, push, (err, result) => {
+    push.send(registrationIds, message, (err, result) => {
         if (err) {
             console.log(err);
+            perform(err);
         } else {
     	    console.log(result);
+          perform(result);
         }
     });
   }
