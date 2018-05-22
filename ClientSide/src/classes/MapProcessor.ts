@@ -11,7 +11,10 @@ export class MapProcessor {
   private initialInterval: any;
   private activeInterval: any;
 
-  //CONFIGURATION OPTIONS
+  //############################
+  //## CONFIGURATION OPTIONS  ##
+  //############################
+  
   //FIRST PROCESSING ITERATION SPEED
   private initialTickInterval: number = 10;
   private initialEventsPertick: number = 10;
@@ -82,24 +85,13 @@ export class MapProcessor {
   }
 
   private prepareDrawable(event: any) : void {
-    if (this.isMarker(event)) 
-      this.drawableFactory.createEventInfoMarker(event);
-    else
-      this.drawableFactory.createPath(event);
+    this.isMarker(event) ? this.drawableFactory.createEventInfoMarker(event) : this.drawableFactory.createPath(event);
   }
 
-  private isMarker(event: any) : boolean {
-    if (event.lat_end != -100 && event.lng_end != -100)
-      return false;
+  private isMarker(event: any) : boolean { return event.lat_end != -100 && event.lng_end != -100; }
 
-    return true;
-  }
-
-  private shouldProcessEvent(event: any) : boolean {
-    if (!this.mapPage.chosenCategories.includes(event.category + '_' + event.color))
-      return false;
-
-    return true;
+  private shouldProcessEvent(event: any) : boolean { 
+    return this.mapPage.chosenCategories.includes(event.category + '_' + event.color);
   }
 
   private checkIfAlive(event: any) : void {
@@ -113,7 +105,5 @@ export class MapProcessor {
   /* ##    GETTERS & SETTERS    ## */
   /* ############################# */
 
-  public getEventsQueue() : any[] {
-    return this.eventsQueue;
-  }
+  public getEventsQueue() : any[] { return this.eventsQueue; }
 }
