@@ -1,15 +1,8 @@
 import { SettingService } from './../../app/services/settingService';
 import { Storage } from '@ionic/storage';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
-
-/**
- * Generated class for the MoreeventnotificationsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HttpService } from './../../app/services/httpService';
 
 @IonicPage()
 @Component({
@@ -24,7 +17,11 @@ export class MoreeventnotificationsPage {
   settings: any;
   states: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storageService: Storage, public settingService: SettingService) {
+  constructor(
+    public storageService: Storage,
+    public settingService: SettingService,
+    private http: HttpService
+  ) {
     this.storage = storageService;
     this.settings = settingService.getSettings('notifications');
     this.states = settingService.getStates();
@@ -43,25 +40,36 @@ export class MoreeventnotificationsPage {
 
   /**
    * onNotificationSettingValueChange()
-   * 
+   *
    * Function gets called when one of the notification settin's value changes.
-   * 
+   *
    * @param {any} name The storageName of the setting.
    * @param {any} state The new state for the setting.
    * @memberof MoreeventnotificationsPage
    */
-  onNotificationSettingValueChange(name) {
+  onNotificationSettingValueChange(name, eventType, eventColor) {
     let state = this.states[name];
     this.updateNotificationState();
+    console.log(name);
     this.settingService.setSetting(name, state);
+
+    let response = this.http.sendDataToServer(
+      'push/user/category/',
+      {
+        userId: '',
+        category: eventType + '_' + eventColor,
+        status: state
+      }
+    );
+    response.subscribe();
   }
 
   /**
    * onNotificationDistanceChange()
-   * 
+   *
    * Function gets called when the distance slider's value changes.
-   * Stores the new value locally. 
-   * 
+   * Stores the new value locally.
+   *
    * @memberof MoreeventnotificationsPage
    */
   onNotificationDistanceChange() {
@@ -70,10 +78,10 @@ export class MoreeventnotificationsPage {
 
   /**
    * onNotificationChange()
-   *   
+   *
    * Function gets called when notification's view bound value is changed.
    * Enables/disables all subsettings depending on new state.
-   * 
+   *
    * @memberof MoreeventnotificationsPage
    */
   onNotificationChange() {
@@ -82,13 +90,13 @@ export class MoreeventnotificationsPage {
 
   /**
    * updateNotificationState()
-   * 
-   * Updates main notification toggler state 
+   *
+   * Updates main notification toggler state
    * based on all the notification settings' states.
-   * 
-   * E.g if all other settings are active, a call to this function will 
+   *
+   * E.g if all other settings are active, a call to this function will
    * result in activation and if not it will become inactive.
-   * 
+   *
    * @memberof MoreeventnotificationsPage
    */
   updateNotificationState() {
@@ -107,10 +115,10 @@ export class MoreeventnotificationsPage {
 
   /**
    * setNotificationStates()
-   * 
+   *
    * Sets the notification state for all notification settings.
-   * 
-   * @param {any} state The state to set the notification to. 
+   *
+   * @param {any} state The state to set the notification to.
    *                    True for active, false for inactive.
    * @memberof MoreeventnotificationsPage
    */

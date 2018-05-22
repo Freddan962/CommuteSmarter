@@ -15,7 +15,7 @@
         <ion-list class="settings-list">
           <ion-item>
             <div item-content col-12>
-              <ion-row> 
+              <ion-row>
                 <ion-col col-8>
                   <ion-label >{{ 'EventNotifications.toggleAll' | translate }}</ion-label>
                 </ion-col>
@@ -24,15 +24,15 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-  
+
                   <ion-item id="notificationrange-item">
-                    <ion-range id="notificationsrange-range" col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">  
+                    <ion-range id="notificationsrange-range" col-12 min="1" max="30" [(ngModel)]="notificationDistance" (ionChange)="onNotificationDistanceChange($event)">
                       <ion-label range-left>
                           <ion-badge item-end>{{notificationDistance}} KM</ion-badge>
                       </ion-label>
                     </ion-range>
                   </ion-item>
-  
+
               </ion-row>
             </div>
           </ion-item>
@@ -44,7 +44,7 @@
           <div no-padding *ngFor="let category of settings.categories">
             <ion-item *ngFor="let setting of category.settings">
               <div item-content col-12>
-                <ion-row> 
+                <ion-row>
                   <ion-col col-2>
                   <span>
                       <img [src]="getIconCategory(setting.eventType, category.name)" class="event-icon" />
@@ -55,8 +55,8 @@
                   </ion-col>
                   <ion-col col-4>
                     <ion-toggle [(ngModel)]="states[formatName('notifications' + category.eventType + setting.eventType)]"
-                     (ionChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType))" 
-                     (ngModelChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType))" 
+                     (ionChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType), setting.eventType, category.color)"
+                     (ngModelChange)="onNotificationSettingValueChange(formatName('notifications' + category.eventType + setting.eventType), setting.eventType, category.color)"
                      [id]="'warning' + setting.ngModel" name="setting.ngModel" color="secondary" class="ios-toggle"></ion-toggle>
                   </ion-col>
                 </ion-row>
@@ -67,5 +67,5 @@
       </div>
     </ion-col>
   </ion-row>
-</ion-grid>  
+</ion-grid>
 </ion-content>
