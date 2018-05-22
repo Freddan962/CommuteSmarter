@@ -41,7 +41,7 @@ module.exports = function(app, models) {
       if(userExists) {
         models.PushSettings.findOne({ where:{ userId: userId, category: category }}).then(categoryExists => {
           if(categoryExists) {
-            PushSettings.updateAttributes({
+            categoryExists.updateAttributes({
               status: status
             }).then(() => {
               result.status(200).json({status: 200, message: 'Successfully changed status!'});

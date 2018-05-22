@@ -2,9 +2,14 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('PushSettings', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       userId: {
         allowNull: false,
-        primaryKey: true,
         type: Sequelize.STRING
       },
       category: {
