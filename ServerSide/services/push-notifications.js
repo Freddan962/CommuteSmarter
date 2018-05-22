@@ -2,7 +2,7 @@ const PushNotifications = require('node-pushnotifications');
 
 const settings = {
     gcm: {
-      //It took way too long to figure ut that this key is the FCM Server API_KEY and not the FCM project id.
+      //It took way too long to figure out that this key is the FCM Server API_KEY and not the FCM project id.
       id: 'AAAA4B1KDy0:APA91bGKIaWHL0bD9LxRyU3pnzs6d3E-9AOWgdpTCPb1ZkOhijK5RqUx8-YswJ8W5vrYIyY_C31K7cHG9vYjZ-E-j5nF4R1Jn_4RZDU1Fs2wRDiDLkYXdGtHVoUPztoj4BZNpIUHeGWJ',
       phonegap: true
     }
