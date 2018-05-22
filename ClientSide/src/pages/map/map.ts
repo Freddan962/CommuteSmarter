@@ -49,7 +49,7 @@ export class MapPage {
     public geolocation: Geolocation,
     private socialSharing: SocialSharing,
     private cdRef: ChangeDetectorRef,
-    private eventService: EventService,
+    public eventService: EventService,
     private translate: TranslateService,
     private alertCtrl: AlertController,
     private http: HttpService,

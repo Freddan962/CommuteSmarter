@@ -19,16 +19,12 @@ export class EventService {
 
   getLatest(categories, previous, perform) {
     this.httpService.getDataFromServer('events?categories='+categories + '&newerThan=' + previous).subscribe(data => {
-      console.log(data);
-
       perform(data);
     });
   }
 
   getEventById(id, perform) {
     this.httpService.getDataFromServer('events/' + id).subscribe(data => {
-      console.log(data);
-
       perform(data);
     });
   }
