@@ -11,7 +11,6 @@ export class MapCategoryHelper {
         categories.push(category);  
     });
 
-    console.log("Got categories: " + categories);
     return categories;
   }
 }

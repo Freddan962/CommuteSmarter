@@ -92,7 +92,6 @@ export class MapPage {
 
   ionViewWillEnter() {
     this.settingService.getCurrentFilters(filters => {
-      console.log("FILTERING");
       this.chosenCategories = filters;
       this.filterOnMap();
     });

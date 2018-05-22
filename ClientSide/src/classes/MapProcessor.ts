@@ -20,7 +20,7 @@ export class MapProcessor {
   /**
    * loadEventsIntoQueue()
    * 
-   * @param {any[]} events The events as defined by JSON to enqueue into the processor
+   * @param {any[]} events The events as objects to enqueue into the processor
    * @memberof MapProcessor
    */
   public loadEventsIntoQueue(events: any[]) : void {
@@ -48,6 +48,8 @@ export class MapProcessor {
   private processEvent(event: any) : void {
     if (event.drawable == undefined)
       this.prepareDrawable(event);
+
+    this.checkIfAlive(event);
   }
 
   private prepareDrawable(event: any) : void {
@@ -76,6 +78,10 @@ export class MapProcessor {
       if (!filter.includes(event.category + '_' + event.color))
         this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
     });
+  }
+
+  private checkIfAlive(event: any) : void {
+
   }
 
   /* ############################# */
