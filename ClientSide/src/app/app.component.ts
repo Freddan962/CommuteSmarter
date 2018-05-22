@@ -56,7 +56,7 @@ export class MyApp {
   handlePushNotifications() {
     const push = this.pushNotifications.init({
       android: {
-        senderID: 962564067117
+        senderID: '962564067117'
       }
     });
 

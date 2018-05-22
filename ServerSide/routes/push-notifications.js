@@ -10,16 +10,18 @@ module.exports = function(app, models) {
     let userId = request.body.userId;
     models.PushUsers.findOne({ where:{ userId: userId }}).then(userExists => {
       if(userExists) {
-        res.status(200).json({status: 200, message: "The push user already exists"});
+        result.status(200).json({status: 200, message: "The push user already exists"});
       } else {
         models.PushUsers.create({userId: request.body.userId}).then( pushUser => {
           if(pushUser) {
-            res.status(200).json({status: 200, message: "Created the Push User Successfully"});
+            result.status(200).json({status: 200, message: "Created the Push User Successfully"});
           } else {
-            res.status(503).json({staus: 503, error: "Error occured on the server"});
+            result.status(503).json({staus: 503, error: "Error occured on the server"});
           }
+        }).catch((err) => {
+          result.status(400).json({ staus: 400, error: err });
         });
       }
-    })
+    });
   });
 }
