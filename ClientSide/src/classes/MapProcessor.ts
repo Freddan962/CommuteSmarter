@@ -53,7 +53,10 @@ export class MapProcessor {
     if (this.eventsQueue.length == 0) return;
 
     let processedLastInIteration: boolean = false;
-    let lastEvent = this.eventsQueue[eventsToTick-1];
+    
+    //Make sure that if we have a small set of events we check all possible events
+    eventsToTick = eventsToTick >= this.eventsQueue.length ? this.eventsQueue.length-1 : eventsToTick;
+    let lastEvent = eventsToTick >= this.eventsQueue.length ? this.eventsQueue[eventsToTick-1] : this.eventsQueue[this.eventsQueue.length-1];
 
     for (let i = 0; i < eventsToTick; i++) {
       let event = this.eventsQueue.shift();
@@ -88,17 +91,23 @@ export class MapProcessor {
     this.isMarker(event) ? this.drawableFactory.createEventInfoMarker(event) : this.drawableFactory.createPath(event);
   }
 
-  private isMarker(event: any) : boolean { return event.lat_end != -100 && event.lng_end != -100; }
-
+  private isMarker(event: any) : boolean {
+    if (event.lat_end != -100 && event.lng_end != -100)
+      return false;
+    
+    return true;
+  }
+    
   private shouldProcessEvent(event: any) : boolean { 
     return this.mapPage.chosenCategories.includes(event.category + '_' + event.color);
   }
 
   private checkIfAlive(event: any) : void {
-    this.mapPage.eventService.getEventById(event.id, data => {
-      if (data.id == undefined)
-        console.log("GOT DELETED EVENT: " + event.category);
-    })
+    //eventservice.getEventById error
+    //this.mapPage.eventService.getEventById(event.id, data => {
+      //if (data == undefined)
+        //console.log("GOT DELETED EVENT: " + event.category);
+    //})
   }
 
   /* ############################# */
