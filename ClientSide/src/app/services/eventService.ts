@@ -27,8 +27,6 @@ export class EventService {
 
   getEventById(id, perform) {
     this.httpService.getDataFromServer('events/' + id).subscribe(data => {
-      console.log(data);
-
       perform(data);
     });
   }

@@ -7,8 +7,16 @@ export class MapProcessor {
   
   private eventsQueue: any[] = [];
 
+  private initialRun: boolean = true;
+  private initialInterval: any;
+  private activeInterval: any;
 
   //CONFIGURATION OPTIONS
+  //FIRST PROCESSING ITERATION SPEED
+  private initialTickInterval: number = 10;
+  private initialEventsPertick: number = 10;
+
+  //AFTER FIRST PROCESSING ITERATION
   private tickInterval: number = 100;
   private eventsPerTick: number = 1;
 
@@ -27,27 +35,48 @@ export class MapProcessor {
     events.forEach((event) => { this.eventsQueue.push(event) });
   }
 
-  private start() : void {
-    setInterval(() => { this.process() }, this.tickInterval );
+  public clearEventQueueByFilter(filter: any) : void {
+    this.eventsQueue.forEach((event) => {
+      if (!filter.includes(event.category + '_' + event.color))
+        this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
+    });
   }
 
-  private process() : void {
+  private start() : void {
+    let initialInterval = setInterval(() => { this.process(this.initialEventsPertick) }, this.initialTickInterval);
+  }
+
+  private process(eventsToTick) : void {
     if (this.eventsQueue.length == 0) return;
 
-    let eventsToTick = this.eventsQueue.length > this.eventsPerTick ? this.eventsPerTick : this.eventsQueue.length;
+    let processedLastInIteration: boolean = false;
+    let lastEvent = this.eventsQueue[eventsToTick-1];
 
     for (let i = 0; i < eventsToTick; i++) {
       let event = this.eventsQueue.shift();
+      
+      if (processedLastInIteration == false) 
+        processedLastInIteration = event.id == lastEvent.id;
+
       if (this.shouldProcessEvent(event))
         this.processEvent(event);
 
       this.eventsQueue.push(event);
     }
-  }
+
+    if (this.initialRun && processedLastInIteration) {
+      this.initialRun = false;
+      clearInterval(this.initialInterval);
+      let eventsToTick = this.eventsQueue.length > this.eventsPerTick ? this.eventsPerTick : this.eventsQueue.length;    
+      this.activeInterval = setInterval(() => { this.process(eventsToTick) }, this.tickInterval );
+    }
+  } 
 
   private processEvent(event: any) : void {
-    if (event.drawable == undefined)
+    if (event.drawable == undefined) {
       this.prepareDrawable(event);
+      return;
+    }
 
     this.checkIfAlive(event);
   }
@@ -73,15 +102,11 @@ export class MapProcessor {
     return true;
   }
 
-  private clearEventQueueByFilter(filter: any) : void {
-    this.eventsQueue.forEach((event) => {
-      if (!filter.includes(event.category + '_' + event.color))
-        this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
-    });
-  }
-
   private checkIfAlive(event: any) : void {
-
+    this.mapPage.eventService.getEventById(event.id, data => {
+      if (data.id == undefined)
+        console.log("GOT DELETED EVENT: " + event.category);
+    })
   }
 
   /* ############################# */
