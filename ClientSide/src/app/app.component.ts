@@ -18,19 +18,45 @@ export class MyApp {
   rootPage:any = TabsPage;
   alwaysShowWelcomePage: any;
 
-  constructor(platform: Platform, 
+  constructor(platform: Platform,
     statusBar: StatusBar, splashScreen: SplashScreen,
-    public Storage: Storage, 
-    translate: TranslateService, 
+    public Storage: Storage,
+    translate: TranslateService,
     language: LanguageService,
    ) {
     this.storageService = Storage;
     this.alwaysShowWelcomePage = false;
-    
+
     platform.ready().then(() => {
       this.handleWelcomeScreen();
       statusBar.styleDefault();
       splashScreen.hide();
+
+      const push = PushNotification.init({
+        android: {
+          senderID: 962564067117
+        }
+      });
+
+      push.on('registration', (data) => {
+        // data.registrationId
+        // Send the id to server
+      });
+
+      push.on('notification', (data) => {
+    	   // data.message,
+    	   // data.title,
+    	   // data.count,
+    	   // data.sound,
+         // data.image,
+         // data.additionalData
+
+         //ionic modal or something
+       });
+
+       push.on('error', (e) => {
+    	    // e.message
+       });
     });
   }
 
