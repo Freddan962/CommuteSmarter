@@ -66,14 +66,13 @@ export class DrawableFactory {
       this.markerStore[storeKey] = [];    
 
     let marker = this.addMarker(markerImage, position);
-    this.markerStore.push(marker);
-    event.marker = marker;
+    event.drawable = marker;
 
     marker.addListener('click', () => {
       this.mapPage.openMapEventInfo(event);
     });
 
-    this.markerStore[storeKey].push(marker);   
+    this.markerStore[storeKey].push(event);   
   }
 
   /**
@@ -146,12 +145,13 @@ export class DrawableFactory {
           this.mapPage.openMapEventInfo(event);
         })
 
+        event.drawable = stepPolyline;
+
         let storeKey = event.category + "_" + event.color;
         if (!this.lineStore.hasOwnProperty(storeKey))
           this.lineStore[storeKey] = [];    
 
-        this.lineStore[storeKey].push(stepPolyline);
-        event.drawable = stepPolyline;
+        this.lineStore[storeKey].push(event);
       }
     }
   }

@@ -48,8 +48,6 @@ export class MapProcessor {
   private processEvent(event: any) : void {
     if (event.drawable == undefined)
       this.prepareDrawable(event);
-
-    console.log("Processed event");
   }
 
   private prepareDrawable(event: any) : void {
@@ -71,6 +69,13 @@ export class MapProcessor {
       return false;
 
     return true;
+  }
+
+  private clearEventQueueByFilter(filter: any) : void {
+    this.eventsQueue.forEach((event) => {
+      if (!filter.includes(event.category + '_' + event.color))
+        this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
+    });
   }
 
   /* ############################# */

@@ -67,7 +67,7 @@ export class MapPage {
     }
   }
 
-  refreshEvents(perform) {
+  refreshEvents() {
     this.settingService.getCurrentFilters( filters => {
       this.eventService.getEvents(filters, data => {
         this.chosenCategories = filters;
@@ -80,8 +80,6 @@ export class MapPage {
         this.obstacles = data;
         this.processor.loadEventsIntoQueue(data);
         this.filterOnMap();
-        
-        perform();
       });
    });
   }
@@ -89,35 +87,39 @@ export class MapPage {
   // Runs only once and is cached
   ionViewDidLoad() {
     this.loadMap();
+    this.refreshEvents();
   }
 
-  // Runs on every view enter
   ionViewWillEnter() {
-    this.doRefreshEvents();
-  }
-
-  // Refresh the events and render events
-  doRefreshEvents() {
-    this.refreshEvents(() => {
-      
+    this.settingService.getCurrentFilters(filters => {
+      console.log("FILTERING");
+      this.chosenCategories = filters;
+      this.filterOnMap();
     });
   }
 
   filterOnMap() {
-    this.clearDrawablesFromMap(this.processor.drawableFactory.getLineStore());
-    this.clearDrawablesFromMap(this.processor.drawableFactory.getLineStore());
-  }
-
-  clearDrawablesFromMap(drawables) {
     let helper = new MapCategoryHelper();
     let categories = helper.getCategoriesToRemove(this.chosenCategories, this.processor.drawableFactory.getMarkerStore());
 
+    this.processor.clearEventQueueByFilter(this.chosenCategories);  
+    this.clearDrawablesByFilter(this.processor.drawableFactory.getMarkerStore(), categories);
+    this.clearDrawablesByFilter(this.processor.drawableFactory.getLineStore(), categories);
+  }
+
+  clearDrawablesByFilter(drawables, categories) {
+    if (drawables == null || drawables == undefined)
+      return;
+
+    if (categories == null || categories == undefined)
+      return;
+
     categories.forEach(category => {
-      if (drawables[category] == undefined)
+      if (drawables[category] == undefined || drawables[category].length == 0)
         return;
 
       for (let i = 0; i < drawables[category].length; i++) {
-        drawables[category][i].setMap(null);
+        drawables[category][i].drawable.setMap(null);
         drawables[category].splice(i, 0);
       }
     })
