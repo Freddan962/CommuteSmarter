@@ -46,7 +46,7 @@ export class MapProcessor {
   }
 
   private start() : void {
-    let initialInterval = setInterval(() => { this.process(this.initialEventsPertick) }, this.initialTickInterval);
+    this.initialInterval = setInterval(() => { this.process(this.initialEventsPertick) }, this.initialTickInterval);
   }
 
   private process(eventsToTick) : void {
@@ -55,8 +55,9 @@ export class MapProcessor {
     let processedLastInIteration: boolean = false;
     
     //Make sure that if we have a small set of events we check all possible events
-    eventsToTick = eventsToTick >= this.eventsQueue.length ? this.eventsQueue.length-1 : eventsToTick;
-    let lastEvent = eventsToTick >= this.eventsQueue.length ? this.eventsQueue[eventsToTick-1] : this.eventsQueue[this.eventsQueue.length-1];
+    eventsToTick = eventsToTick >= this.eventsQueue.length ? this.eventsQueue.length : eventsToTick;
+    
+    let lastEvent = this.eventsQueue[eventsToTick-1];
 
     for (let i = 0; i < eventsToTick; i++) {
       let event = this.eventsQueue.shift();
@@ -98,16 +99,15 @@ export class MapProcessor {
     return true;
   }
     
-  private shouldProcessEvent(event: any) : boolean { 
+  public shouldProcessEvent(event: any) : boolean { 
     return this.mapPage.chosenCategories.includes(event.category + '_' + event.color);
   }
 
   private checkIfAlive(event: any) : void {
-    //eventservice.getEventById error
-    //this.mapPage.eventService.getEventById(event.id, data => {
-      //if (data == undefined)
-        //console.log("GOT DELETED EVENT: " + event.category);
-    //})
+    this.mapPage.eventService.getEventById(event.id, data => {
+      if (data.status != undefined && data.status == '404')
+        console.log("GOT DELETED EVENT: " + event.category);
+    })
   }
 
   /* ############################# */
