@@ -120,7 +120,9 @@ export class DrawableFactory {
     };
 
     //Fullösning bör igentligen hanteras på serversidan (dvs om en väg mellan punkterna ej hittas)
-    if (response == null || response == undefined)
+    if (response == null || response == undefined ||
+        response.routes == undefined || response.routes[0] == undefined 
+        || response.routes[0].legs == undefined) 
       return;
 
     let polylines = [];

@@ -16,12 +16,12 @@ export class MapProcessor {
   //############################
   
   //FIRST PROCESSING ITERATION SPEED
-  private initialTickInterval: number = 10;
+  private initialTickInterval: number = 100;
   private initialEventsPertick: number = 10;
 
   //AFTER FIRST PROCESSING ITERATION
-  private tickInterval: number = 100;
-  private eventsPerTick: number = 1;
+  private tickInterval: number = 1000;
+  private eventsPerTick: number = 5;
 
   public constructor(private mapPage: MapPage) {
     this.start();
