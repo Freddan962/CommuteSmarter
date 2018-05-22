@@ -73,7 +73,7 @@ export class MapProcessor {
     return true;
   }
 
-  private clearEventQueueByFilter(filter: any) : void {
+  public clearEventQueueByFilter(filter: any) : void {
     this.eventsQueue.forEach((event) => {
       if (!filter.includes(event.category + '_' + event.color))
         this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
