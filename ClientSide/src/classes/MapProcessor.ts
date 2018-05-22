@@ -38,7 +38,9 @@ export class MapProcessor {
 
     for (let i = 0; i < eventsToTick; i++) {
       let event = this.eventsQueue.shift();
-      this.processEvent(event);
+      if (this.shouldProcessEvent(event))
+        this.processEvent(event);
+
       this.eventsQueue.push(event);
     }
   }
@@ -59,6 +61,13 @@ export class MapProcessor {
 
   private isMarker(event: any) : boolean {
     if (event.lat_end != -100 && event.lng_end != -100)
+      return false;
+
+    return true;
+  }
+
+  private shouldProcessEvent(event: any) : boolean {
+    if (!this.mapPage.chosenCategories.includes(event.category + '_' + event.color))
       return false;
 
     return true;

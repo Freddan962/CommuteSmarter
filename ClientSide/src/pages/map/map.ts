@@ -104,11 +104,11 @@ export class MapPage {
   }
 
   filterOnMap() {
-    //this.clearDrawablesFromMap(this.markerStore);
-    //this.clearDrawablesFromMap(this.lineStore);
+    this.clearDrawablesFromMap(this.processor.drawableFactory.getLineStore());
+    this.clearDrawablesFromMap(this.processor.drawableFactory.getLineStore());
   }
 
-  /*clearDrawablesFromMap(drawables) {
+  clearDrawablesFromMap(drawables) {
     let helper = new MapCategoryHelper();
     let categories = helper.getCategoriesToRemove(this.chosenCategories, this.processor.drawableFactory.getMarkerStore());
 
@@ -121,7 +121,7 @@ export class MapPage {
         drawables[category].splice(i, 0);
       }
     })
-  }*/
+  }
 
   /**
    * loadMap()
