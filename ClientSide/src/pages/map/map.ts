@@ -1,5 +1,4 @@
 import { MapCategoryHelper } from './../../classes/MapCategoryHelper';
-import { DrawableFactory } from './../../classes/DrawableFactory';
 import { SettingService } from './../../app/services/settingService';
 import { MorePage } from './../more/more';
 import { Component, ViewChild, ElementRef } from '@angular/core';
@@ -11,7 +10,6 @@ import moment from 'moment';
 import { EventService } from './../../app/services/eventService';
 import { TranslateService } from '@ngx-translate/core';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Observable } from "rxjs/Rx"
 import { HttpService } from './../../app/services/httpService';
 import { LoginWithTwitterService } from './../../app/services/loginWithTwitterService';
 import { EventsReportPage } from '../eventsreport/eventsreport';

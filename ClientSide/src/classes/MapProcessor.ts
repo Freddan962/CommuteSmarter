@@ -46,7 +46,7 @@ export class MapProcessor {
   }
 
   private start() : void {
-    let initialInterval = setInterval(() => { this.process(this.initialEventsPertick) }, this.initialTickInterval);
+    this.initialInterval = setInterval(() => { this.process(this.initialEventsPertick) }, this.initialTickInterval);
   }
 
   private process(eventsToTick) : void {
