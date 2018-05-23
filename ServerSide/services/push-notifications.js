@@ -20,13 +20,9 @@ let pushMethods = {
         title: data.title, // REQUIRED for Android
         message: data.body,
         image: data.image,
-        icon: data.icon
       },
       priority: 'high', // gcm, apn. Supported values are 'high' or 'normal' (gcm). Will be translated to 10 and 5 for apn. Defaults to 'high'
       dryRun: false, // gcm for android
-      icon: data.icon, // gcm for android
-      tag: '', // gcm for android
-      color: data.color, // gcm for android
     };
 
     // You can use it in node callback style
