@@ -1,14 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var PushSettings = sequelize.define('PushSettings', {
+    dbPushId: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     userId: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     category: {
+      primaryKey: true,
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     status: {
       allowNull: false,

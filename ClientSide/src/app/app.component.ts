@@ -56,7 +56,8 @@ export class MyApp {
   handlePushNotifications() {
     const options: PushOptions = {
       android: {
-        senderID: '962564067117'
+        senderID: '962564067117',
+        icon: 'jux'
       }
     };
 
@@ -79,9 +80,11 @@ export class MyApp {
     pushObject.on('notification').subscribe(data => {
        console.log(data);
 
+       let trimmed = data.message.substring(0, data.message.indexOf('. Open T'));
+
        let alert = this.alertCtrl.create({
          title: data.title,
-         message: data.message
+         message: trimmed
        });
 
        alert.present();

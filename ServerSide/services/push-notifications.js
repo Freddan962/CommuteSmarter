@@ -17,12 +17,12 @@ let pushMethods = {
       body: data.body,
       custom: {
         sender: 'PVT73TrafficInfo',
+        title: data.title, // REQUIRED for Android
+        message: data.body,
+        image: data.image,
       },
       priority: 'high', // gcm, apn. Supported values are 'high' or 'normal' (gcm). Will be translated to 10 and 5 for apn. Defaults to 'high'
       dryRun: false, // gcm for android
-      icon: '', // gcm for android
-      tag: '', // gcm for android
-      color: 'blue', // gcm for android
     };
 
     // You can use it in node callback style

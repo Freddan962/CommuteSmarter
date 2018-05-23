@@ -41,17 +41,22 @@ module.exports = function(app, models) {
       if(userExists) {
         models.PushSettings.findOne({ where:{ userId: userId, category: category }}).then(categoryExists => {
           if(categoryExists) {
-            PushSettings.updateAttributes({
+            categoryExists.updateAttributes({
               status: status
             }).then(() => {
               result.status(200).json({status: 200, message: 'Successfully changed status!'});
             })
           } else {
-            models.PushSettings.create({ userId: userId, category: category, status: status }).then(categoryExists => {
+            models.PushSettings.create({ dbPushId: userExists.id, userId: userId, category: category, status: status }).then(categoryExists => {
               if(categoryExists) {
                 result.status(200).json({status: 200, message: 'Successfully changed status!'});
               } else {
                 result.status(400).json({status: 400, message: 'Did not change status!'});
+              }
+            }).catch(error => {
+            if(error.SequelizeUniqueConstraintError) {
+              console.log("JUUUUUX");
+                result.status(200).json({status: 200, message: 'Hopefully changed status! Sequelize hates when primary key is set to use multiple columns, and therfore throws SequelizeUniqueConstraintError!'});
               }
             });
           }

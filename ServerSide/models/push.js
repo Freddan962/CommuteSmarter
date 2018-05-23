@@ -1,10 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var PushUsers = sequelize.define('PushUsers', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
     userId: {
       type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true
+      allowNull: false
     }
   }, {
     timestamps: false

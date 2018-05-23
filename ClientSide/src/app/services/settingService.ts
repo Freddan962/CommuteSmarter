@@ -244,12 +244,14 @@ export class SettingService {
     this.storage.get('currentPushId').then( pushId => {
      if(pushId !== undefined && pushId !== null && pushId.length > 0) {
        perform(pushId);
+     } else {
+       perform(false);
      }
    });
   }
 
   public setCurrentPushId(newPushId) {
-    this.getCurrentPushId(pushId => {
+    this.storage.get('currentPushId').then( pushId => {
       if(pushId === undefined || pushId === null || pushId.length <= 0) {
         this.storage.set('currentPushId', newPushId);
       }
