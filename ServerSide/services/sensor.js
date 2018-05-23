@@ -100,9 +100,7 @@ function getRandomEvent(models, perform) {
                   let options = {
                     title: 'Event occured',
                     body: 'At ' + address + '. Open Traffic Info to read more!',
-                    color: type.color,
-                    icon: 'http://10.0.1.16:3000/static/icon.png',
-                    image: 'http://10.0.1.16:3000/static/' + icon
+                    image: 'http://pvt73trafficinfo.herokuapp.com/static' + icon,
                   }
 
                   console.log("Getting ready to send push notifications!");
