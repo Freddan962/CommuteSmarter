@@ -96,12 +96,13 @@ function getRandomEvent(models, perform) {
                     console.log(user.dataValues.userId);
                     users.push(user.dataValues.userId);
                   });
-
+                  let icon = '/imgs/' + type.subtype + '_' + type.color + '.png';
                   let options = {
                     title: 'Event occured',
                     body: 'At ' + address + '. Open Traffic Info to read more!',
                     color: type.color,
-                    icon: './assets/imgs/' + type.subtype + '_' + type.color + '.png'
+                    icon: 'http://10.0.1.16:3000/static/icon.png',
+                    image: 'http://10.0.1.16:3000/static/' + icon
                   }
 
                   console.log("Getting ready to send push notifications!");

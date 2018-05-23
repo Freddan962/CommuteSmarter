@@ -17,6 +17,10 @@ let pushMethods = {
       body: data.body,
       custom: {
         sender: 'PVT73TrafficInfo',
+        title: data.title, // REQUIRED for Android
+        message: data.body,
+        image: data.image,
+        icon: data.icon
       },
       priority: 'high', // gcm, apn. Supported values are 'high' or 'normal' (gcm). Will be translated to 10 and 5 for apn. Defaults to 'high'
       dryRun: false, // gcm for android
