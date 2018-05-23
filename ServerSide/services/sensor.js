@@ -61,10 +61,11 @@ function getRandomEvent(models, perform) {
             })
             .asPromise()
             .then((response) => {
-                console.log(response.json.results[0].formatted_address);
+              let address = response.json.results[0].formatted_address;
+                console.log(address);
                 let eventInfo = {
                     color: type.color,
-                    location: response.json.results[0].formatted_address,
+                    location: address,
                     lat: sensor.latitude,
                     long: sensor.longitude,
                     category: type.subtype,
@@ -84,12 +85,34 @@ function getRandomEvent(models, perform) {
                     });
                 });
 
-                models.PushSettings.find({ where: {
+                models.PushSettings.findAll({ where: {
                   category: type.subtype + '_' + type.color,
                   status: 1
                 }}).then( pushUsers => {
-                  console.log(pushUsers);
-                  console.log("HERE");
+                  console.log();
+
+                  let users = [];
+                  pushUsers.forEach(user => {
+                    console.log(user.dataValues.userId);
+                    users.push(user.dataValues.userId);
+                  });
+
+                  let options = {
+                    title: 'Event occured',
+                    body: 'At ' + address + '. Open Traffic Info to read more!',
+                    color: type.color,
+                    icon: './assets/imgs/' + type.subtype + '_' + type.color + '.png'
+                  }
+
+                  console.log("Getting ready to send push notifications!");
+                  console.log(options);
+
+                  push.sendPushNotification(
+                    options,
+                    users,
+                    () => {
+
+                    })
                 });
             })
             .catch((err) => {

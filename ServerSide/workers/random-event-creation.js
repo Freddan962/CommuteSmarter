@@ -4,7 +4,7 @@ const sensor = require('../services/sensor.js');
 
 module.exports = {
   name: 'Random Event Creation',
-  interval: 30000,
+  interval: 3000,
   func: function() {
     sensor.getRandomEvent(models, () => {
         console.log("Called create random event!");
