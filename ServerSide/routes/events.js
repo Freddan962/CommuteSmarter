@@ -87,6 +87,16 @@ module.exports = function(app, models) {
       }
     }
 
+    let eventId = req.query.higherThanEventId;
+
+    if(eventId !== undefined && eventId.length > 0) {
+      if(query.where === undefined) {
+        query['where'] = { 'id': { [$gt]: eventId } };
+      } else {
+        query.where['id'] = { [$gt]: eventId };
+      }
+    }
+
     models.Event.findAll(query).then(events => {
       res.status(200).json(events);
     });
