@@ -40,7 +40,7 @@ export class MapPage {
   chosenCategories: any;
 
   processor: MapProcessor = new MapProcessor(this);
-  latestFetch: Date = new Date();
+  latestFetch: string = new Date().toISOString();
   fetchLatestInterval: number = 15000;
 
   constructor(
@@ -101,7 +101,7 @@ export class MapPage {
     let helper = new MapCategoryHelper();
     let categories = helper.getCategoriesToRemove(this.chosenCategories, this.processor.drawableFactory.getMarkerStore());
 
-    this.processor.clearEventQueueByFilter(this.chosenCategories);  
+    this.processor.clearEventQueueByFilter(this.chosenCategories);
     this.clearDrawablesByFilter(this.processor.drawableFactory.getMarkerStore(), categories);
     this.clearDrawablesByFilter(this.processor.drawableFactory.getLineStore(), categories);
   }
@@ -306,12 +306,15 @@ export class MapPage {
   fetchLatest() {
     this.eventService.getLatest(this.chosenCategories, this.latestFetch, latest => {
       console.log('chosen categories:' + this.chosenCategories);
-      //TODO: Never gets a response  
-        this.processor.loadEventsIntoQueue(latest);
-      }
-    );
+      console.log('latest fetch:' + this.latestFetch);
+      console.log(latest);
 
-    this.latestFetch = new Date();
+      //TODO Change so uses higherThanEventId endpoint at api!!!!!
+
+      this.processor.loadEventsIntoQueue(latest);
+      // set the new date from here, otherwise it might be set before this method has been able to run.
+      this.latestFetch = new Date().toISOString();
+    });
   }
 
   sendSolved(item){
