@@ -40,8 +40,8 @@ export class MapPage {
   chosenCategories: any;
 
   processor: MapProcessor = new MapProcessor(this);
-  latestFetch: string = new Date().toISOString();
-  fetchLatestInterval: number = 15000;
+  latestFetch: number = 0;
+  fetchLatestInterval: number = 10000;
 
   constructor(
     public navCtrl: NavController,
@@ -77,6 +77,7 @@ export class MapPage {
           return;
         }
 
+        this.latestFetch = this.getHighestID(data);
         this.processor.loadEventsIntoQueue(data);
         this.filterOnMap();
       });
@@ -305,15 +306,10 @@ export class MapPage {
    */
   fetchLatest() {
     this.eventService.getLatest(this.chosenCategories, this.latestFetch, latest => {
-      console.log('chosen categories:' + this.chosenCategories);
-      console.log('latest fetch:' + this.latestFetch);
-      console.log(latest);
-
-      //TODO Change so uses higherThanEventId endpoint at api!!!!!
+      if (latest.length < 1) return;
 
       this.processor.loadEventsIntoQueue(latest);
-      // set the new date from here, otherwise it might be set before this method has been able to run.
-      this.latestFetch = new Date().toISOString();
+      this.latestFetch = this.getHighestID(latest);
     });
   }
 
@@ -328,5 +324,10 @@ export class MapPage {
     } else {
       this.navCtrl.push(MorePage);
     }
+  }
+
+  private getHighestID(events: any[]): number {
+    let ids: Array<number> = events.map(event => event.id)
+    return Math.max(...ids);
   }
 }
