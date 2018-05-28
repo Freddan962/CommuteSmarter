@@ -15,8 +15,8 @@ export class EventService {
     });
   }
 
-  getLatest(categories, previous, perform) {
-    this.httpService.getDataFromServer('events?categories='+categories + '&newerThan=' + previous).subscribe(data => {
+  getLatest(categories, id, perform) {
+    this.httpService.getDataFromServer('events?categories='+categories + '&higherThanEventId=' + id).subscribe(data => {
       perform(data);
     });
   }
