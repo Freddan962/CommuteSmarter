@@ -310,9 +310,7 @@ export class MapPage {
       if (latest.length < 1) return;
 
       this.processor.loadEventsIntoQueue(latest);
-      let latest = this.getHighestID(latest);
-
-      this.latestFetch = latest;
+      this.latestFetch = this.getHighestID(latest);
     });
   }
 
