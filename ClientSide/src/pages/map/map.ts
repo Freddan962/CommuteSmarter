@@ -72,14 +72,15 @@ export class MapPage {
       this.eventService.getEvents(filters, data => {
         this.chosenCategories = filters;
 
-        if (this.chosenCategories.length == 0) {
+        if (this.chosenCategories === undefined || this.chosenCategories === null  || this.chosenCategories.length <= 0) {
           this.filterOnMap();
-          return;
-        }
+        } else {
+          let id = this.getHighestID(data);
 
-        this.latestFetch = this.getHighestID(data);
-        this.processor.loadEventsIntoQueue(data);
-        this.filterOnMap();
+          this.latestFetch = id;
+          this.processor.loadEventsIntoQueue(data);
+          this.filterOnMap();
+        }
       });
    });
   }
@@ -309,7 +310,9 @@ export class MapPage {
       if (latest.length < 1) return;
 
       this.processor.loadEventsIntoQueue(latest);
-      this.latestFetch = this.getHighestID(latest);
+      let latest = this.getHighestID(latest);
+
+      this.latestFetch = latest;
     });
   }
 

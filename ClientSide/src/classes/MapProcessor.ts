@@ -4,13 +4,13 @@ import { DrawableFactory } from "./DrawableFactory";
 import { MapPage } from "../pages/map/map";
 
 export class MapProcessor {
-  
+
   public static storeHandler: MapEventStoreHandler = new MapEventStoreHandler();
   public drawableFactory: DrawableFactory;
-  
+
   private eventsQueue: any[] = [];
   private eventDeletionQueue: any[] = [];
-  
+
   private initialRun: boolean = true;
   private initialInterval: any;
   private activeInterval: any;
@@ -18,39 +18,41 @@ export class MapProcessor {
   //############################
   //## CONFIGURATION OPTIONS  ##
   //############################
-  
+
   //FIRST PROCESSING ITERATION SPEED
   private initialTickInterval: number = 100;
   private initialEventsPertick: number = 10;
-  
+
   //AFTER FIRST PROCESSING ITERATION
   private tickInterval: number = 1000;
   private eventsPerTick: number = 5;
 
-  
+
   public constructor(private mapPage: MapPage) {
     this.start();
     this.drawableFactory = new DrawableFactory(this.mapPage);
   }
-  
+
   /**
    * loadEventsIntoQueue()
-   * 
+   *
    * @param {any[]} events The events as objects to enqueue into the processor
    * @memberof MapProcessor
    */
   public loadEventsIntoQueue(events: any[]): void {
-    events.forEach((event) => { this.eventsQueue.push(event) });
+    events.forEach((event) => {
+      this.eventsQueue.push(event);
+     });
   }
-  
+
   public clearEventQueueByFilter(filter: any): void {
     this.eventsQueue.forEach((event) => {
       if (!filter.includes(event.category + '_' + event.color))
       this.eventsQueue.splice(this.eventsQueue.indexOf(event), 1);
     });
   }
-  
-  public shouldProcessEvent(event: any): boolean { 
+
+  public shouldProcessEvent(event: any): boolean {
     return this.mapPage.chosenCategories.includes(event.category + '_' + event.color);
   }
 
@@ -67,27 +69,30 @@ export class MapProcessor {
 
     for (let i = 0; i < eventsToTick; i++) {
       let event = this.eventsQueue.shift();
-      
-      if (processedLastInIteration == false) 
-        processedLastInIteration = event.id == lastEvent.id;
 
-      if (this.shouldProcessEvent(event))
+      if (processedLastInIteration == false) {
+        processedLastInIteration = event.id == lastEvent.id;
+      }
+
+      if (this.shouldProcessEvent(event)) {
         this.processEvent(event);
+      }
 
       if (this.eventDeletionQueue.indexOf(event.id) > -1) {
         this.handleEventDeletion(event);
         this.eventDeletionQueue.splice(this.eventDeletionQueue.indexOf(event.id), 1);
-      } else 
+      } else {
         this.eventsQueue.push(event);
+      }
     }
 
-    if (this.initialRun && processedLastInIteration) {  
+    if (this.initialRun && processedLastInIteration) {
       this.initialRun = false;
       clearInterval(this.initialInterval);
-      let eventsToTick = this.eventsQueue.length > this.eventsPerTick ? this.eventsPerTick : this.eventsQueue.length;    
+      let eventsToTick = this.eventsQueue.length > this.eventsPerTick ? this.eventsPerTick : this.eventsQueue.length;
       this.activeInterval = setInterval(() => { this.process(eventsToTick) }, this.tickInterval );
     }
-  } 
+  }
 
   private processEvent(event: any): void {
     if (event.drawable == undefined) {
@@ -102,7 +107,7 @@ export class MapProcessor {
     this.isMarker(event) ? this.drawableFactory.createEventInfoMarker(event) : this.drawableFactory.createPath(event);
   }
 
-  private isMarker(event: any): boolean { return event.lat_end != -100 && event.lng_end != -100; }
+  private isMarker(event: any): boolean { return event.lat_end === -100 && event.long_end === -100; }
 
   private checkIfAlive(event: any): void {
     this.mapPage.eventService.getEventById(event.id, data => {
@@ -118,7 +123,7 @@ export class MapProcessor {
 
   private handleEventCreation(event: any): void {
     MapProcessor.storeHandler.addCreatedEvent(event);
-    this.prepareDrawable(event);    
+    this.prepareDrawable(event);
   }
 
   private handleEventDeletion(event: any): void {
