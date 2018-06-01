@@ -11,9 +11,9 @@ Node (Express), Sequelize as ORM (SQLite & MySQL), Heroku for deployment.
 
 ### APIs
 
-Twitter for user authentication/handling.
-Google Maps for event visualization.
-Google's Directions Service for reverse geo-lookup and path generation.
+Twitter for user authentication/handling.                                                              
+Google Maps for event visualization.                                                                                
+Google's Directions Service for reverse geo-lookup and path generation.                                                      
 
 ### Application overview
 ![](Images/introduction.png) ![](Images/map.png) 
