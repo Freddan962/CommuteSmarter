@@ -15,7 +15,8 @@ Node (Express), Sequelize as ORM (SQLite & MySQL), Heroku for deployment.
 
 Twitter for user authentication/handling.                                                              
 Google Maps for event visualization.                                                                                
-Google's Directions Service for reverse geo-lookup and path generation.                                                      
+Google's Directions Service for reverse geo-lookup and path generation.  
+Stockholm's Öppna Data for streetlight sensor simulation.
 
 ### Application overview
 ![](Images/introduction.png) ![](Images/map.png) 
