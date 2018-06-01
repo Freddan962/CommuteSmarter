@@ -3,6 +3,8 @@ A hybrid application that allows for Stockholm's citizens to commute smarter.
 Developed in cooperation with Stockholm City and Stockholm's Öppna Data. 
 Push-notifications support for nearby events when running on Android.
 
+Developed using the agile methodology SCRUM.
+
 ### Client-side technologies
 Ionic, Cordova, Angular, SQLite, SASS and TypeScript.
 
